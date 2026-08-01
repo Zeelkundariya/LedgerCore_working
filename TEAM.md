@@ -15,11 +15,11 @@ LedgerCore is developed by a dedicated team of four, divided into specialized Fr
 
 ## ⚙️ Backend & AI Squad (Zeel & Saptak)
 **Focus:** FastAPI (Python), PostgreSQL, Open-Source Machine Learning, and APIs.
-*   **Zeel (Backend Lead / System Architect)**:
+*   **Saptak (Backend Lead / System Architect)**:
     *   Set up the **FastAPI** server and design the **PostgreSQL** database schema.
     *   Implement Role-Based Access Control (RBAC) and secure User Management APIs.
     *   Develop **Payment Gateway Integrations** and the secure local Data Vault (JSON backup/restore logic).
-*   **Saptak (AI & Machine Learning Engineer)**:
+*   **Zeel (AI & Machine Learning Engineer)**:
     *   Integrate **Tesseract/PaddleOCR** for the AI Receipt Scanner.
     *   Deploy **Local LLMs (Ollama)** to power the AI Approval Copilot and Natural Language Search.
     *   Build custom anomaly detection models (Scikit-Learn) for **Expense Risk Scoring** and AI Fraud Detection.
