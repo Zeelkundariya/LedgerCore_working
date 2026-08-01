@@ -77,7 +77,29 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Search public users by skill
+// @route   GET /api/users/search
+// @access  Private (or Public, but usually need to be logged in to swap)
+const searchUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.skill
+    ? {
+        skillsOffered: {
+          $regex: req.query.skill,
+          $options: 'i',
+        },
+      }
+    : {};
+
+  // Only return users whose profiles are public, and are not the current user
+  const users = await User.find({ ...keyword, isPublic: true, _id: { $ne: req.user._id } }).select(
+    '-password -email -role'
+  );
+
+  res.json(users);
+});
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
+  searchUsers,
 };
