@@ -38,7 +38,108 @@ const getMySwapRequests = asyncHandler(async (req, res) => {
   res.json(requests);
 });
 
+// @desc    Accept a swap request
+// @route   PUT /api/swaps/:id/accept
+// @access  Private
+const acceptSwapRequest = asyncHandler(async (req, res) => {
+  const request = await SwapRequest.findById(req.params.id);
+
+  if (request) {
+    if (request.receiverId.toString() !== req.user._id.toString()) {
+      res.status(401);
+      throw new Error('Not authorized to accept this request');
+    }
+    request.status = 'ACCEPTED';
+    const updatedRequest = await request.save();
+    res.json(updatedRequest);
+  } else {
+    res.status(404);
+    throw new Error('Request not found');
+  }
+});
+
+// @desc    Reject a swap request
+// @route   PUT /api/swaps/:id/reject
+// @access  Private
+const rejectSwapRequest = asyncHandler(async (req, res) => {
+  const request = await SwapRequest.findById(req.params.id);
+
+  if (request) {
+    if (request.receiverId.toString() !== req.user._id.toString()) {
+      res.status(401);
+      throw new Error('Not authorized to reject this request');
+    }
+    request.status = 'REJECTED';
+    const updatedRequest = await request.save();
+    res.json(updatedRequest);
+  } else {
+    res.status(404);
+    throw new Error('Request not found');
+  }
+});
+
+// @desc    Cancel a swap request (Sender only)
+// @route   DELETE /api/swaps/:id/cancel
+// @access  Private
+const cancelSwapRequest = asyncHandler(async (req, res) => {
+  const request = await SwapRequest.findById(req.params.id);
+
+  if (request) {
+    if (request.senderId.toString() !== req.user._id.toString()) {
+      res.status(401);
+      throw new Error('Not authorized to cancel this request');
+    }
+    if (request.status !== 'PENDING') {
+      res.status(400);
+      throw new Error('Can only cancel PENDING requests');
+    }
+    await request.deleteOne();
+    res.json({ message: 'Request cancelled' });
+  } else {
+    res.status(404);
+    throw new Error('Request not found');
+  }
+});
+
+// @desc    Complete a swap and submit feedback
+// @route   POST /api/swaps/:id/complete
+// @access  Private
+const completeSwapRequest = asyncHandler(async (req, res) => {
+  const request = await SwapRequest.findById(req.params.id);
+  const { rating, comment } = req.body;
+
+  if (request) {
+    if (request.status !== 'ACCEPTED') {
+      res.status(400);
+      throw new Error('Can only complete ACCEPTED requests');
+    }
+
+    const Feedback = require('../models/feedbackModel');
+    
+    let targetUserId = request.senderId.toString() === req.user._id.toString() ? request.receiverId : request.senderId;
+
+    await Feedback.create({
+      swapId: request._id,
+      reviewerId: req.user._id,
+      targetUserId,
+      rating,
+      comment
+    });
+
+    request.status = 'COMPLETED';
+    await request.save();
+    res.json({ message: 'Swap completed and feedback submitted' });
+  } else {
+    res.status(404);
+    throw new Error('Request not found');
+  }
+});
+
 module.exports = {
   createSwapRequest,
   getMySwapRequests,
+  acceptSwapRequest,
+  rejectSwapRequest,
+  cancelSwapRequest,
+  completeSwapRequest
 };
