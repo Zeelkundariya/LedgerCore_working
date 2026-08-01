@@ -40,6 +40,31 @@ LedgerCore operates on a seamless, secure, and multi-tier workflow:
 6. **Payment**: A payment gateway triggers the reimbursement to the employee's account, applying multi-currency conversions where necessary.
 7. **Data Vault**: All transaction data is auto-saved to a secure local vault with options for backup and export.
 
+## 🛠️ Technology Stack
+
+We chose a completely free, open-source, and highly scalable tech stack to power LedgerCore:
+
+### 1. Frontend (User Interface)
+*   **Next.js (React)**: Chosen for its incredible performance, Server-Side Rendering (SSR), and seamless routing. It is the industry standard for building robust enterprise web applications.
+*   **Tailwind CSS & shadcn/ui**: Allows us to build beautiful, highly customized, and accessible dashboards (like the Executive Health Dashboard) quickly.
+*   **Zustand / Redux Toolkit**: Essential for managing complex application states like user roles, active claims, and multi-currency data.
+
+### 2. Backend & Core API
+*   **FastAPI (Python)**: Python is the undisputed king of AI and Data Science ecosystems. FastAPI is a modern, high-performance web framework for building APIs with Python, perfectly bridging the web app with complex AI models.
+
+### 3. AI & Machine Learning (100% Free & Open-Source)
+*   **Tesseract OCR / PaddleOCR**: Powerful open-source engines that extract text and numbers from physical receipts completely for free.
+*   **Local LLMs (Ollama, Llama 3)**: Running open-source Large Language Models locally guarantees total data privacy and eliminates API costs. They act as the AI Approval Copilot and parse unstructured data.
+*   **Scikit-Learn / XGBoost**: Used to train custom anomaly detection models on past financial data to spot outliers and assign Expense Risk Scores without any third-party dependencies.
+*   **OpenAI Whisper (Open-Source Version)**: Hosted locally to provide flawless, free voice-to-text transcription for Voice Expense Submissions.
+
+### 4. Database & Secure Storage
+*   **PostgreSQL**: The most robust open-source relational database. Ideal for financial transactions, strict data integrity, and natively supports JSON data for easy backup and restore capabilities.
+*   **SQLAlchemy / Prisma**: Object-Relational Mappers (ORMs) that ensure secure, typo-safe database interactions.
+
+### 5. Payments & Integrations
+*   **Stripe Connect / Razorpay**: Chosen for their robust support of automated, multi-currency payouts, making it trivial to route reimbursements directly to employees' bank accounts globally.
+
 ## 🌍 Conclusion & Impact
 LedgerCore modernizes corporate expense management by combining AI-driven fraud prevention with a transparent, role-based approval system. By automating payments and reimbursements across multi-currency transactions, it:
 - Reduces financial fraud.
