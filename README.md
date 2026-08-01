@@ -19,6 +19,16 @@ This leads to poor financial transparency and low trust in corporate expense sys
 - **🔐 Admin & User Management**: Secure directory management linking employees to managers with strict access control.
 - **💾 Secure Data Persistence**: Auto-saving local vault with one-click JSON backup/restore and admin reset controls.
 
+### 🌟 Advanced AI Features
+- **📸 AI Receipt Scanner**: OCR + auto-fill for seamless data extraction from physical receipts.
+- **🛡️ AI Fraud Detection**: Advanced algorithms to proactively identify and block suspicious claims.
+- **📊 Expense Risk Score**: Automated risk assessment scoring for each expense submission.
+- **🧠 AI Approval Copilot**: Intelligent assistant for managers to streamline the review process.
+- **🧾 AI Audit Report Generator**: Instant, comprehensive audit trails and compliance reports.
+- **🎙️ Voice Expense Submission**: Hands-free expense logging using natural language voice commands.
+- **📈 Executive Health Dashboard**: High-level visual insights into organizational spending health.
+- **🔍 Natural Language Search**: Query data naturally (e.g., *"Show pending travel claims > ₹5000"*).
+
 ## 🔄 Architecture & Workflow
 LedgerCore operates on a seamless, secure, and multi-tier workflow:
 
