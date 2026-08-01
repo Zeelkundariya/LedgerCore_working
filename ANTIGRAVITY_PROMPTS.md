@@ -1,76 +1,84 @@
 # 🚀 Antigravity "God-Tier" Execution Prompts
 
-This document contains highly detailed, context-rich prompts designed specifically for the **Antigravity AI Assistant**. Each team member can copy their respective prompt and paste it into Antigravity to instantly kickstart their assigned work. 
+This document contains hyper-detailed, extremely prescriptive prompts designed specifically for the **Antigravity AI Assistant**. Each team member should copy their respective prompt and paste it into Antigravity to instantly kickstart their assigned work. 
 
-These prompts are engineered to instruct the AI to produce **perfect, professional, highly aesthetic, and heavily animated** results, exactly as envisioned for LedgerCore.
+These prompts leave absolutely no room for ambiguity. They enforce strict architectures, premium aesthetics, exact animation physics, and production-ready code generation.
 
 ---
 
 ## 🎨 1. Rani (Frontend Lead / UI Engineer)
 **Role:** Next.js Setup, Employee Dashboard, Voice UI, Zustand State Management
 
-**Prompt to paste into Antigravity:**
-> "You are acting as Rani, the Frontend Lead for LedgerCore. We are building a comprehensive FinTech platform. Your task is to initialize the frontend architecture and build the core **Employee Dashboard**. 
+**Copy and Paste this into Antigravity:**
+> "You are acting as Rani, the Frontend Lead for LedgerCore (a modern FinTech platform). Your objective is to build the core Next.js architecture and the Employee Expense Dashboard.
 > 
-> **Tech Stack:** Next.js (App Router), Tailwind CSS, shadcn/ui, Zustand, Framer Motion.
+> **TECH STACK:** Next.js 14 (App Router), Tailwind CSS, shadcn/ui, Zustand, Framer Motion, Lucide Icons.
 > 
-> **Requirements:**
-> 1. **Setup:** Initialize a Next.js project with Tailwind and shadcn/ui. Set up a robust Zustand store to handle active expense claims and user sessions.
-> 2. **Design Language (GOD-TIER AESTHETICS):** The UI must be breathtakingly beautiful, professional, and ultra-modern. Use curated premium color palettes (deep sleek dark mode by default), subtle glassmorphism effects, smooth gradients, and modern typography (e.g., Inter or Outfit). Do NOT use generic colors or basic layouts.
-> 3. **Micro-Animations:** Use Framer Motion to add flawless, buttery-smooth micro-animations to every interactive element (hover states, page transitions, loading skeletons, modal popups). The UI must feel alive and highly responsive.
-> 4. **Features to Build:** Create the primary Employee Dashboard layout, including an 'Expense Submission' form with drag-and-drop receipt upload, and a highly aesthetic 'Voice Recording' UI for hands-free logging with pulsing audio visualizers.
+> **STRICT REQUIREMENTS:**
+> 1. **Directory Structure:** Set up an enterprise-grade structure: `app/(dashboard)`, `components/ui`, `components/shared`, `store/`, `lib/utils.ts`.
+> 2. **God-Tier Aesthetics:** Do NOT use standard/boring designs. Use a deeply premium dark mode theme (`bg-slate-950`). Implement heavy glassmorphism for cards (`bg-white/5 backdrop-blur-xl border border-white/10`). Use vibrant, glowing neon accents (e.g., Electric Indigo, Emerald Green) for primary actions. Use the 'Inter' or 'Outfit' font family.
+> 3. **Micro-Animations (Framer Motion):** Every interaction must be animated using spring physics (e.g., `type: 'spring', stiffness: 300, damping: 20`). Implement 'magnetic' buttons. Use `layoutId` for smooth layout transitions. Modals must scale up from `0.95` opacity `0` with a slight bounce. 
+> 4. **Zustand Store:** Create `store/useExpenseStore.ts`. It must handle `expenses` array, `isRecording` boolean, `isUploading` boolean, and user session data. Include actions for `addExpense` and `updateStatus`.
+> 5. **Core Components to Build:**
+>    - **Expense Submission Form:** A beautifully animated multi-step form with drag-and-drop receipt upload. Show a shimmering skeleton loader during OCR processing.
+>    - **Voice Recording UI:** A futuristic, floating microphone button. When `isRecording` is true, display pulsating, multi-layered CSS glowing rings around the button mimicking audio waveforms.
 > 
-> Please generate the full directory structure, implement the foundational layout, and provide the fully styled components. Make it look like a multi-million dollar SaaS product."
+> Please output the exact terminal commands to set up the dependencies, followed by the fully styled, production-ready code for the layout, the Zustand store, and the dashboard page."
 
 ---
 
 ## 📊 2. Anshu (Frontend Developer / Data Visualization)
 **Role:** Manager/Admin Dashboards, Executive Health Dashboard, Natural Language Search UI
 
-**Prompt to paste into Antigravity:**
-> "You are acting as Anshu, the Frontend Data & Dashboard Developer for LedgerCore. Your task is to build the complex data-driven views for Managers and Admins.
+**Copy and Paste this into Antigravity:**
+> "You are acting as Anshu, the Frontend Data & Dashboard Developer for LedgerCore. Your objective is to build complex, animated data-driven views for Managers and Admins.
 > 
-> **Tech Stack:** Next.js (App Router), Tailwind CSS, Framer Motion, Recharts (or similar charting library).
+> **TECH STACK:** Next.js (App Router), Tailwind CSS, Framer Motion, Recharts (for charts), `cmdk` (for search).
 > 
-> **Requirements:**
-> 1. **Manager & Admin Dashboards:** Build a stunning, intuitive interface for reviewing expense claims. Include real-time status tracking with beautifully color-coded badges (e.g., Pending, Approved, Flagged). 
-> 2. **Executive Health Dashboard:** This is the centerpiece. Build an interactive, ultra-premium data dashboard showing organizational spending. Use beautiful, animated charts (line graphs, donut charts) that elegantly transition when data changes. 
-> 3. **Natural Language Search UI:** Implement a sleek, AI-powered search bar component (like a spotlight search) where users can type complex queries (e.g., 'Show pending travel claims > ₹5000'). Include animated loading states and slick dropdown results.
-> 4. **Aesthetics & Animations (GOD-TIER):** The design must match a state-of-the-art enterprise SaaS. Use staggered entrance animations for list items, smooth layout transitions, and rich hover effects. Everything must feel cohesive, premium, and lightning-fast.
+> **STRICT REQUIREMENTS:**
+> 1. **Manager Approval Dashboard:** Build a sticky-header data table. Rows must have a staggered Framer Motion entrance (`staggerChildren: 0.1`). Implement color-coded pill badges for statuses: `bg-emerald-500/20 text-emerald-400` for Approved, `bg-rose-500/20 text-rose-400` for Flagged/Fraud. Include smooth, expanding rows to view OCR receipt details.
+> 2. **Executive Health Dashboard:** Build an interactive grid (`grid-cols-3` or `grid-cols-4`). Create ultra-premium Recharts components:
+>    - A gradient-filled Area Chart for 'Monthly Spend'. Provide custom, glassmorphic tooltips.
+>    - A Donut Chart for 'Expenses by Category' with custom animated path drawing on mount.
+> 3. **Natural Language Search (AI Copilot):** Implement a Cmd+K (Mac) / Ctrl+K (Windows) global shortcut that opens a glassmorphic command palette (using `cmdk`). The input should say 'Ask the AI Copilot (e.g., Show pending travel claims > ₹5000)'. Results must filter smoothly with layout animations.
+> 4. **Aesthetics:** Maintain the ultra-premium dark theme. Use subtle hover glows (`hover:shadow-[0_0_15px_rgba(79,70,229,0.5)]`) on interactive dashboard widgets.
 > 
-> Please write the code for these dashboards and components, ensuring they are visually spectacular and ready to consume real API data."
+> Please provide the terminal commands for Recharts and cmdk, and generate the fully functional, flawlessly animated React components for the Table, Charts, and Search Palette."
 
 ---
 
 ## ⚙️ 3. Saptak (Backend Lead / System Architect)
 **Role:** FastAPI, PostgreSQL, RBAC, Payments, JSON Data Vault
 
-**Prompt to paste into Antigravity:**
-> "You are acting as Saptak, the Backend Lead and System Architect for LedgerCore. Your task is to build a highly secure, robust, and scalable backend infrastructure.
+**Copy and Paste this into Antigravity:**
+> "You are acting as Saptak, the Backend Lead and System Architect for LedgerCore. Your objective is to build a highly secure, heavily-typed backend infrastructure.
 > 
-> **Tech Stack:** Python, FastAPI, PostgreSQL, SQLAlchemy (or SQLModel), Stripe/Razorpay SDKs.
+> **TECH STACK:** Python 3.11+, FastAPI, PostgreSQL, SQLAlchemy 2.0, Pydantic V2, PyJWT, Stripe SDK, APScheduler.
 > 
-> **Requirements:**
-> 1. **Architecture & Database:** Initialize a production-ready FastAPI project. Design a strict PostgreSQL database schema using SQLAlchemy to handle multi-tier relationships (Employee -> Manager -> Admin) and secure financial transaction records.
-> 2. **Authentication & RBAC:** Implement highly secure JWT-based authentication and Role-Based Access Control (RBAC). Ensure that endpoints are strictly protected based on user roles.
-> 3. **Payment Gateway:** Create the foundational endpoints and webhooks for automated, multi-currency payouts using Stripe or Razorpay.
-> 4. **Secure Data Vault:** Implement a background utility to auto-save transaction data into a secure local vault, with a clean API endpoint to trigger a full JSON backup/restore.
-> 5. **Code Quality:** Use strict Pydantic models for request/response validation, comprehensive error handling, and modular routing. Provide the foundational server code and database models."
+> **STRICT REQUIREMENTS:**
+> 1. **Enterprise Architecture:** Use a modular structure: `app/api/endpoints/`, `app/core/config.py`, `app/models/` (SQLAlchemy), `app/schemas/` (Pydantic), `app/services/`. Use Dependency Injection heavily (e.g., `Depends(get_db)`).
+> 2. **Database Schema:** Create SQLAlchemy models for `User` (id, email, hashed_password, role Enum [EMPLOYEE, MANAGER, ADMIN]), and `Expense` (id, amount, currency, merchant, status, ai_risk_score, user_id).
+> 3. **Security (RBAC):** Implement OAuth2 with Password Flow (JWT). Write a robust dependency `def get_current_active_user` and role checkers like `def require_admin(user: User = Depends(get_current_active_user))`.
+> 4. **Payment Webhooks:** Create a `/payments/webhook` endpoint for Stripe. Implement signature verification and idempotency keys to ensure reimbursements are never processed twice.
+> 5. **JSON Data Vault (Auto-Backup):** Use `APScheduler` to run a background cron job every 24 hours. The job must query the entire PostgreSQL database, serialize it into a structured JSON file, and securely save it to a local `/vault/backups/` directory. Create an Admin-only endpoint to trigger a manual backup.
+> 
+> Please output the requirements.txt, the core FastAPI setup (`main.py`), the database models, the auth utilities, and the background JSON vault logic. Code must strictly adhere to PEP8 and type hinting."
 
 ---
 
 ## 🧠 4. Zeel (AI & Machine Learning Engineer)
 **Role:** OCR, Local LLMs (Ollama), Risk Scoring, Voice-to-Text (Whisper)
 
-**Prompt to paste into Antigravity:**
-> "You are acting as Zeel, the AI & Machine Learning Engineer for LedgerCore. Your task is to build the 'brain' of the platform using 100% free and open-source AI tools.
+**Copy and Paste this into Antigravity:**
+> "You are acting as Zeel, the AI & ML Engineer for LedgerCore. Your objective is to build the offline, 100% free AI 'brain' of the platform and expose them as modular Python services.
 > 
-> **Tech Stack:** Python, FastAPI, Tesseract OCR/PaddleOCR, Ollama (Local LLMs), Scikit-Learn/XGBoost, OpenAI Whisper (local).
+> **TECH STACK:** Python, FastAPI (for ML inference), `pytesseract`, `ollama` (or `langchain`), `scikit-learn`, `openai-whisper`, `pandas`.
 > 
-> **Requirements:**
-> 1. **AI Receipt Scanner Pipeline:** Build a robust Python service that takes an uploaded image, processes it using Tesseract or PaddleOCR, and uses regex/heuristics to auto-fill merchant names, amounts, and dates.
-> 2. **AI Approval Copilot & Search:** Write the integration code to connect the backend to a locally running LLM (via Ollama API). Create prompts and functions to parse unstructured receipt data and translate Natural Language queries into SQL/JSON filters.
-> 3. **Expense Risk Scoring:** Create a foundational machine learning pipeline (using Scikit-Learn) that trains an Isolation Forest or similar anomaly detection model on sample expense data to flag fraudulent or unusual claims.
-> 4. **Voice Processing:** Integrate the open-source Python library for OpenAI Whisper to create an endpoint that accepts an audio file and returns highly accurate transcribed text.
+> **STRICT REQUIREMENTS:**
+> 1. **Service Architecture:** Isolate the ML logic into `services/ocr.py`, `services/llm_copilot.py`, `services/fraud.py`, and `services/voice.py`.
+> 2. **AI Receipt Scanner:** In `ocr.py`, write a function that takes an image byte array, runs `pytesseract.image_to_string()`, and uses advanced Regex to extract `Total Amount`, `Date`, and `Merchant Name`. Return a clean JSON dictionary.
+> 3. **Expense Risk Scoring:** In `fraud.py`, write a function that uses Scikit-Learn's `IsolationForest` (contamination=0.01). It should take a Pandas DataFrame of historical expenses and a new expense, returning an `anomaly_score` (0 to 100) and a boolean `is_flagged`.
+> 4. **AI Approval Copilot (Ollama):** In `llm_copilot.py`, write a function connecting to a local Ollama instance (e.g., Llama 3). Inject a strict system prompt: 'You are a strict financial auditor API. Respond ONLY in JSON format extracting query parameters from the user's natural language search.'
+> 5. **Voice Expense Processing:** In `voice.py`, use `whisper.load_model('base')`. Write an async function that accepts an audio file, transcribes it offline, and passes the text to the Ollama LLM to extract the expense amount and category.
 > 
-> Please write the clean, modular Python microservices and API endpoints necessary to expose these AI features to the main backend."
+> Please output the Python code for these 4 distinct ML services. Ensure the code is optimized, handles exceptions (like corrupted images/audio gracefully), and is ready to be imported into the main FastAPI application."
