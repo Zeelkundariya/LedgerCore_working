@@ -47,12 +47,3 @@ LedgerCore modernizes corporate expense management by combining AI-driven fraud 
 - Promotes personal finance management and financial inclusion.
 - Makes expense management faster, safer, and more accessible for organizations of any size.
 
-## 👥 Team
-> **Note:** Please update this section with your team's details, as they were not included in the presentation slides.
-
-| Name | Role | GitHub/LinkedIn |
-| :--- | :--- | :--- |
-| **[Name 1]** | [Role, e.g., Full Stack Developer] | [Link] |
-| **[Name 2]** | [Role, e.g., AI/ML Engineer] | [Link] |
-| **[Name 3]** | [Role, e.g., UI/UX Designer] | [Link] |
-| **[Name 4]** | [Role, e.g., Project Manager] | [Link] |
