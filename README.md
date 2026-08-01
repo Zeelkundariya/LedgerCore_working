@@ -1,52 +1,38 @@
-# StackIt – A Minimal Q&A Forum Platform
+# Skill Swap Platform 🔄
 
 ## 📖 Overview
-**StackIt** is a minimal question-and-answer platform that supports collaborative learning and structured knowledge sharing. It’s designed to be simple, user-friendly, and focused on the core experience of asking and answering questions within a community.
+The **Skill Swap Platform** is a collaborative web application designed to connect individuals who want to exchange knowledge. It allows users to list the skills they can teach and request the skills they want to learn, facilitating a 1-on-1 "skill swap" without any monetary transactions.
 
-## 👥 User Roles
-The platform operates on a strictly role-based permission system:
+## 🚀 Tech Stack
+To ensure a highly responsive, scalable, and secure application, we utilize the following modern technologies:
+- **Frontend**: Next.js (React) and Tailwind CSS for a sleek, lightning-fast, and responsive UI.
+- **Backend**: Node.js with Express.js for building robust RESTful APIs.
+- **Database**: MongoDB (with Mongoose) for flexible and scalable storage of user profiles and swap relationships.
+- **Authentication**: JWT (JSON Web Tokens) for secure user sessions and strict Role-Based Access Control (Admin vs User).
 
-| Role | Permissions |
-| :--- | :--- |
-| **Guest** | View all questions and answers |
-| **User** | Register, log in, post questions/answers, vote |
-| **Admin** | Moderate content |
+## ✨ Core Features
 
-## ✨ Core Features (Must-Have)
+### 👤 User Profiles
+Users can create comprehensive profiles to facilitate the best skill matches:
+- **Basic Info**: Name, optional Location, and optional Profile Photo.
+- **Skill Inventory**: Dedicated lists for **Skills Offered** and **Skills Wanted**.
+- **Availability**: Specify preferred meeting times (e.g., Weekends, Evenings).
+- **Privacy Controls**: Users have full control to toggle their profiles between **Public** or **Private**.
 
-### 1. Ask Question
-Users can submit a new question with the following details:
-- **Title**: Short and descriptive.
-- **Description**: Written using the built-in rich text editor.
-- **Tags**: Multi-select input (e.g., React, JWT) to properly categorize the question.
+### 🔍 Search & Discovery
+- **Skill Search**: Users can easily browse the community or search for specific skills (e.g., "Photoshop", "Excel", "React") to find the perfect learning partner.
 
-### 2. Rich Text Editor Features
-The description editor supports robust text formatting for clarity:
-- Bold, Italic, Strikethrough
-- Numbered lists & Bullet points
-- Emoji insertion
-- Hyperlink insertion (URL)
-- Image upload
-- Text alignment (Left, Center, Right)
+### 🤝 Request & Swap Management
+- **Send & Receive Offers**: Initiate swap requests with other public users.
+- **Offer Management**: Instantly **Accept** or **Reject** incoming swap offers.
+- **Tracking Dashboard**: A dedicated view to monitor all **current** and **pending** swap requests.
+- **Cancellation**: Users retain the ability to **delete or cancel** a swap request if the other party has not yet accepted it.
+- **Feedback System**: Upon completing a swap, users can leave **Ratings and Feedback** to help build community trust.
 
-### 3. Answering Questions
-- Users can post answers to any question on the platform.
-- Answers are formatted using the same robust **Rich Text Editor**.
-- *Restriction*: Only logged-in users can post answers.
-
-### 4. Voting & Accepting Answers
-- **Voting**: Users can upvote or downvote answers to bubble up the most helpful responses.
-- **Accepting**: Question owners have the exclusive ability to mark one specific answer as "accepted".
-
-### 5. Tagging
-- All questions must include relevant tags, making it easy for the community to discover topics of interest.
-
-### 6. Notification System
-A highly responsive notification system keeps users engaged:
-- A **notification icon (bell)** appears in the top navigation bar.
-- Users are notified in real-time when:
-  - Someone answers their question.
-  - Someone comments on their answer.
-  - Someone mentions them using `@username`.
-- The bell icon displays a badge showing the number of **unread notifications**.
-- Clicking the icon opens a dropdown list of recent notifications for quick access.
+## 🛡️ Admin Role & Moderation
+To ensure a safe and high-quality learning environment, Admins are equipped with a powerful moderation dashboard:
+- **Content Moderation**: Ability to reject and remove inappropriate or spammy skill descriptions.
+- **User Management**: Authority to ban users who violate platform policies.
+- **Platform Monitoring**: Track system health by monitoring all pending, accepted, and cancelled swaps globally.
+- **Announcements**: Send platform-wide broadcast messages (such as new feature updates or downtime alerts).
+- **Data & Analytics**: Download comprehensive reports detailing user activity, feedback logs, and swap statistics.
