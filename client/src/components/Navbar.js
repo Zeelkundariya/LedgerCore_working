@@ -15,7 +15,7 @@ export default function Navbar() {
   }, [checkAuth]);
 
   return (
-    <nav className="fixed w-full z-50 glassmorphism border-b border-white/10">
+    <nav className="fixed w-full z-[100] bg-surface/90 backdrop-blur-xl border-b border-white/10 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/">
