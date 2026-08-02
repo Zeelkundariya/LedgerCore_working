@@ -81,7 +81,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-text-secondary hover:text-white">
+            <button onClick={() => setIsOpen(!isOpen)} className="text-text-secondary hover:text-white p-2">
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
@@ -95,11 +95,11 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glassmorphism border-t border-white/10"
+            className="md:hidden bg-surface border-t border-white/10 shadow-2xl relative z-40 overflow-hidden"
           >
-            <div className="px-4 pt-2 pb-4 space-y-4">
+            <div className="px-4 pt-2 pb-6 space-y-4">
               <Link href="/explore" onClick={() => setIsOpen(false)}>
-                <span className="block text-text-secondary hover:text-white pt-2">Explore</span>
+                <span className="block text-text-secondary hover:text-white pt-2 font-medium">Explore</span>
               </Link>
               
               {isAuthenticated ? (
@@ -110,22 +110,24 @@ export default function Navbar() {
                     </Link>
                   )}
                   <Link href="/requests" onClick={() => setIsOpen(false)}>
-                    <span className="block text-text-secondary hover:text-white pt-2">Requests</span>
+                    <span className="block text-text-secondary hover:text-white pt-2 font-medium">Requests</span>
                   </Link>
                   <Link href="/dashboard" onClick={() => setIsOpen(false)}>
-                    <span className="block text-text-secondary hover:text-white pt-2">Dashboard</span>
+                    <span className="block text-text-secondary hover:text-white pt-2 font-medium">Dashboard</span>
                   </Link>
-                  <button onClick={() => { logout(); setIsOpen(false); }} className="block text-red-400 hover:text-red-300 w-full text-left pt-2">
+                  <button onClick={() => { logout(); setIsOpen(false); }} className="block text-red-400 hover:text-red-300 w-full text-left pt-2 font-medium">
                     Logout
                   </button>
                 </>
               ) : (
-                <div className="flex flex-col space-y-3 pt-2">
+                <div className="flex flex-col space-y-4 pt-2">
                   <Link href="/login" onClick={() => setIsOpen(false)}>
-                    <span className="block text-text-secondary hover:text-white">Login</span>
+                    <span className="block text-text-secondary hover:text-white font-medium">Login</span>
                   </Link>
                   <Link href="/register" onClick={() => setIsOpen(false)}>
-                    <span className="block bg-primary text-center rounded-md py-2 text-white">Get Started</span>
+                    <span className="block bg-primary hover:bg-primary-dark text-center rounded-xl py-3 text-white font-semibold transition-colors">
+                      Get Started
+                    </span>
                   </Link>
                 </div>
               )}
