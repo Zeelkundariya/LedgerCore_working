@@ -239,7 +239,7 @@ export default function Home() {
       </section>
 
       {/* Discover Capabilities / Features Section */}
-      <section className="relative z-10 py-32 border-t border-white/10 bg-surface/10">
+      <section className="relative z-10 pt-20 pb-32 border-t border-white/10 bg-surface/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
