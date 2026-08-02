@@ -96,9 +96,63 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Floating Badges Area (to be implemented next) */}
+        {/* Floating Badges Area */}
         <div className="lg:w-1/2 mt-20 lg:mt-0 relative h-[500px] w-full hidden md:block">
-          {/* Badges go here */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.2, type: "spring" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-2xl"
+          />
+          
+          {/* Main Center Badge */}
+          <motion.div 
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 animate-float"
+            style={{ animationDuration: '5s' }}
+          >
+            <div className="glassmorphism p-6 rounded-3xl border border-white/20 shadow-[0_0_50px_rgba(139,92,246,0.3)] flex flex-col items-center">
+              <div className="bg-primary/20 p-4 rounded-2xl mb-3">
+                <Code className="w-10 h-10 text-primary" />
+              </div>
+              <p className="font-bold text-white text-lg">Web Dev</p>
+              <p className="text-sm text-green-400 font-medium mt-1">High Demand</p>
+            </div>
+          </motion.div>
+
+          {/* Top Right Badge */}
+          <motion.div 
+            className="absolute top-10 right-10 z-20 animate-float"
+            style={{ animationDuration: '7s', animationDelay: '1s' }}
+          >
+            <div className="glassmorphism p-5 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-4">
+              <div className="bg-pink-500/20 p-3 rounded-xl">
+                <Palette className="w-6 h-6 text-pink-500" />
+              </div>
+              <div>
+                <p className="font-bold text-white">UI Design</p>
+                <div className="flex -space-x-2 mt-1">
+                  {[1,2,3].map(i => <div key={i} className="w-6 h-6 rounded-full bg-gray-600 border border-surface" />)}
+                  <span className="text-xs text-gray-400 ml-3">+42 offers</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Bottom Left Badge */}
+          <motion.div 
+            className="absolute bottom-10 left-10 z-20 animate-float"
+            style={{ animationDuration: '6s', animationDelay: '2s' }}
+          >
+            <div className="glassmorphism p-4 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-3">
+              <div className="bg-blue-500/20 p-3 rounded-xl">
+                <Globe className="w-6 h-6 text-blue-500" />
+              </div>
+              <div>
+                <p className="font-bold text-white">Languages</p>
+                <p className="text-xs text-blue-300">Spanish ↔ English</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
       </main>
