@@ -154,8 +154,24 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-
       </main>
+
+      {/* Infinite Scrolling Marquee */}
+      <section className="relative z-10 py-10 border-y border-white/5 bg-surface/30 backdrop-blur-md overflow-hidden flex flex-col items-center">
+        <p className="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6">Popular Skills Being Swapped Right Now</p>
+        <div className="flex w-[200%] md:w-[150%] lg:w-[120%] space-x-8 animate-marquee whitespace-nowrap">
+          {/* Duplicate the list for seamless looping */}
+          {[1, 2].map((group) => (
+            <div key={group} className="flex space-x-8 min-w-full justify-around items-center">
+              {['React.js', 'Figma', 'Spanish', 'Python', 'SEO', 'Video Editing', 'Guitar', 'AWS', 'Copywriting'].map(skill => (
+                <span key={skill} className="text-2xl font-black text-gray-600 hover:text-white transition-colors duration-300">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
 
     </div>
   );
