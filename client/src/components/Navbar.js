@@ -35,7 +35,13 @@ export default function Navbar() {
             </Link>
             
             {isAuthenticated ? (
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-6">
+                <Link href="/requests">
+                  <span className="text-text-secondary hover:text-white transition-colors relative">
+                    Requests
+                    <span className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+                  </span>
+                </Link>
                 <Link href="/dashboard">
                   <motion.div whileHover={{ scale: 1.05 }} className="flex items-center space-x-1 text-text-secondary hover:text-white">
                     <User className="w-5 h-5" />
@@ -95,6 +101,9 @@ export default function Navbar() {
               
               {isAuthenticated ? (
                 <>
+                  <Link href="/requests" onClick={() => setIsOpen(false)}>
+                    <span className="block text-text-secondary hover:text-white pt-2">Requests</span>
+                  </Link>
                   <Link href="/dashboard" onClick={() => setIsOpen(false)}>
                     <span className="block text-text-secondary hover:text-white">Dashboard</span>
                   </Link>
