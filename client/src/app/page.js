@@ -238,6 +238,53 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Discover Capabilities / Features Section */}
+      <section className="relative z-10 py-32 border-t border-white/10 bg-surface/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Master Any Category</h2>
+            <p className="text-text-secondary text-xl max-w-2xl mx-auto">Explore thousands of skills being taught by passionate experts right now.</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { icon: <Code className="w-8 h-8 text-primary" />, title: "Programming", desc: "Learn to code from experts and teach your own skills.", color: "group-hover:border-primary/50 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.15)]" },
+              { icon: <Palette className="w-8 h-8 text-pink-500" />, title: "Design", desc: "Swap your design expertise for development help.", color: "group-hover:border-pink-500/50 group-hover:shadow-[0_0_30px_rgba(236,72,153,0.15)]" },
+              { icon: <BookOpen className="w-8 h-8 text-blue-500" />, title: "Languages", desc: "Exchange language lessons with native speakers.", color: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]" },
+              { icon: <Music className="w-8 h-8 text-purple-500" />, title: "Music", desc: "Trade guitar lessons for vocal coaching.", color: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]" },
+              { icon: <Camera className="w-8 h-8 text-green-500" />, title: "Photography", desc: "Share your camera skills for editing tips.", color: "group-hover:border-green-500/50 group-hover:shadow-[0_0_30px_rgba(34,197,94,0.15)]" },
+              { icon: <Zap className="w-8 h-8 text-yellow-500" />, title: "Productivity", desc: "Exchange time management strategies.", color: "group-hover:border-yellow-500/50 group-hover:shadow-[0_0_30px_rgba(234,179,8,0.15)]" }
+            ].map((feature, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -10 }}
+                className={`group glassmorphism p-8 rounded-3xl border border-white/5 transition-all duration-300 relative overflow-hidden ${feature.color}`}
+              >
+                {/* Spotlight effect background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                
+                <div className="relative z-10">
+                  <div className="p-4 bg-white/5 rounded-2xl w-fit mb-6 shadow-inner border border-white/10 group-hover:bg-white/10 transition-colors">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 text-white">{feature.title}</h3>
+                  <p className="text-text-secondary leading-relaxed">{feature.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
