@@ -36,6 +36,13 @@ export default function Navbar() {
             
             {isAuthenticated ? (
               <div className="flex items-center space-x-6">
+                {user?.role === 'ADMIN' && (
+                  <Link href="/admin">
+                    <span className="text-red-400 font-bold hover:text-red-300 transition-colors">
+                      Admin Panel
+                    </span>
+                  </Link>
+                )}
                 <Link href="/requests">
                   <span className="text-text-secondary hover:text-white transition-colors relative">
                     Requests
@@ -101,13 +108,18 @@ export default function Navbar() {
               
               {isAuthenticated ? (
                 <>
+                  {user?.role === 'ADMIN' && (
+                    <Link href="/admin" onClick={() => setIsOpen(false)}>
+                      <span className="block text-red-400 font-bold hover:text-red-300 pt-2">Admin Panel</span>
+                    </Link>
+                  )}
                   <Link href="/requests" onClick={() => setIsOpen(false)}>
                     <span className="block text-text-secondary hover:text-white pt-2">Requests</span>
                   </Link>
                   <Link href="/dashboard" onClick={() => setIsOpen(false)}>
-                    <span className="block text-text-secondary hover:text-white">Dashboard</span>
+                    <span className="block text-text-secondary hover:text-white pt-2">Dashboard</span>
                   </Link>
-                  <button onClick={() => { logout(); setIsOpen(false); }} className="block text-red-400 hover:text-red-300 w-full text-left">
+                  <button onClick={() => { logout(); setIsOpen(false); }} className="block text-red-400 hover:text-red-300 w-full text-left pt-2">
                     Logout
                   </button>
                 </>
