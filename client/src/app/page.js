@@ -107,7 +107,7 @@ export default function Home() {
           
           {/* Main Center Badge */}
           <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 animate-float"
+            className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30 animate-float"
             style={{ animationDuration: '5s' }}
           >
             <div className="glassmorphism p-6 rounded-3xl border border-white/20 shadow-[0_0_50px_rgba(139,92,246,0.3)] flex flex-col items-center">
