@@ -107,7 +107,7 @@ export default function Home() {
           
           {/* Main Center Badge */}
           <motion.div 
-            className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30 animate-float"
+            className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30 animate-float scale-75 lg:scale-100 origin-center"
             style={{ animationDuration: '5s' }}
           >
             <div className="glassmorphism p-6 rounded-3xl border border-white/20 shadow-[0_0_50px_rgba(139,92,246,0.3)] flex flex-col items-center">
@@ -121,7 +121,7 @@ export default function Home() {
 
           {/* Top Right Badge */}
           <motion.div 
-            className="absolute top-[10%] right-[10%] z-20 animate-float"
+            className="absolute top-[10%] right-[10%] z-20 animate-float scale-75 lg:scale-100 origin-right"
             style={{ animationDuration: '7s', animationDelay: '1s' }}
           >
             <div className="glassmorphism p-5 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-4">
@@ -140,7 +140,7 @@ export default function Home() {
 
           {/* Bottom Left Badge */}
           <motion.div 
-            className="absolute bottom-[20%] left-[5%] z-20 animate-float"
+            className="absolute bottom-[20%] left-[5%] z-20 animate-float scale-75 lg:scale-100 origin-left"
             style={{ animationDuration: '6s', animationDelay: '2s' }}
           >
             <div className="glassmorphism p-4 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-3">
