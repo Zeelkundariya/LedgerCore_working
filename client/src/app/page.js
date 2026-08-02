@@ -121,7 +121,7 @@ export default function Home() {
 
           {/* Top Right Badge */}
           <motion.div 
-            className="absolute top-10 right-10 z-20 animate-float"
+            className="absolute top-[10%] right-[10%] z-20 animate-float"
             style={{ animationDuration: '7s', animationDelay: '1s' }}
           >
             <div className="glassmorphism p-5 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-4">
