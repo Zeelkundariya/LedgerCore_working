@@ -29,28 +29,24 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/explore">
-              <span className="text-text-secondary hover:text-white transition-colors">Explore</span>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/explore" className="text-text-secondary hover:text-white transition-colors">
+              Explore
             </Link>
             
             {isAuthenticated ? (
-              <div className="flex items-center space-x-6">
+              <div className="flex items-center gap-6">
                 {user?.role === 'ADMIN' && (
-                  <Link href="/admin">
-                    <span className="text-red-400 font-bold hover:text-red-300 transition-colors">
-                      Admin Panel
-                    </span>
+                  <Link href="/admin" className="text-red-400 font-bold hover:text-red-300 transition-colors">
+                    Admin Panel
                   </Link>
                 )}
-                <Link href="/requests">
-                  <span className="text-text-secondary hover:text-white transition-colors relative">
-                    Requests
-                    <span className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full"></span>
-                  </span>
+                <Link href="/requests" className="text-text-secondary hover:text-white transition-colors relative">
+                  Requests
+                  <span className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full"></span>
                 </Link>
                 <Link href="/dashboard">
-                  <motion.div whileHover={{ scale: 1.05 }} className="flex items-center space-x-1 text-text-secondary hover:text-white">
+                  <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-1 text-text-secondary hover:text-white">
                     <User className="w-5 h-5" />
                     <span>{user?.name}</span>
                   </motion.div>
@@ -59,22 +55,22 @@ export default function Navbar() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={logout}
-                  className="flex items-center space-x-1 text-red-400 hover:text-red-300 transition-colors"
+                  className="flex items-center gap-1 text-red-400 hover:text-red-300 transition-colors"
                 >
                   <LogOut className="w-5 h-5" />
                   <span>Logout</span>
                 </motion.button>
               </div>
             ) : (
-              <div className="flex items-center space-x-4">
-                <Link href="/login">
-                  <span className="text-text-secondary hover:text-white transition-colors">Login</span>
+              <div className="flex items-center gap-6">
+                <Link href="/login" className="text-text-secondary hover:text-white transition-colors font-medium">
+                  Login
                 </Link>
                 <Link href="/register">
                   <motion.button 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-primary hover:bg-primary-dark text-white px-5 py-2 rounded-full font-medium transition-colors"
+                    className="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(139,92,246,0.3)]"
                   >
                     Get Started
                   </motion.button>
