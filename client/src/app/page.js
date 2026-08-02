@@ -187,34 +187,52 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             
             {/* Step 1 */}
-            <div className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-primary/50 transition-all group">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6 }}
+              className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-primary/50 transition-all group"
+            >
               <div className="absolute -top-6 -left-6 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(139,92,246,0.6)]">1</div>
               <div className="bg-primary/10 p-5 rounded-2xl w-fit mb-6 text-primary group-hover:scale-110 transition-transform">
                 <Users className="w-8 h-8" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-3">Create Your Profile</h3>
               <p className="text-gray-400 leading-relaxed">List the skills you are an expert in, and the skills you want to learn. Set your availability to match with others.</p>
-            </div>
+            </motion.div>
 
             {/* Step 2 */}
-            <div className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-secondary/50 transition-all group">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-secondary/50 transition-all group"
+            >
               <div className="absolute -top-6 -left-6 w-12 h-12 bg-secondary text-white rounded-full flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(236,72,153,0.6)]">2</div>
               <div className="bg-secondary/10 p-5 rounded-2xl w-fit mb-6 text-secondary group-hover:scale-110 transition-transform">
                 <CheckCircle2 className="w-8 h-8" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-3">Find a Match</h3>
               <p className="text-gray-400 leading-relaxed">Browse the explore page or let our algorithm suggest perfect matches. Send a swap request to connect.</p>
-            </div>
+            </motion.div>
 
             {/* Step 3 */}
-            <div className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-blue-500/50 transition-all group">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-blue-500/50 transition-all group"
+            >
               <div className="absolute -top-6 -left-6 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(59,130,246,0.6)]">3</div>
               <div className="bg-blue-500/10 p-5 rounded-2xl w-fit mb-6 text-blue-500 group-hover:scale-110 transition-transform">
                 <Star className="w-8 h-8" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-3">Swap & Learn</h3>
               <p className="text-gray-400 leading-relaxed">Meet up via video call, trade your knowledge, and leave feedback for each other to build your reputation.</p>
-            </div>
+            </motion.div>
 
           </div>
         </div>
