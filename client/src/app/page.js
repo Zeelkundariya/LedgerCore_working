@@ -140,7 +140,7 @@ export default function Home() {
 
           {/* Bottom Left Badge */}
           <motion.div 
-            className="absolute bottom-10 left-10 z-20 animate-float"
+            className="absolute bottom-[20%] left-[5%] z-20 animate-float"
             style={{ animationDuration: '6s', animationDelay: '2s' }}
           >
             <div className="glassmorphism p-4 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-3">
