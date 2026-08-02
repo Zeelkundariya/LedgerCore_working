@@ -285,6 +285,40 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Glowing CTA Section */}
+      <section className="relative z-10 py-32 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/30 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-20">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, type: "spring" }}
+            className="glassmorphism p-12 md:p-16 rounded-[3rem] border border-white/20 shadow-[0_0_80px_rgba(139,92,246,0.2)]"
+          >
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">Ready to Level Up?</h2>
+            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Join thousands of others who are trading skills and advancing their careers without spending a dime.</p>
+            
+            <Link href="/register">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="px-10 py-5 bg-white text-background rounded-full font-black text-xl shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] transition-all flex items-center justify-center mx-auto group"
+              >
+                Create Free Account 
+                <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform" />
+              </motion.button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Simple Footer */}
+      <footer className="relative z-10 border-t border-white/10 py-8 text-center text-text-secondary bg-background">
+        <p>© {new Date().getFullYear()} SkillSwap. Built with passion.</p>
+      </footer>
+
     </div>
   );
 }
