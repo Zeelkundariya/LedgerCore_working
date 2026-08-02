@@ -97,7 +97,7 @@ export default function Home() {
         </motion.div>
 
         {/* Floating Badges Area */}
-        <div className="relative w-full aspect-square max-h-[500px] flex items-center justify-center hidden md:block">
+        <div className="relative w-full h-[400px] lg:h-[500px] items-center justify-center hidden lg:flex">
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
