@@ -46,13 +46,15 @@ export default function Login() {
   };
 
   return (
-    <div className="flex-grow flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+    <div className="flex-grow flex w-full min-h-[calc(100vh-80px)] bg-[#0A0F1C] items-center justify-center p-4 relative overflow-hidden">
+      {/* Background Blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-secondary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
       
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md z-10"
       >
         <div className="glassmorphism rounded-2xl p-8 shadow-2xl relative z-10 border border-white/10">
           <div className="text-center mb-8">
