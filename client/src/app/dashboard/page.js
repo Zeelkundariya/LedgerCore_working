@@ -9,7 +9,7 @@ import { User, MapPin, Briefcase, Plus, X, Save, Clock, Lock, Globe } from 'luci
 export default function Dashboard() {
   const router = useRouter();
   const { user, token, checkAuth } = useAuthStore();
-  
+
   const [profile, setProfile] = useState({
     name: '',
     location: '',
@@ -124,11 +124,11 @@ export default function Dashboard() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
+
           {/* Profile Form */}
           <div className="lg:col-span-2 glassmorphism rounded-2xl p-6 shadow-xl border border-white/10">
             <h2 className="text-xl font-semibold mb-6 flex items-center"><User className="mr-2 text-primary" /> Profile Settings</h2>
-            
+
             <form onSubmit={handleSave} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
@@ -137,41 +137,41 @@ export default function Dashboard() {
                     type="text"
                     className="w-full px-4 py-3 bg-surface border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
                     value={profile.name}
-                    onChange={(e) => setProfile({...profile, name: e.target.value})}
+                    onChange={(e) => setProfile({ ...profile, name: e.target.value })}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-1"><MapPin className="inline w-4 h-4 mr-1"/> Location (Optional)</label>
+                  <label className="block text-sm font-medium text-gray-300 mb-1"><MapPin className="inline w-4 h-4 mr-1" /> Location (Optional)</label>
                   <input
                     type="text"
                     className="w-full px-4 py-3 bg-surface border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
                     value={profile.location}
-                    onChange={(e) => setProfile({...profile, location: e.target.value})}
+                    onChange={(e) => setProfile({ ...profile, location: e.target.value })}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-1"><Clock className="inline w-4 h-4 mr-1"/> Availability</label>
+                <label className="block text-sm font-medium text-gray-300 mb-1"><Clock className="inline w-4 h-4 mr-1" /> Availability</label>
                 <input
                   type="text"
                   placeholder="e.g. Weekends, Evenings"
                   className="w-full px-4 py-3 bg-surface border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white"
                   value={profile.availability}
-                  onChange={(e) => setProfile({...profile, availability: e.target.value})}
+                  onChange={(e) => setProfile({ ...profile, availability: e.target.value })}
                 />
               </div>
 
               <div className="flex items-center space-x-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setProfile({...profile, isPublic: !profile.isPublic})}
+                  onClick={() => setProfile({ ...profile, isPublic: !profile.isPublic })}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${profile.isPublic ? 'bg-primary' : 'bg-gray-600'}`}
                 >
                   <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${profile.isPublic ? 'translate-x-6' : 'translate-x-1'}`} />
                 </button>
                 <span className="text-sm text-gray-300 flex items-center">
-                  {profile.isPublic ? <><Globe className="w-4 h-4 mr-1 text-green-400"/> Public Profile</> : <><Lock className="w-4 h-4 mr-1 text-yellow-400"/> Private Profile</>}
+                  {profile.isPublic ? <><Globe className="w-4 h-4 mr-1 text-green-400" /> Public Profile</> : <><Lock className="w-4 h-4 mr-1 text-yellow-400" /> Private Profile</>}
                 </span>
               </div>
 

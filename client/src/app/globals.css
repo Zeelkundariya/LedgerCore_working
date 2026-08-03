@@ -2,17 +2,18 @@
 @source "../";
 
 @theme {
-  --color-primary: #8b5cf6;
-  --color-primary-dark: #7c3aed;
-  --color-secondary: #ec4899;
-  --color-background: #0f172a;
-  --color-surface: #1e293b;
-  --color-surface-hover: #334155;
+  --color-primary: #1F3A5F;
+  --color-accent: #C97C2B;
+  --color-success: #2E8B57;
+  --color-secondary: #7A8B99;
   
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
+  --color-background: #F7F6F3;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #121212;
+  --color-text-muted: #666666;
   
   --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
 }
 
 @layer base {
@@ -26,84 +27,72 @@
     display: flex;
     flex-direction: column;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
 }
 
 @layer utilities {
-  .glassmorphism {
-    background: rgba(30, 41, 59, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .btn-magnetic {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   
-  .text-gradient {
-    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  @keyframes blob {
-    0% { transform: translate(0px, 0px) scale(1); }
-    33% { transform: translate(30px, -50px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.9); }
-    100% { transform: translate(0px, 0px) scale(1); }
-  }
-
-  @keyframes marquee {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-100%); }
-  }
-
-  @keyframes shimmer {
-    0% { background-position: 200% center; }
-    100% { background-position: -200% center; }
-  }
-
-  @keyframes float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-  }
-
-  .animate-blob {
-    animation: blob 7s infinite;
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
   }
   
-  .animate-marquee {
-    animation: marquee 25s linear infinite;
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(31, 58, 95, 0.3);
   }
   
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .btn-accent {
+    background-color: var(--color-accent);
+    color: #FFFFFF;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-accent:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(201, 124, 43, 0.3);
   }
 
-  .text-shimmer {
-    background: linear-gradient(
-      to right,
-      var(--color-primary) 20%,
-      var(--color-secondary) 40%,
-      var(--color-secondary) 60%,
-      var(--color-primary) 80%
-    );
-    background-size: 200% auto;
-    animation: shimmer 4s linear infinite;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .strip-hover {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  
+  .strip-hover:hover {
+    background-color: #FFFFFF;
+    box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05);
+    transform: scale(1.01);
+    z-index: 10;
+    border-radius: 12px;
+    border-bottom: 1px solid transparent;
   }
 
-  .animation-delay-2000 {
-    animation-delay: 2s;
+  /* Grid lines for editorial layout */
+  .editorial-grid {
+    background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 25% 100%;
   }
-
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }

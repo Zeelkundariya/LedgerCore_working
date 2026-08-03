@@ -37,16 +37,16 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.email = req.body.email || user.email;
     user.profilePhoto = req.body.profilePhoto || user.profilePhoto;
     user.location = req.body.location || user.location;
-    
+
     if (req.body.skillsOffered) {
       user.skillsOffered = req.body.skillsOffered;
     }
     if (req.body.skillsWanted) {
       user.skillsWanted = req.body.skillsWanted;
     }
-    
+
     user.availability = req.body.availability || user.availability;
-    
+
     if (req.body.isPublic !== undefined) {
       user.isPublic = req.body.isPublic;
     }
@@ -83,11 +83,11 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 const searchUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.skill
     ? {
-        skillsOffered: {
-          $regex: req.query.skill,
-          $options: 'i',
-        },
-      }
+      skillsOffered: {
+        $regex: req.query.skill,
+        $options: 'i',
+      },
+    }
     : {};
 
   // Only return users whose profiles are public, and are not the current user

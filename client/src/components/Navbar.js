@@ -19,7 +19,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-2"
             >
@@ -33,7 +33,7 @@ export default function Navbar() {
             <Link href="/explore" className="text-text-secondary hover:text-white transition-colors">
               Explore
             </Link>
-            
+
             {isAuthenticated ? (
               <div className="flex items-center gap-6">
                 {user?.role === 'ADMIN' && (
@@ -67,7 +67,7 @@ export default function Navbar() {
                   Login
                 </Link>
                 <Link href="/register">
-                  <motion.button 
+                  <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-semibold transition-all shadow-[0_0_15px_rgba(139,92,246,0.3)]"
@@ -101,7 +101,7 @@ export default function Navbar() {
               <Link href="/explore" onClick={() => setIsOpen(false)}>
                 <span className="block text-text-secondary hover:text-white pt-2 font-medium">Explore</span>
               </Link>
-              
+
               {isAuthenticated ? (
                 <>
                   {user?.role === 'ADMIN' && (

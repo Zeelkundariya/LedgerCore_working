@@ -20,10 +20,10 @@ export default function Explore() {
   const searchUsers = async (searchQuery) => {
     setLoading(true);
     try {
-      const url = searchQuery 
+      const url = searchQuery
         ? `http://localhost:5000/api/users/search?skill=${searchQuery}`
         : 'http://localhost:5000/api/users/search';
-      
+
       const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 

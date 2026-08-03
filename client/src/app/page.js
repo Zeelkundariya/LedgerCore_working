@@ -1,283 +1,254 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowRight, Code, Palette, BookOpen, Music, Camera, Zap, Star, Users, CheckCircle2, Globe } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ArrowRight, Star, Clock, Video, MessageCircle } from 'lucide-react';
+import { useRef } from 'react';
 
 export default function Home() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const { scrollYProgress } = useScroll();
+  const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
-    <div className="relative min-h-screen bg-background text-text-primary overflow-hidden selection:bg-primary/30">
-      
-      {/* Interactive Global Background Glow */}
-      <div 
-        className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(139,92,246,0.07), transparent 40%)`
-        }}
-      />
-      
-      {/* Core Background Blobs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-primary/20 blur-[120px] mix-blend-screen animate-blob" />
-      <div className="absolute top-[20%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-secondary/20 blur-[120px] mix-blend-screen animate-blob animation-delay-2000" />
-      <div className="absolute bottom-[-10%] left-[20%] w-[45vw] h-[45vw] rounded-full bg-blue-500/20 blur-[120px] mix-blend-screen animate-blob animation-delay-4000" />
+    <div className="relative bg-background text-text-primary overflow-x-hidden selection:bg-accent selection:text-white editorial-grid font-sans min-h-screen">
 
-      {/* Grid Pattern Overlay */}
-      <div className="absolute inset-0 z-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-      <div className="absolute inset-0 z-0" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)', backgroundSize: '50px 50px' }}></div>
-
-      <main className="relative z-10 pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
-        {/* Hero Text */}
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center lg:text-left z-20 w-full pt-10 lg:pt-0"
-        >
-          <div className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-6">
-            <span className="flex h-2 w-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.8)]"></span>
-            <span className="text-sm font-medium text-gray-300 tracking-wide">Platform is Live & Growing</span>
-          </div>
+      {/* --- HERO SECTION --- */}
+      <section className="relative z-10 w-full min-h-[90vh] flex items-center pt-24 pb-12">
+        <div className="max-w-[1400px] w-full mx-auto px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 leading-tight">
-            Master Any Skill. <br />
-            <span className="text-shimmer font-black">
-              Pay With Knowledge.
-            </span>
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-gray-400 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-            The world's most premium skill exchange network. Connect with experts, teach what you love, and learn what you need—completely free.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-5">
-            <Link href="/register">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 w-full sm:w-auto bg-gradient-to-r from-primary to-secondary text-white rounded-2xl font-bold text-lg shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(236,72,153,0.4)] transition-all flex items-center justify-center group"
-              >
-                Join the Network 
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </motion.button>
-            </Link>
-            
-            <Link href="/explore">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 w-full sm:w-auto glassmorphism border border-white/20 text-white rounded-2xl font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center"
-              >
-                Explore Experts
-              </motion.button>
-            </Link>
-          </div>
-          
-          <div className="mt-12 flex items-center justify-center lg:justify-start space-x-6 text-gray-400">
-            <div className="flex items-center">
-              <Users className="w-5 h-5 mr-2 text-primary" />
-              <span className="font-semibold text-white">10k+</span>&nbsp;Users
-            </div>
-            <div className="flex items-center">
-              <Star className="w-5 h-5 mr-2 text-yellow-500" />
-              <span className="font-semibold text-white">4.9/5</span>&nbsp;Rating
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Floating Badges Area */}
-        <div className="relative w-full h-[400px] lg:h-[500px] items-center justify-center hidden lg:flex">
+          {/* Hero Left: Editorial Typography */}
           <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2, type: "spring" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-primary/20 to-secondary/20 rounded-full blur-2xl"
-          />
-          
-          {/* Main Center Badge */}
-          <motion.div 
-            className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30 animate-float scale-75 lg:scale-100 origin-center"
-            style={{ animationDuration: '5s' }}
+            style={{ y, opacity }}
+            className="z-20 w-full flex flex-col justify-center"
           >
-            <div className="glassmorphism p-6 rounded-3xl border border-white/20 shadow-[0_0_50px_rgba(139,92,246,0.3)] flex flex-col items-center">
-              <div className="bg-primary/20 p-4 rounded-2xl mb-3">
-                <Code className="w-10 h-10 text-primary" />
-              </div>
-              <p className="font-bold text-white text-lg">Web Dev</p>
-              <p className="text-sm text-green-400 font-medium mt-1">High Demand</p>
-            </div>
-          </motion.div>
-
-          {/* Top Right Badge */}
-          <motion.div 
-            className="absolute top-[10%] right-[10%] z-20 animate-float scale-75 lg:scale-100 origin-right"
-            style={{ animationDuration: '7s', animationDelay: '1s' }}
-          >
-            <div className="glassmorphism p-5 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-4">
-              <div className="bg-pink-500/20 p-3 rounded-xl">
-                <Palette className="w-6 h-6 text-pink-500" />
-              </div>
-              <div>
-                <p className="font-bold text-white">UI Design</p>
-                <div className="flex -space-x-2 mt-1">
-                  {[1,2,3].map(i => <div key={i} className="w-6 h-6 rounded-full bg-gray-600 border border-surface" />)}
-                  <span className="text-xs text-gray-400 ml-3">+42 offers</span>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <h1 className="text-6xl sm:text-7xl lg:text-[5.5rem] font-bold text-primary leading-[0.95] tracking-tight mb-8">
+                Master Skills.<br/>
+                Share Knowledge.<br/>
+                <span className="text-accent">Grow Together.</span>
+              </h1>
+              
+              <p className="text-xl text-secondary max-w-lg mb-12 leading-relaxed font-light">
+                A community built on the pure exchange of knowledge. Trade what you know for what you want to learn. No transactions, just human connection.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row items-center gap-6">
+                <Link href="/register" className="btn-primary w-full sm:w-auto">
+                    Start Exchanging
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+                <div className="flex items-center gap-3 text-sm font-medium text-secondary">
+                  <div className="flex -space-x-2">
+                    {[1, 2, 3].map(i => (
+                      <div key={i} className="w-8 h-8 rounded-full border-2 border-background bg-slate-200">
+                        <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="User" className="w-full h-full rounded-full object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                  Join 50,000+ Learners
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* Bottom Left Badge */}
-          <motion.div 
-            className="absolute bottom-[20%] left-[5%] z-20 animate-float scale-75 lg:scale-100 origin-left"
-            style={{ animationDuration: '6s', animationDelay: '2s' }}
-          >
-            <div className="glassmorphism p-4 rounded-3xl border border-white/10 shadow-xl flex items-center space-x-3">
-              <div className="bg-blue-500/20 p-3 rounded-xl">
-                <Globe className="w-6 h-6 text-blue-500" />
-              </div>
-              <div>
-                <p className="font-bold text-white">Languages</p>
-                <p className="text-xs text-blue-300">Spanish ↔ English</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </main>
-
-      {/* Infinite Scrolling Marquee */}
-      <section className="relative z-10 py-10 border-y border-white/5 bg-surface/30 backdrop-blur-md overflow-hidden flex flex-col items-center w-full">
-        <p className="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6">Popular Skills Being Swapped Right Now</p>
-        <div className="flex w-[300%] md:w-[200%] lg:w-[150%] space-x-12 animate-marquee whitespace-nowrap">
-          {/* Duplicate the list for seamless looping */}
-          {[1, 2].map((group) => (
-            <div key={group} className="flex space-x-8 min-w-full justify-around items-center">
-              {['React.js', 'Figma', 'Spanish', 'Python', 'SEO', 'Video Editing', 'Guitar', 'AWS', 'Copywriting'].map(skill => (
-                <span key={skill} className="text-2xl font-black text-gray-600 hover:text-white transition-colors duration-300">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="relative z-10 py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-6">How It Works</h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">Three simple steps to start trading your knowledge and leveling up your skills.</p>
-        </div>
-
-        <div className="relative">
-          {/* Connecting Line */}
-          <div className="absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-blue-500 transform -translate-y-1/2 hidden md:block opacity-20"></div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          {/* Hero Right: Node Visualization */}
+          <div className="relative w-full aspect-square lg:aspect-auto lg:h-[600px] hidden md:block">
+            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <motion.path 
+                d="M100,100 Q200,300 400,200 T600,400" 
+                fill="transparent" 
+                stroke="rgba(31, 58, 95, 0.1)" 
+                strokeWidth="2"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+              />
+              <motion.path 
+                d="M600,100 Q400,200 300,400 T100,500" 
+                fill="transparent" 
+                stroke="rgba(201, 124, 43, 0.1)" 
+                strokeWidth="2"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 2.5, ease: "easeInOut" }}
+              />
+            </svg>
             
-            {/* Step 1 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-              className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-primary/50 transition-all group"
-            >
-              <div className="absolute -top-6 -left-6 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(139,92,246,0.6)]">1</div>
-              <div className="bg-primary/10 p-5 rounded-2xl w-fit mb-6 text-primary group-hover:scale-110 transition-transform">
-                <Users className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Create Your Profile</h3>
-              <p className="text-gray-400 leading-relaxed">List the skills you are an expert in, and the skills you want to learn. Set your availability to match with others.</p>
-            </motion.div>
-
-            {/* Step 2 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-secondary/50 transition-all group"
-            >
-              <div className="absolute -top-6 -left-6 w-12 h-12 bg-secondary text-white rounded-full flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(236,72,153,0.6)]">2</div>
-              <div className="bg-secondary/10 p-5 rounded-2xl w-fit mb-6 text-secondary group-hover:scale-110 transition-transform">
-                <CheckCircle2 className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Find a Match</h3>
-              <p className="text-gray-400 leading-relaxed">Browse the explore page or let our algorithm suggest perfect matches. Send a swap request to connect.</p>
-            </motion.div>
-
-            {/* Step 3 */}
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="relative glassmorphism p-8 rounded-3xl border border-white/10 hover:border-blue-500/50 transition-all group"
-            >
-              <div className="absolute -top-6 -left-6 w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(59,130,246,0.6)]">3</div>
-              <div className="bg-blue-500/10 p-5 rounded-2xl w-fit mb-6 text-blue-500 group-hover:scale-110 transition-transform">
-                <Star className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold text-white mb-3">Swap & Learn</h3>
-              <p className="text-gray-400 leading-relaxed">Meet up via video call, trade your knowledge, and leave feedback for each other to build your reputation.</p>
-            </motion.div>
-
+            {/* Nodes */}
+            {[
+              { top: '15%', left: '15%', size: 60, img: '10' },
+              { top: '40%', left: '70%', size: 90, img: '20' },
+              { top: '70%', left: '30%', size: 70, img: '30' },
+              { top: '80%', left: '80%', size: 50, img: '40' },
+              { top: '20%', left: '85%', size: 45, img: '50' }
+            ].map((node, i) => (
+              <motion.div
+                key={i}
+                className="absolute rounded-full border-4 border-white shadow-xl overflow-hidden cursor-pointer"
+                style={{ top: node.top, left: node.left, width: node.size, height: node.size }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: i * 0.2, type: 'spring', stiffness: 100 }}
+                whileHover={{ scale: 1.1, zIndex: 10 }}
+              >
+                <img src={`https://i.pravatar.cc/200?img=${node.img}`} alt="Node" className="w-full h-full object-cover" />
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Discover Capabilities / Features Section */}
-      <section className="relative z-10 pt-20 pb-32 border-t border-white/10 bg-surface/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">Master Any Category</h2>
-            <p className="text-text-secondary text-xl max-w-2xl mx-auto">Explore thousands of skills being taught by passionate experts right now.</p>
-          </motion.div>
+      {/* --- HOW IT WORKS (Timeline) --- */}
+      <section className="py-32 bg-white border-y border-black/5">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="mb-20">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">The Exchange Process</h2>
+            <p className="text-xl text-secondary font-light max-w-2xl">A seamless framework designed to connect you with the perfect learning partner.</p>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6 relative">
+            <div className="absolute top-1/2 left-0 w-full h-[1px] bg-black/10 hidden lg:block -z-10"></div>
+            
             {[
-              { icon: <Code className="w-8 h-8 text-primary" />, title: "Programming", desc: "Learn to code from experts and teach your own skills.", color: "group-hover:border-primary/50 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.15)]" },
-              { icon: <Palette className="w-8 h-8 text-pink-500" />, title: "Design", desc: "Swap your design expertise for development help.", color: "group-hover:border-pink-500/50 group-hover:shadow-[0_0_30px_rgba(236,72,153,0.15)]" },
-              { icon: <BookOpen className="w-8 h-8 text-blue-500" />, title: "Languages", desc: "Exchange language lessons with native speakers.", color: "group-hover:border-blue-500/50 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)]" },
-              { icon: <Music className="w-8 h-8 text-purple-500" />, title: "Music", desc: "Trade guitar lessons for vocal coaching.", color: "group-hover:border-purple-500/50 group-hover:shadow-[0_0_30px_rgba(168,85,247,0.15)]" },
-              { icon: <Camera className="w-8 h-8 text-green-500" />, title: "Photography", desc: "Share your camera skills for editing tips.", color: "group-hover:border-green-500/50 group-hover:shadow-[0_0_30px_rgba(34,197,94,0.15)]" },
-              { icon: <Zap className="w-8 h-8 text-yellow-500" />, title: "Productivity", desc: "Exchange time management strategies.", color: "group-hover:border-yellow-500/50 group-hover:shadow-[0_0_30px_rgba(234,179,8,0.15)]" }
-            ].map((feature, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                whileHover={{ y: -10 }}
-                className={`group glassmorphism p-8 rounded-3xl border border-white/5 transition-all duration-300 relative overflow-hidden ${feature.color}`}
+              { step: '01', title: 'Create Profile', desc: 'List your skills and what you want to learn.' },
+              { step: '02', title: 'Smart Match', desc: 'Our algorithm finds your perfect knowledge partner.' },
+              { step: '03', title: 'Live Session', desc: 'Connect via integrated high-quality video call.' },
+              { step: '04', title: 'Grow', desc: 'Exchange ratings to build your reputation.' }
+            ].map((item, index) => (
+              <motion.div 
+                key={item.step}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay: index * 0.2, duration: 0.6 }}
+                className="bg-white p-6 md:p-8 flex-1 border border-black/5 rounded-2xl shadow-sm hover:shadow-xl transition-shadow"
               >
-                {/* Spotlight effect background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div className="relative z-10">
-                  <div className="p-4 bg-white/5 rounded-2xl w-fit mb-6 shadow-inner border border-white/10 group-hover:bg-white/10 transition-colors">
-                    {feature.icon}
+                <span className="text-accent font-bold text-lg mb-4 block">{item.step}</span>
+                <h3 className="text-xl font-bold text-primary mb-3">{item.title}</h3>
+                <p className="text-secondary text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- EXPLORE SKILLS (Circular Ecosystem) --- */}
+      <section className="py-32 bg-white overflow-hidden border-b border-black/5">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="mb-24 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">Explore Knowledge</h2>
+            <p className="text-xl text-secondary font-light">Join an interconnected ecosystem of skills.</p>
+          </div>
+          
+          <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] mx-auto flex items-center justify-center">
+            {/* Center Node */}
+            <motion.div 
+              className="absolute z-20 w-24 h-24 md:w-32 md:h-32 bg-primary rounded-full flex items-center justify-center shadow-2xl border-4 border-white cursor-pointer"
+              whileHover={{ scale: 1.1 }}
+            >
+              <span className="text-white font-bold tracking-widest uppercase text-sm">YOU</span>
+            </motion.div>
+            
+            {/* Orbiting Nodes */}
+            <motion.div 
+              className="absolute inset-0 z-10"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            >
+              {[
+                { skill: 'React', color: '#1F3A5F', angle: 0 },
+                { skill: 'Music', color: '#C97C2B', angle: 45 },
+                { skill: 'Design', color: '#2E8B57', angle: 90 },
+                { skill: 'Cooking', color: '#7A8B99', angle: 135 },
+                { skill: 'Python', color: '#1F3A5F', angle: 180 },
+                { skill: 'Spanish', color: '#C97C2B', angle: 225 },
+                { skill: 'Fitness', color: '#2E8B57', angle: 270 },
+                { skill: 'Marketing', color: '#7A8B99', angle: 315 },
+              ].map((item, i) => {
+                const radius = '45%'; // 45% of container width
+                return (
+                  <div
+                    key={item.skill}
+                    className="absolute inset-0"
+                    style={{ transform: `rotate(${item.angle}deg)` }}
+                  >
+                    <div 
+                      className="absolute top-0 left-1/2"
+                      style={{ transform: `translate(-50%, -50%) rotate(-${item.angle}deg)` }}
+                    >
+                      <motion.div
+                        className="flex items-center justify-center rounded-full bg-white border-2 shadow-lg cursor-pointer transition-colors hover:text-white"
+                        style={{
+                          width: '80px', height: '80px',
+                          borderColor: item.color,
+                          color: item.color
+                        }}
+                        whileHover={{ scale: 1.2, backgroundColor: item.color, color: '#fff', zIndex: 30 }}
+                      >
+                        <span className="font-bold text-xs uppercase tracking-wider">{item.skill}</span>
+                      </motion.div>
+                    </div>
                   </div>
-                  <h3 className="text-2xl font-bold mb-3 text-white">{feature.title}</h3>
-                  <p className="text-text-secondary leading-relaxed">{feature.desc}</p>
+                );
+              })}
+            </motion.div>
+            
+            {/* Orbit Ring */}
+            <div className="absolute inset-4 rounded-full border border-black/5 border-dashed pointer-events-none -z-10"></div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- EXPERTS SECTION (Profile Strips) --- */}
+      <section className="py-32 bg-background">
+        <div className="max-w-[1000px] mx-auto px-6 lg:px-12">
+          <div className="mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">Available Experts</h2>
+            <p className="text-xl text-secondary font-light">Connect with highly rated mentors instantly.</p>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            {[
+              { name: 'Sarah Jenkins', role: 'Senior UX Designer', rating: '4.9', img: '45', skill: 'Figma' },
+              { name: 'Marcus Chen', role: 'Full Stack Engineer', rating: '5.0', img: '33', skill: 'React.js' },
+              { name: 'Elena Rodriguez', role: 'Product Manager', rating: '4.8', img: '22', skill: 'Agile' },
+              { name: 'David Kim', role: 'Data Scientist', rating: '4.9', img: '11', skill: 'Python' }
+            ].map((expert, i) => (
+              <motion.div 
+                key={expert.name}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="strip-hover flex flex-col md:flex-row items-center justify-between p-4 md:p-6 gap-6 cursor-pointer"
+              >
+                <div className="flex items-center gap-6 w-full md:w-auto">
+                  <img src={`https://i.pravatar.cc/150?img=${expert.img}`} className="w-16 h-16 rounded-full object-cover" />
+                  <div>
+                    <h4 className="text-lg font-bold text-primary">{expert.name}</h4>
+                    <p className="text-sm text-secondary">{expert.role}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between w-full md:w-auto gap-8">
+                  <div className="flex flex-col items-start md:items-end">
+                    <span className="text-xs text-secondary uppercase tracking-widest font-semibold mb-1">Teaching</span>
+                    <span className="font-medium text-primary">{expert.skill}</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2">
+                    <Star className="w-4 h-4 text-accent fill-current" />
+                    <span className="font-bold">{expert.rating}</span>
+                  </div>
+                  
+                  <button className="p-3 bg-primary/5 text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -285,38 +256,106 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Glowing CTA Section */}
-      <section className="relative z-10 py-32 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/30 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
-        
-        <div className="max-w-4xl mx-auto px-4 text-center relative z-20">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, type: "spring" }}
-            className="glassmorphism p-12 md:p-16 rounded-[3rem] border border-white/20 shadow-[0_0_80px_rgba(139,92,246,0.2)]"
-          >
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-6">Ready to Level Up?</h2>
-            <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">Join thousands of others who are trading skills and advancing their careers without spending a dime.</p>
-            
-            <Link href="/register">
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-white text-background rounded-full font-black text-xl shadow-[0_0_40px_rgba(255,255,255,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)] transition-all flex items-center justify-center mx-auto group"
+      {/* --- STATISTICS (Oversized Typography) --- */}
+      <section className="py-32 bg-primary text-white">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 border-t border-white/20 pt-16">
+            {[
+              { label: 'People Connected', val: '50K+' },
+              { label: 'Countries', val: '120+' },
+              { label: 'Successful Matches', val: '98%' },
+              { label: 'Sessions Completed', val: '100K+' }
+            ].map((stat, i) => (
+              <motion.div 
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="flex flex-col"
               >
-                Create Free Account 
-                <ArrowRight className="ml-2 w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </motion.button>
-            </Link>
+                <span className="text-6xl md:text-7xl font-bold font-display text-accent mb-4 tracking-tighter">{stat.val}</span>
+                <span className="text-lg font-medium text-white/70 uppercase tracking-widest">{stat.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- TESTIMONIALS (Chat Bubbles) --- */}
+      <section className="py-32 bg-background overflow-hidden relative">
+        <div className="max-w-[1000px] mx-auto px-6 lg:px-12 text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">Real Connections</h2>
+          <p className="text-xl text-secondary font-light">See what happens when knowledge flows freely.</p>
+        </div>
+
+        <div className="max-w-[800px] mx-auto px-6 relative flex flex-col gap-6">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex gap-4 self-start max-w-[85%]"
+          >
+            <img src="https://i.pravatar.cc/100?img=12" className="w-10 h-10 rounded-full mt-auto" />
+            <div className="bg-white p-5 rounded-2xl rounded-bl-none shadow-sm border border-black/5">
+              <p className="text-primary font-medium leading-relaxed">"I traded my Spanish lessons for React tutoring. I just landed my first Junior Developer role today! 😭🚀"</p>
+              <span className="text-xs text-secondary mt-2 block">Maria G. • 2 hours ago</span>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="flex gap-4 self-end max-w-[85%] flex-row-reverse"
+          >
+            <img src="https://i.pravatar.cc/100?img=68" className="w-10 h-10 rounded-full mt-auto" />
+            <div className="bg-primary text-white p-5 rounded-2xl rounded-br-none shadow-md">
+              <p className="font-medium leading-relaxed">"That's incredible Maria! The UX feedback you gave me on my portfolio was game-changing too. SkillSwap is the best."</p>
+              <span className="text-xs text-white/70 mt-2 block">James T. • 1 hour ago</span>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Simple Footer */}
-      <footer className="relative z-10 border-t border-white/10 py-8 text-center text-text-secondary bg-background">
-        <p>© {new Date().getFullYear()} SkillSwap. Built with passion.</p>
+      {/* --- FOOTER (Editorial) --- */}
+      <footer className="bg-white border-t border-black/10 pt-32 pb-12">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 mb-32">
+            <div>
+              <h2 className="text-5xl font-bold text-primary tracking-tight mb-8">Ready to grow?</h2>
+              <Link href="/register">
+                <button className="btn-primary text-lg px-10 py-5">
+                  Join SkillSwap Free
+                </button>
+              </Link>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-10">
+              <div className="flex flex-col gap-4">
+                <h4 className="font-bold text-primary mb-4 uppercase tracking-widest text-sm">Platform</h4>
+                <Link href="/explore" className="text-secondary hover:text-accent transition-colors">Explore Experts</Link>
+                <Link href="/how-it-works" className="text-secondary hover:text-accent transition-colors">How it Works</Link>
+                <Link href="/pricing" className="text-secondary hover:text-accent transition-colors">Pricing (Free)</Link>
+              </div>
+              <div className="flex flex-col gap-4">
+                <h4 className="font-bold text-primary mb-4 uppercase tracking-widest text-sm">Company</h4>
+                <Link href="/about" className="text-secondary hover:text-accent transition-colors">About Us</Link>
+                <Link href="/guidelines" className="text-secondary hover:text-accent transition-colors">Community Guidelines</Link>
+                <Link href="/contact" className="text-secondary hover:text-accent transition-colors">Contact</Link>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col md:flex-row items-center justify-between border-t border-black/10 pt-8 text-sm text-secondary font-medium">
+            <p>© 2026 SkillSwap Inc. All rights reserved.</p>
+            <div className="flex gap-6 mt-4 md:mt-0">
+              <a href="#" className="hover:text-primary transition-colors">Twitter</a>
+              <a href="#" className="hover:text-primary transition-colors">LinkedIn</a>
+              <a href="#" className="hover:text-primary transition-colors">GitHub</a>
+            </div>
+          </div>
+        </div>
       </footer>
 
     </div>
