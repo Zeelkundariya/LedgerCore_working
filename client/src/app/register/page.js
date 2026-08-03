@@ -152,12 +152,15 @@ export default function Register() {
                   <input
                     type="email"
                     required
+                    pattern=".+@gmail\.com"
+                    title="Please provide a valid @gmail.com address"
                     className="w-full pl-11 pr-4 py-3.5 bg-surface/50 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-white transition-all placeholder:text-gray-600 font-medium"
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
+                <p className="text-[10px] text-gray-500 ml-2 mt-1">* Only @gmail.com accounts are supported</p>
               </div>
 
               <div className="space-y-1">
