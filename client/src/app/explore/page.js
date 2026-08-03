@@ -17,8 +17,11 @@ export default function Explore() {
     searchUsers('');
   }, []);
 
+  const [error, setError] = useState(null);
+
   const searchUsers = async (searchQuery) => {
     setLoading(true);
+    setError(null);
     try {
       const url = searchQuery
         ? `http://localhost:5000/api/users/search?skill=${searchQuery}`
@@ -31,9 +34,12 @@ export default function Explore() {
       if (res.ok) {
         const data = await res.json();
         setUsers(data);
+      } else {
+        setError('Failed to fetch data from the server.');
       }
     } catch (err) {
-      console.error(err);
+      setError('Could not connect to the server. Make sure the backend is running.');
+      setUsers([]);
     } finally {
       setLoading(false);
     }
@@ -99,6 +105,11 @@ export default function Explore() {
         {loading ? (
           <div className="flex justify-center items-center h-64">
             <div className="animate-pulse w-12 h-12 bg-primary rounded-full"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-20 glassmorphism rounded-3xl border border-red-500/20 bg-red-500/5">
+            <h3 className="text-2xl font-semibold mb-2 text-red-400">Connection Error</h3>
+            <p className="text-text-secondary">{error}</p>
           </div>
         ) : users.length === 0 ? (
           <div className="text-center py-20 glassmorphism rounded-3xl">
