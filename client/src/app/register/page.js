@@ -19,6 +19,10 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email.toLowerCase().endsWith('@gmail.com')) {
+      setError('Please use a valid @gmail.com address');
+      return;
+    }
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
