@@ -35,7 +35,11 @@ export default function Login() {
       login(data);
       router.push('/dashboard');
     } catch (err) {
-      setError(err.message);
+      if (err.message === 'Failed to fetch') {
+        setError('Could not connect to the server. Make sure the backend is running.');
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
