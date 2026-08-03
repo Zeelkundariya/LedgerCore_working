@@ -1,25 +1,12 @@
-@import "tailwindcss";
-@source "../";
-
-@theme {
-  --color-primary: #8b5cf6;
-  --color-primary-dark: #7c3aed;
-  --color-secondary: #ec4899;
-  --color-background: #0f172a;
-  --color-surface: #1e293b;
-  --color-surface-hover: #334155;
-  
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #94a3b8;
-  
-  --font-sans: 'Inter', system-ui, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   body {
-    background-color: var(--color-background);
-    color: var(--color-text-primary);
-    font-family: var(--font-sans);
+    background-color: theme('colors.background');
+    color: theme('colors.text.primary', #f8fafc);
+    font-family: theme('fontFamily.sans');
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -37,7 +24,7 @@
   }
   
   .text-gradient {
-    background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+    background: linear-gradient(to right, theme('colors.primary'), theme('colors.secondary'));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -81,10 +68,10 @@
   .text-shimmer {
     background: linear-gradient(
       to right,
-      var(--color-primary) 20%,
-      var(--color-secondary) 40%,
-      var(--color-secondary) 60%,
-      var(--color-primary) 80%
+      theme('colors.primary') 20%,
+      theme('colors.secondary') 40%,
+      theme('colors.secondary') 60%,
+      theme('colors.primary') 80%
     );
     background-size: 200% auto;
     animation: shimmer 4s linear infinite;
