@@ -64,9 +64,13 @@ export default function Login() {
           </div>
 
           {error && (
-            <div className="bg-red-500/20 border border-red-500/50 text-red-200 p-3 rounded-lg mb-6 text-sm text-center">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-red-500/10 border border-red-500/50 text-red-400 p-4 rounded-xl mb-6 text-sm text-center font-medium"
+            >
               {error}
-            </div>
+            </motion.div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -124,9 +128,9 @@ export default function Login() {
             </motion.button>
           </form>
 
-          <p className="text-center mt-6 text-text-secondary">
+          <p className="text-center mt-8 text-gray-400 font-medium">
             Don't have an account?{' '}
-            <Link href="/register" className="text-primary hover:text-white transition-colors">
+            <Link href="/register" className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary hover:opacity-80 transition-opacity font-bold ml-1">
               Sign up
             </Link>
           </p>
