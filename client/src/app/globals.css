@@ -1,26 +1,12 @@
-@import "tailwindcss";
-@source "../";
-
-@theme {
-  --color-primary: #1F3A5F;
-  --color-accent: #C97C2B;
-  --color-success: #2E8B57;
-  --color-secondary: #7A8B99;
-  
-  --color-background: #F7F6F3;
-  --color-surface: #FFFFFF;
-  --color-text-primary: #121212;
-  --color-text-muted: #666666;
-  
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-display: 'Space Grotesk', system-ui, sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   body {
-    background-color: var(--color-background);
-    color: var(--color-text-primary);
-    font-family: var(--font-sans);
+    background-color: theme('colors.background');
+    color: theme('colors.text.primary');
+    font-family: theme('fontFamily.sans');
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
@@ -29,7 +15,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
+    font-family: theme('fontFamily.display');
     font-weight: 700;
     letter-spacing: -0.02em;
   }
@@ -43,7 +29,7 @@
   }
   
   .btn-primary {
-    background-color: var(--color-primary);
+    background-color: theme('colors.primary');
     color: #FFFFFF;
     padding: 1rem 2rem;
     font-weight: 600;
@@ -60,7 +46,7 @@
   }
   
   .btn-accent {
-    background-color: var(--color-accent);
+    background-color: theme('colors.accent');
     color: #FFFFFF;
     padding: 1rem 2rem;
     font-weight: 600;

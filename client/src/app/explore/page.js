@@ -118,47 +118,48 @@ export default function Explore() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {users.map((user, idx) => (
-              <motion.div
+            {users.map(user => (
+              <motion.div 
                 key={user._id}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="glassmorphism p-6 rounded-2xl flex flex-col h-full border border-white/10 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all"
+                className="bg-white rounded-2xl p-6 shadow-sm border border-black/5 hover:shadow-md transition-shadow flex flex-col"
               >
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                    <User className="text-primary w-6 h-6" />
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20">
+                    {user.profilePicture ? (
+                      <img src={user.profilePicture} alt={user.name} className="w-full h-full rounded-full object-cover" />
+                    ) : (
+                      <User className="w-6 h-6 text-primary" />
+                    )}
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-white">{user.name}</h3>
-                    {user.location && (
-                      <p className="text-sm text-text-secondary flex items-center">
-                        <MapPin className="w-3 h-3 mr-1" /> {user.location}
-                      </p>
-                    )}
+                    <h3 className="text-lg font-bold text-primary">{user.name}</h3>
+                    <div className="flex items-center text-secondary text-sm">
+                      <MapPin className="w-3 h-3 mr-1" />
+                      {user.location || 'Remote'}
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex-grow space-y-4">
+                <div className="space-y-4 flex-grow">
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider text-green-400 font-semibold mb-2">Offers</h4>
+                    <h4 className="text-xs uppercase tracking-wider text-secondary font-bold mb-2">Offers</h4>
                     <div className="flex flex-wrap gap-2">
                       {user.skillsOffered.slice(0, 3).map(s => (
-                        <span key={s} className="px-2 py-1 bg-surface rounded-md text-xs text-green-200 border border-green-500/20">{s}</span>
+                        <span key={s} className="px-2 py-1 bg-primary/5 rounded-md text-xs font-medium text-primary border border-primary/10">{s}</span>
                       ))}
-                      {user.skillsOffered.length > 3 && <span className="px-2 py-1 text-xs text-text-secondary">+{user.skillsOffered.length - 3}</span>}
+                      {user.skillsOffered.length > 3 && <span className="px-2 py-1 text-xs text-secondary font-medium">+{user.skillsOffered.length - 3}</span>}
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-xs uppercase tracking-wider text-purple-400 font-semibold mb-2">Wants</h4>
+                    <h4 className="text-xs uppercase tracking-wider text-secondary font-bold mb-2">Wants</h4>
                     <div className="flex flex-wrap gap-2">
                       {user.skillsWanted.slice(0, 3).map(s => (
-                        <span key={s} className="px-2 py-1 bg-surface rounded-md text-xs text-purple-200 border border-purple-500/20">{s}</span>
+                        <span key={s} className="px-2 py-1 bg-black/5 rounded-md text-xs font-medium text-black/70 border border-black/10">{s}</span>
                       ))}
-                      {user.skillsWanted.length > 3 && <span className="px-2 py-1 text-xs text-text-secondary">+{user.skillsWanted.length - 3}</span>}
+                      {user.skillsWanted.length > 3 && <span className="px-2 py-1 text-xs text-secondary font-medium">+{user.skillsWanted.length - 3}</span>}
                     </div>
                   </div>
                 </div>
@@ -167,9 +168,9 @@ export default function Explore() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full py-2 bg-surface hover:bg-primary text-white rounded-xl text-sm font-semibold transition-colors flex justify-center items-center group"
+                    className="w-full py-2.5 bg-primary hover:bg-[#152843] text-white rounded-xl text-sm font-bold transition-all shadow-sm flex justify-center items-center group"
                   >
-                    Request Swap <ArrowRight className="w-4 h-4 ml-1 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-10px] group-hover:translate-x-0" />
+                    Request Swap <ArrowRight className="w-4 h-4 ml-1 opacity-70 group-hover:opacity-100 transition-all translate-x-0 group-hover:translate-x-1" />
                   </motion.button>
                 </Link>
               </motion.div>

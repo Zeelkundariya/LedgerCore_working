@@ -137,124 +137,118 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- EXPLORE SKILLS (Circular Ecosystem) --- */}
-      <section className="py-32 bg-white overflow-hidden border-b border-black/5">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="mb-24 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">Explore Knowledge</h2>
-            <p className="text-xl text-secondary font-light">Join an interconnected ecosystem of skills.</p>
+      {/* --- EXPLORE SKILLS (3D Orbital Ecosystem) --- */}
+      <section className="py-32 bg-[#F7F6F3] overflow-hidden border-b border-black/5 relative">
+        {/* Subtle grid background */}
+        <div className="absolute inset-0 pointer-events-none opacity-20" style={{ backgroundImage: 'linear-gradient(#1F3A5F 1px, transparent 1px), linear-gradient(90deg, #1F3A5F 1px, transparent 1px)', backgroundSize: '100px 100px' }}></div>
+        
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+          <div className="mb-12 text-center relative z-20">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">Knowledge Orbit</h2>
+            <p className="text-xl text-secondary font-light">A multi-dimensional network of global skills.</p>
           </div>
           
-          <div className="relative w-[300px] h-[300px] md:w-[500px] md:h-[500px] mx-auto flex items-center justify-center">
-            {/* Center Node */}
-            <motion.div 
-              className="absolute z-20 w-24 h-24 md:w-32 md:h-32 bg-primary rounded-full flex items-center justify-center shadow-2xl border-4 border-white cursor-pointer"
-              whileHover={{ scale: 1.1 }}
+          <div 
+            className="relative w-[350px] h-[350px] md:w-[700px] md:h-[700px] mx-auto flex items-center justify-center -my-20 md:-my-32"
+            style={{ perspective: '1200px' }}
+          >
+            {/* The 3D Floor */}
+            <div 
+              className="absolute inset-0"
+              style={{ transform: 'rotateX(65deg)', transformStyle: 'preserve-3d' }}
             >
-              <span className="text-white font-bold tracking-widest uppercase text-sm">YOU</span>
-            </motion.div>
-            
-            {/* Orbiting Nodes */}
-            <motion.div 
-              className="absolute inset-0 z-10"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            >
-              {[
-                { skill: 'React', color: '#1F3A5F', angle: 0 },
-                { skill: 'Music', color: '#C97C2B', angle: 45 },
-                { skill: 'Design', color: '#2E8B57', angle: 90 },
-                { skill: 'Cooking', color: '#7A8B99', angle: 135 },
-                { skill: 'Python', color: '#1F3A5F', angle: 180 },
-                { skill: 'Spanish', color: '#C97C2B', angle: 225 },
-                { skill: 'Fitness', color: '#2E8B57', angle: 270 },
-                { skill: 'Marketing', color: '#7A8B99', angle: 315 },
-              ].map((item, i) => {
-                const radius = '45%'; // 45% of container width
-                return (
-                  <div
-                    key={item.skill}
-                    className="absolute inset-0"
-                    style={{ transform: `rotate(${item.angle}deg)` }}
-                  >
-                    <div 
-                      className="absolute top-0 left-1/2"
-                      style={{ transform: `translate(-50%, -50%) rotate(-${item.angle}deg)` }}
-                    >
-                      <motion.div
-                        className="flex items-center justify-center rounded-full bg-white border-2 shadow-lg cursor-pointer transition-colors hover:text-white"
-                        style={{
-                          width: '80px', height: '80px',
-                          borderColor: item.color,
-                          color: item.color
-                        }}
-                        whileHover={{ scale: 1.2, backgroundColor: item.color, color: '#fff', zIndex: 30 }}
-                      >
-                        <span className="font-bold text-xs uppercase tracking-wider">{item.skill}</span>
-                      </motion.div>
-                    </div>
-                  </div>
-                );
-              })}
-            </motion.div>
-            
-            {/* Orbit Ring */}
-            <div className="absolute inset-4 rounded-full border border-black/5 border-dashed pointer-events-none -z-10"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- EXPERTS SECTION (Profile Strips) --- */}
-      <section className="py-32 bg-background">
-        <div className="max-w-[1000px] mx-auto px-6 lg:px-12">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">Available Experts</h2>
-            <p className="text-xl text-secondary font-light">Connect with highly rated mentors instantly.</p>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            {[
-              { name: 'Sarah Jenkins', role: 'Senior UX Designer', rating: '4.9', img: '45', skill: 'Figma' },
-              { name: 'Marcus Chen', role: 'Full Stack Engineer', rating: '5.0', img: '33', skill: 'React.js' },
-              { name: 'Elena Rodriguez', role: 'Product Manager', rating: '4.8', img: '22', skill: 'Agile' },
-              { name: 'David Kim', role: 'Data Scientist', rating: '4.9', img: '11', skill: 'Python' }
-            ].map((expert, i) => (
-              <motion.div 
-                key={expert.name}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="strip-hover flex flex-col md:flex-row items-center justify-between p-4 md:p-6 gap-6 cursor-pointer"
+              {/* Concentric 3D Orbit Rings */}
+              <div className="absolute inset-0 rounded-full border-[1.5px] border-primary/10 border-dashed"></div>
+              <div className="absolute inset-16 md:inset-32 rounded-full border border-primary/5"></div>
+              <div className="absolute inset-24 md:inset-48 rounded-full border border-primary/15 border-dashed"></div>
+              
+              {/* Center Node (Stands up) */}
+              <div 
+                className="absolute top-1/2 left-1/2 z-40"
+                style={{ transform: 'translate(-50%, -50%) rotateX(-65deg)', transformStyle: 'preserve-3d' }}
               >
-                <div className="flex items-center gap-6 w-full md:w-auto">
-                  <img src={`https://i.pravatar.cc/150?img=${expert.img}`} className="w-16 h-16 rounded-full object-cover" />
-                  <div>
-                    <h4 className="text-lg font-bold text-primary">{expert.name}</h4>
-                    <p className="text-sm text-secondary">{expert.role}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between w-full md:w-auto gap-8">
-                  <div className="flex flex-col items-start md:items-end">
-                    <span className="text-xs text-secondary uppercase tracking-widest font-semibold mb-1">Teaching</span>
-                    <span className="font-medium text-primary">{expert.skill}</span>
-                  </div>
-                  
-                  <div className="flex items-center gap-2">
-                    <Star className="w-4 h-4 text-accent fill-current" />
-                    <span className="font-bold">{expert.rating}</span>
-                  </div>
-                  
-                  <button className="p-3 bg-primary/5 text-primary rounded-full hover:bg-primary hover:text-white transition-colors">
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
-                </div>
+                <motion.div 
+                  className="w-24 h-24 md:w-36 md:h-36 bg-primary rounded-full flex flex-col items-center justify-center shadow-[0_20px_40px_rgba(31,58,95,0.4)] border-4 border-white cursor-pointer relative"
+                  whileHover={{ scale: 1.05, y: -10 }}
+                >
+                  <div className="absolute -inset-4 rounded-full bg-primary/20 animate-ping"></div>
+                  <span className="text-white/70 text-[10px] uppercase tracking-widest mb-1">Your</span>
+                  <span className="text-white font-bold tracking-widest uppercase text-lg">Brain</span>
+                </motion.div>
+              </div>
+              
+              {/* Orbiting Nodes Wrapper */}
+              <motion.div 
+                className="absolute inset-0 z-30"
+                style={{ transformStyle: 'preserve-3d' }}
+                animate={{ rotateZ: 360 }}
+                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+              >
+                {[
+                  { skill: 'React.js', color: '#1F3A5F', angle: 0, radius: '48%' },
+                  { skill: 'Music Theory', color: '#C97C2B', angle: 45, radius: '28%' },
+                  { skill: 'UI/UX Design', color: '#2E8B57', angle: 90, radius: '48%' },
+                  { skill: 'Culinary Arts', color: '#7A8B99', angle: 135, radius: '28%' },
+                  { skill: 'Python AI', color: '#1F3A5F', angle: 180, radius: '48%' },
+                  { skill: 'Spanish', color: '#C97C2B', angle: 225, radius: '28%' },
+                  { skill: 'Fitness', color: '#2E8B57', angle: 270, radius: '48%' },
+                  { skill: 'Digital Marketing', color: '#7A8B99', angle: 315, radius: '28%' },
+                ].map((item, i) => {
+                  return (
+                    <div
+                      key={item.skill}
+                      className="absolute inset-0 origin-center"
+                      style={{ 
+                        transform: `rotateZ(${item.angle}deg)`, 
+                        transformStyle: 'preserve-3d' 
+                      }}
+                    >
+                      {/* Connecting Line on the floor */}
+                      <div 
+                        className="absolute left-1/2 bottom-1/2 w-[1px] origin-bottom"
+                        style={{ 
+                          height: item.radius,
+                          background: `linear-gradient(to top, transparent, ${item.color}40)` 
+                        }}
+                      ></div>
+
+                      {/* Node Placement */}
+                      <div 
+                        className="absolute left-1/2"
+                        style={{ 
+                          top: `calc(50% - ${item.radius})`,
+                          transform: `translate(-50%, -50%)`,
+                          transformStyle: 'preserve-3d'
+                        }}
+                      >
+                        {/* Dynamic Counter-Rotation for spin */}
+                        <motion.div
+                          style={{ transformStyle: 'preserve-3d' }}
+                          animate={{ rotateZ: [-item.angle, -360 - item.angle] }}
+                          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                        >
+                          {/* Tilt up to face camera */}
+                          <div style={{ transform: 'rotateX(-65deg)', transformStyle: 'preserve-3d' }}>
+                            <motion.div
+                              className="bg-white shadow-[0_15px_30px_rgb(0,0,0,0.12)] border border-black/5 rounded-full px-5 py-3 flex items-center gap-3 cursor-pointer whitespace-nowrap"
+                              whileHover={{ scale: 1.1, y: -5, boxShadow: `0 20px 40px ${item.color}30` }}
+                            >
+                              <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }}></div>
+                              <span className="font-bold text-[11px] uppercase tracking-widest text-primary">{item.skill}</span>
+                            </motion.div>
+                          </div>
+                        </motion.div>
+                      </div>
+                    </div>
+                  );
+                })}
               </motion.div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
+
+
 
       {/* --- STATISTICS (Oversized Typography) --- */}
       <section className="py-32 bg-primary text-white">

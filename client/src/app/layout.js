@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-background text-text-primary antialiased min-h-screen flex flex-col`}>
+      <body suppressHydrationWarning className={`${inter.className} bg-background text-text-primary antialiased min-h-screen flex flex-col`}>
         <Navbar />
         <main className="flex-grow pt-16">
           {children}

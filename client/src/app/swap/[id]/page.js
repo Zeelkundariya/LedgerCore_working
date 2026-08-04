@@ -108,43 +108,45 @@ export default function RequestSwap() {
 
   return (
     <div className="flex-grow max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none"></div>
-
-      <Link href="/explore" className="inline-flex items-center text-text-secondary hover:text-white mb-6 transition-colors">
+      <Link href="/explore" className="inline-flex items-center text-secondary hover:text-primary mb-6 transition-colors font-medium">
         <ArrowLeft className="w-4 h-4 mr-2" /> Back to Explore
       </Link>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glassmorphism rounded-3xl p-8 border border-white/10 shadow-2xl relative z-10"
+        className="bg-white rounded-3xl p-8 border border-black/10 shadow-sm relative z-10"
       >
-        <div className="flex items-center space-x-4 mb-8 pb-8 border-b border-white/10">
-          <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center">
-            <User className="text-primary w-8 h-8" />
+        <div className="flex items-center space-x-4 mb-8 pb-8 border-b border-black/5">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center border border-primary/20">
+            {targetUser.profilePicture ? (
+              <img src={targetUser.profilePicture} alt={targetUser.name} className="w-full h-full rounded-full object-cover" />
+            ) : (
+              <User className="text-primary w-8 h-8" />
+            )}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white">Request Swap with {targetUser.name}</h1>
-            <p className="text-text-secondary">Propose a skill exchange</p>
+            <h1 className="text-2xl font-bold text-primary">Request Swap with {targetUser.name}</h1>
+            <p className="text-secondary font-medium">Propose a skill exchange</p>
           </div>
         </div>
 
         {error && (
-          <div className="bg-red-500/20 border border-red-500/50 text-red-200 p-3 rounded-lg mb-6 text-sm">
+          <div className="bg-red-50 border border-red-200 text-red-600 p-3 rounded-lg mb-6 text-sm font-medium">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
           <div>
-            <h3 className="text-lg font-semibold mb-3 text-purple-400">1. What skills do you want from them?</h3>
+            <h3 className="text-lg font-bold mb-3 text-primary">1. What skills do you want from them?</h3>
             <div className="flex flex-wrap gap-3">
               {targetUser.skillsOffered.map(skill => (
                 <button
                   key={skill}
                   type="button"
                   onClick={() => toggleSelection(skill, selectedWanted, setSelectedWanted)}
-                  className={`px-4 py-2 rounded-xl border transition-all ${selectedWanted.includes(skill) ? 'bg-purple-500/20 border-purple-500 text-purple-200 shadow-[0_0_10px_rgba(168,85,247,0.3)]' : 'bg-surface border-white/10 text-gray-400 hover:border-purple-500/50'}`}
+                  className={`px-4 py-2.5 rounded-xl border transition-all font-medium text-sm ${selectedWanted.includes(skill) ? 'bg-primary border-primary text-white shadow-md' : 'bg-white border-black/10 text-secondary hover:border-primary/40 hover:bg-black/5'}`}
                 >
                   {skill}
                 </button>
@@ -153,8 +155,8 @@ export default function RequestSwap() {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-3 text-green-400">2. What skills can you offer them in return?</h3>
-            <p className="text-sm text-text-secondary mb-3">These are the skills they are looking for, or you can offer your other skills.</p>
+            <h3 className="text-lg font-bold mb-3 text-primary">2. What skills can you offer them in return?</h3>
+            <p className="text-sm text-secondary font-medium mb-3">These are the skills they are looking for, or you can offer your other skills.</p>
             <div className="flex flex-wrap gap-3">
               {user?.skillsOffered?.map(skill => {
                 const isHighlyDesired = targetUser.skillsWanted.includes(skill);
@@ -163,7 +165,7 @@ export default function RequestSwap() {
                     key={skill}
                     type="button"
                     onClick={() => toggleSelection(skill, selectedOffered, setSelectedOffered)}
-                    className={`px-4 py-2 rounded-xl border transition-all ${selectedOffered.includes(skill) ? 'bg-green-500/20 border-green-500 text-green-200 shadow-[0_0_10px_rgba(34,197,94,0.3)]' : 'bg-surface border-white/10 text-gray-400 hover:border-green-500/50'}`}
+                    className={`px-4 py-2.5 rounded-xl border transition-all font-medium text-sm ${selectedOffered.includes(skill) ? 'bg-primary border-primary text-white shadow-md' : 'bg-white border-black/10 text-secondary hover:border-primary/40 hover:bg-black/5'}`}
                   >
                     {skill} {isHighlyDesired && '⭐'}
                   </button>
@@ -171,14 +173,20 @@ export default function RequestSwap() {
               })}
             </div>
             {(!user?.skillsOffered || user.skillsOffered.length === 0) && (
-              <p className="text-yellow-400 text-sm mt-2">You haven't listed any offered skills on your profile yet.</p>
+              <div className="bg-orange-50 border border-orange-200 p-5 rounded-xl flex flex-col items-start mt-4 shadow-sm">
+                <p className="text-orange-700 font-bold text-sm mb-3">You haven't listed any skills on your profile yet!</p>
+                <p className="text-orange-600/80 font-medium text-sm mb-4">You must add at least one skill to your profile before you can request a swap with {targetUser.name}.</p>
+                <Link href="/dashboard" className="px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm font-bold transition-all shadow-md hover:shadow-lg">
+                  Go to Dashboard to Add Skills
+                </Link>
+              </div>
             )}
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-3 text-white">3. Send a message</h3>
+            <h3 className="text-lg font-bold mb-3 text-primary">3. Send a message</h3>
             <textarea
-              className="w-full px-4 py-3 bg-surface border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary text-white transition-all h-32"
+              className="w-full px-4 py-3 bg-white border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-primary font-medium transition-all h-32 placeholder:text-black/30 shadow-sm"
               placeholder="Hi! I'd love to learn React from you. In return, I can teach you Spanish..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -187,13 +195,13 @@ export default function RequestSwap() {
           </div>
 
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            disabled={submitting}
+            whileHover={(!user?.skillsOffered || user.skillsOffered.length === 0) ? {} : { scale: 1.01 }}
+            whileTap={(!user?.skillsOffered || user.skillsOffered.length === 0) ? {} : { scale: 0.99 }}
+            disabled={submitting || !user?.skillsOffered || user.skillsOffered.length === 0}
             type="submit"
-            className="w-full py-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-bold text-lg shadow-[0_0_20px_rgba(139,92,246,0.3)] flex items-center justify-center disabled:opacity-50"
+            className="w-full py-4 bg-primary hover:bg-[#152843] text-white rounded-xl font-bold text-lg shadow-md hover:shadow-lg transition-all flex items-center justify-center disabled:opacity-50 disabled:hover:bg-primary disabled:cursor-not-allowed group"
           >
-            <Send className="w-5 h-5 mr-2" /> {submitting ? 'Sending Request...' : 'Send Swap Request'}
+            <Send className="w-5 h-5 mr-2 opacity-70 group-hover:opacity-100 transition-opacity" /> {submitting ? 'Sending Request...' : 'Send Swap Request'}
           </motion.button>
         </form>
       </motion.div>
