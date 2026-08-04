@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../store/useAuthStore';
-import { Menu, X, Code2, LogOut, User, Sparkles } from 'lucide-react';
+import { Menu, X, Code2, LogOut, User, Sparkles, Map } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -32,22 +32,27 @@ export default function Navbar() {
             </motion.div>
           </Link>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-2">
-            <Link 
-              href="/explore" 
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${isActive('/explore') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
-            >
-              Explore
-            </Link>
-            <Link 
-              href="/matches" 
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/matches') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
-            >
-              <Sparkles className="w-4 h-4 mr-1.5" /> AI Match
-            </Link>
+            <div className="hidden md:flex items-center gap-2">
+              <Link 
+                href="/explore" 
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${isActive('/explore') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
+              >
+                Explore
+              </Link>
+              <Link 
+                href="/matches" 
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/matches') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
+              >
+                <Sparkles className="w-4 h-4 mr-1.5" /> AI Match
+              </Link>
+              <Link 
+                href="/roadmap" 
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/roadmap') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
+              >
+                <Map className="w-4 h-4 mr-1.5" /> Roadmap
+              </Link>
 
-            {isAuthenticated ? (
+              {isAuthenticated ? (
               <div className="flex items-center gap-6 ml-4">
                 {user?.role === 'ADMIN' && (
                   <Link href="/admin" className="text-red-500 font-bold hover:text-red-600 transition-colors">
