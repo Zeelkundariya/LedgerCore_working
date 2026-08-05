@@ -29,6 +29,18 @@ const swapRequestSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
+    scheduledDate: {
+      type: Date,
+      default: null,
+    },
+    duration: {
+      type: Number, // duration in minutes
+      default: 60,
+    },
+    meetingLink: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,
