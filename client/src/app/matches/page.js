@@ -147,13 +147,17 @@ export default function AIMatches() {
     let score = 0;
     const explanations = [];
 
-    const theyTeachYouWant = otherUser.skillsOffered.filter(skill => currentUser.skillsWanted.some(w => w.toLowerCase() === skill.toLowerCase()));
+    const safeOtherSkillsOffered = otherUser.skillsOffered || [];
+    const safeCurrentSkillsWanted = currentUser.skillsWanted || [];
+    const theyTeachYouWant = safeOtherSkillsOffered.filter(skill => safeCurrentSkillsWanted.some(w => w.toLowerCase() === skill.toLowerCase()));
     if (theyTeachYouWant.length > 0) {
       score += 40;
       explanations.push(`They teach ${theyTeachYouWant.join(', ')}, your highest priority skill.`);
     }
 
-    const youTeachTheyWant = currentUser.skillsOffered.filter(skill => otherUser.skillsWanted.some(w => w.toLowerCase() === skill.toLowerCase()));
+    const safeCurrentSkillsOffered = currentUser.skillsOffered || [];
+    const safeOtherSkillsWanted = otherUser.skillsWanted || [];
+    const youTeachTheyWant = safeCurrentSkillsOffered.filter(skill => safeOtherSkillsWanted.some(w => w.toLowerCase() === skill.toLowerCase()));
     if (youTeachTheyWant.length > 0) {
       score += 40;
       explanations.push(`You can teach ${youTeachTheyWant.join(', ')}, which they want.`);
