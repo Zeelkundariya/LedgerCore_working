@@ -59,6 +59,7 @@ export default function AIMatches() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [analyzing, setAnalyzing] = useState(true);
+  const [sortBy, setSortBy] = useState('match'); // 'match' or 'recent'
   const [compareModalOpen, setCompareModalOpen] = useState(false);
   const [compareUser, setCompareUser] = useState(null);
 
@@ -96,7 +97,11 @@ export default function AIMatches() {
   }
 
   // Users are already pre-scored and fully populated by the backend matching engine
-  const scoredUsers = users.filter(u => u.score > 0);
+  const scoredUsers = [...users].filter(u => u.score > 0).sort((a, b) => {
+    if (sortBy === 'match') return b.score - a.score;
+    // Assuming higher _id corresponds to more recent signups or similar sorting fallback
+    return b._id.localeCompare(a._id); 
+  });
 
   const bestMatch = scoredUsers.length > 0 ? scoredUsers[0] : null;
   const otherMatches = scoredUsers.slice(1);
@@ -108,9 +113,27 @@ export default function AIMatches() {
           <Sparkles className="w-6 h-6 text-primary" />
           <h1 className="text-2xl font-black text-primary uppercase tracking-widest">AI Skill Match</h1>
         </div>
-        <p className="text-secondary font-medium text-lg md:text-xl leading-relaxed">
+        <p className="text-secondary font-medium text-lg md:text-xl leading-relaxed mb-6">
           Our AI analyzes your skills, learning goals, availability, trust score, and community activity to recommend the best learning partners.
         </p>
+        
+        {/* Sort Toggle */}
+        {!analyzing && scoredUsers.length > 0 && (
+          <div className="inline-flex items-center bg-black/5 p-1 rounded-lg border border-black/10">
+            <button 
+              onClick={() => setSortBy('match')}
+              className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${sortBy === 'match' ? 'bg-white text-primary shadow-sm' : 'text-secondary hover:text-primary'}`}
+            >
+              Highest Match %
+            </button>
+            <button 
+              onClick={() => setSortBy('recent')}
+              className={`px-4 py-2 rounded-md text-sm font-bold transition-all ${sortBy === 'recent' ? 'bg-white text-primary shadow-sm' : 'text-secondary hover:text-primary'}`}
+            >
+              Recently Active
+            </button>
+          </div>
+        )}
       </div>
 
       {analyzing ? (
