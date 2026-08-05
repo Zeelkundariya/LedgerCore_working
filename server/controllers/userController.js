@@ -98,8 +98,32 @@ const searchUsers = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
+// @desc    Add a review to a user profile
+// @route   POST /api/users/:id/reviews
+// @access  Private
+const addUserReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+  const userToReview = await User.findById(req.params.id);
+
+  if (userToReview) {
+    const review = {
+      reviewerName: req.user.name,
+      rating: Number(rating),
+      comment,
+    };
+
+    userToReview.reviews.push(review);
+    await userToReview.save();
+    res.status(201).json({ message: 'Review added' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
   searchUsers,
+  addUserReview,
 };
