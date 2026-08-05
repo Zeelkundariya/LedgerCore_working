@@ -74,24 +74,28 @@ export default function ProfileView() {
         className="bg-white rounded-3xl border border-black/10 shadow-lg overflow-hidden"
       >
         {/* Banner */}
-        <div className="h-32 bg-primary/5"></div>
+        <div className="h-48 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 relative">
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
         
         <div className="px-8 pb-10 relative">
           {/* Avatar */}
-          <div className="w-24 h-24 bg-white rounded-full border-4 border-white shadow-md flex items-center justify-center absolute -top-12 overflow-hidden">
+          <div className="w-32 h-32 bg-white rounded-full border-4 border-white shadow-xl flex items-center justify-center absolute -top-16 overflow-hidden z-10">
             {targetUser.profilePicture ? (
               <img src={targetUser.profilePicture} alt={targetUser.name} className="w-full h-full object-cover" />
             ) : (
-              <User className="w-12 h-12 text-primary" />
+              <div className="w-full h-full bg-gradient-to-br from-primary to-blue-800 flex items-center justify-center text-white text-4xl font-bold">
+                {targetUser.name.charAt(0)}
+              </div>
             )}
           </div>
           
-          <div className="mt-16 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
+          <div className="mt-20 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
             <div>
-              <h1 className="text-3xl font-black text-primary">{targetUser.name}</h1>
-              <div className="flex items-center gap-4 text-secondary font-medium mt-2">
-                <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {targetUser.location || 'Remote'}</span>
-                <span className="flex items-center"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> 4.9 Average Rating</span>
+              <h1 className="text-4xl font-black text-gray-900 tracking-tight">{targetUser.name}</h1>
+              <div className="flex items-center gap-4 text-gray-500 font-medium mt-3">
+                <span className="flex items-center bg-gray-100 px-3 py-1 rounded-full text-sm"><MapPin className="w-4 h-4 mr-1 text-primary" /> {targetUser.location || 'Remote'}</span>
+                <span className="flex items-center bg-yellow-50 px-3 py-1 rounded-full text-yellow-700 text-sm"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> 5.0 (12 Reviews)</span>
               </div>
             </div>
             
