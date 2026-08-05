@@ -7,57 +7,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { User, MapPin, ArrowRight, CheckCircle2, Star, Target, Sparkles, AlertCircle, Clock, Zap, ShieldCheck, Award, MessageSquare, GraduationCap, X, ChevronRight, Activity } from 'lucide-react';
 import Link from 'next/link';
 
-// Deterministic mock data generator based on user ID
-const getMockStats = (id) => {
-  let hash = 0;
-  if (!id) return { rating: "4.8", swaps: 12 };
-  for (let i = 0; i < id.length; i++) {
-    hash = id.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const rating = 4 + (Math.abs(hash) % 11) / 10; // 4.0 to 5.0
-  const swaps = 5 + (Math.abs(hash) % 45); // 5 to 50
-  return { rating: rating.toFixed(1), swaps };
-};
-
-const getExtendedStats = (id, baseScore, offered, wanted) => {
-  let hash = 0;
-  const safeId = id || "default";
-  for (let i = 0; i < safeId.length; i++) {
-    hash = safeId.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const pHash = Math.abs(hash);
-  
-  // Normalize baseScore so it doesn't exceed 100 with offsets
-  const safeScore = Math.min(95, baseScore);
-
-  return {
-    skillsCompat: Math.min(100, safeScore + (pHash % 5)),
-    availCompat: Math.max(60, safeScore - (pHash % 15)),
-    goalsCompat: Math.min(100, safeScore + (pHash % 8)),
-    expCompat: Math.max(50, safeScore - (pHash % 12)),
-    trustCompat: Math.min(100, 85 + (pHash % 15)),
-    commCompat: Math.min(100, 75 + (pHash % 20)),
-    
-    successProb: Math.min(99, safeScore + (pHash % 6)),
-    respTime: pHash % 2 === 0 ? 'Within 2 Hours' : 'Within 24 Hours',
-    estSessions: 4 + (pHash % 8),
-    estDays: 14 + (pHash % 20),
-    
-    challenges: pHash % 3 === 0 ? [
-      { text: "Different timezone", suggestion: "Schedule meetings on weekends." }
-    ] : pHash % 3 === 1 ? [
-      { text: "Medium response speed", suggestion: "Send materials 24h before session." }
-    ] : [
-      { text: "Different experience levels", suggestion: "Start with fundamental concepts." }
-    ],
-    
-    badges: pHash % 3 === 0 ? ['Verified Email', 'Top Mentor'] : pHash % 3 === 1 ? ['Verified Email', 'Fast Responder', '5-Star Rated'] : ['Community Verified', '100% Attendance'],
-    
-    firstSession: offered.length && wanted.length ? `${offered[0]} Basics ↔ ${wanted[0]} Fundamentals` : 'General Introduction',
-    
-    relatedSkills: offered.length ? [offered[0], 'Advanced ' + offered[0], offered[0] + ' Ecosystem', 'Mentorship'] : ['React', 'Next.js', 'TypeScript', 'Redux']
-  };
-};
+// Real backend data will be provided now, mock stats functions removed
 
 // Counter animation component
 const AnimatedCounter = ({ value }) => {
@@ -123,7 +73,7 @@ export default function AIMatches() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/users/search', {
+      const res = await fetch('http://localhost:5000/api/users/matches', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -141,72 +91,12 @@ export default function AIMatches() {
     }
   };
 
-  const calculateCompatibility = (otherUser) => {
-    if (!currentUser) return { score: 0, explanations: [] };
-
-    let score = 0;
-    const explanations = [];
-
-    const safeOtherSkillsOffered = otherUser.skillsOffered || [];
-    const safeCurrentSkillsWanted = currentUser.skillsWanted || [];
-    const theyTeachYouWant = safeOtherSkillsOffered.filter(skill => safeCurrentSkillsWanted.some(w => w.toLowerCase() === skill.toLowerCase()));
-    if (theyTeachYouWant.length > 0) {
-      score += 40;
-      explanations.push(`They teach ${theyTeachYouWant.join(', ')}, your highest priority skill.`);
-    }
-
-    const safeCurrentSkillsOffered = currentUser.skillsOffered || [];
-    const safeOtherSkillsWanted = otherUser.skillsWanted || [];
-    const youTeachTheyWant = safeCurrentSkillsOffered.filter(skill => safeOtherSkillsWanted.some(w => w.toLowerCase() === skill.toLowerCase()));
-    if (youTeachTheyWant.length > 0) {
-      score += 40;
-      explanations.push(`You can teach ${youTeachTheyWant.join(', ')}, which they want.`);
-    }
-
-    const myLoc = currentUser.location?.toLowerCase() || '';
-    const theirLoc = otherUser.location?.toLowerCase() || '';
-    if (myLoc && theirLoc && myLoc === theirLoc) {
-      score += 10;
-      explanations.push('Both of you are in the same location.');
-    } else if (theirLoc.includes('remote') || theirLoc === '') {
-      score += 5;
-      explanations.push('Compatible for online sessions.');
-    }
-
-    const myAvail = currentUser.availability?.toLowerCase() || '';
-    const theirAvail = otherUser.availability?.toLowerCase() || '';
-    if (myAvail && theirAvail) {
-      const intersect = myAvail.split(/[,\s]+/).filter(w => w.length > 3 && theirAvail.split(/[,\s]+/).includes(w));
-      if (intersect.length > 0) {
-        score += 10;
-        explanations.push(`Both of you are available on ${intersect[0]}.`);
-      }
-    }
-
-    if (score > 0 && score < 20) score += 20;
-
-    const stats = getMockStats(otherUser._id);
-    if (score === 80) score = 85 + (stats.swaps % 13); 
-    if (score > 98) score = 98;
-    
-    // Add fake AI reasons for variety
-    if (stats.rating > 4.5) explanations.push('Excellent community reputation.');
-    if (stats.swaps > 20) explanations.push('High completion rate for previous swaps.');
-    explanations.push('Similar experience level.');
-
-    const extStats = getExtendedStats(otherUser._id, score, otherUser.skillsOffered, otherUser.skillsWanted);
-
-    return { score, explanations, stats, extStats };
-  };
-
   if (loading || !currentUser) {
     return <div className="flex-grow flex items-center justify-center min-h-[calc(100vh-4rem)]"><div className="animate-pulse w-12 h-12 bg-primary rounded-full"></div></div>;
   }
 
-  const scoredUsers = users.map(user => {
-    const matchData = calculateCompatibility(user);
-    return { ...user, ...matchData };
-  }).filter(u => u.score > 0).sort((a, b) => b.score - a.score);
+  // Users are already pre-scored and fully populated by the backend matching engine
+  const scoredUsers = users.filter(u => u.score > 0);
 
   const bestMatch = scoredUsers.length > 0 ? scoredUsers[0] : null;
   const otherMatches = scoredUsers.slice(1);
