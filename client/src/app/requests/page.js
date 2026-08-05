@@ -12,6 +12,7 @@ export default function Requests() {
   const [activeTab, setActiveTab] = useState('incoming');
   const [feedbackData, setFeedbackData] = useState({ rating: 5, comment: '', showFor: null });
   const [scheduleData, setScheduleData] = useState({ date: '', time: '', duration: 60, showFor: null });
+  const [levelUpData, setLevelUpData] = useState(null);
   const { user, checkAuth } = useAuthStore();
   const router = useRouter();
 
@@ -70,8 +71,14 @@ export default function Requests() {
         body: JSON.stringify({ rating: feedbackData.rating, comment: feedbackData.comment })
       });
       if (res.ok) {
+        const data = await res.json();
         setFeedbackData({ rating: 5, comment: '', showFor: null });
         fetchRequests();
+        
+        if (data.gamification) {
+          setLevelUpData(data.gamification);
+          setTimeout(() => setLevelUpData(null), 5000);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -298,6 +305,25 @@ export default function Requests() {
           </div>
         )}
       </motion.div>
+
+      {/* Gamification Level Up Toast */}
+      {levelUpData && (
+        <motion.div 
+          initial={{ opacity: 0, y: 50, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 50, scale: 0.9 }}
+          className="fixed bottom-10 right-10 bg-gradient-to-br from-yellow-400 to-yellow-600 p-6 rounded-2xl shadow-2xl z-50 flex items-center gap-4 text-white max-w-sm"
+        >
+          <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+            <Star className="w-8 h-8 fill-yellow-200 text-yellow-200" />
+          </div>
+          <div>
+            <h4 className="font-black text-xl">+50 XP Earned!</h4>
+            {levelUpData.leveledUp && <p className="font-bold text-yellow-100">You leveled up to Lvl {levelUpData.newLevel}!</p>}
+            {levelUpData.newBadges?.length > 0 && <p className="font-bold text-yellow-100 text-sm">New Badge: {levelUpData.newBadges[0]}</p>}
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 }
