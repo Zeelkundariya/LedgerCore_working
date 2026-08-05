@@ -183,6 +183,39 @@ export default function ProfileView() {
             </div>
           </div>
           
+          {/* Reviews Section */}
+          <div className="mt-16 pt-10 border-t border-gray-100">
+            <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center mr-3">⭐</span>
+              Reviews & Testimonials
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[1, 2].map((item) => (
+                <div key={item} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm relative">
+                  <div className="flex items-center gap-1 mb-3">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 italic mb-4">"Absolutely fantastic session! I learned so much about React and the explanation was super clear. Highly recommended!"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">
+                      U{item}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-gray-900">User {item}</h4>
+                      <p className="text-xs text-gray-400">1 week ago</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <button className="mt-6 w-full py-4 border-2 border-dashed border-gray-200 text-gray-500 font-bold rounded-2xl hover:border-primary hover:text-primary transition-colors flex items-center justify-center">
+              Leave a Review
+            </button>
+          </div>
+          
         </div>
       </motion.div>
     </div>
