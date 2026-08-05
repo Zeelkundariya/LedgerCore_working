@@ -11,6 +11,7 @@ export default function Requests() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('incoming');
   const [feedbackData, setFeedbackData] = useState({ rating: 5, comment: '', showFor: null });
+  const [scheduleData, setScheduleData] = useState({ date: '', time: '', duration: 60, showFor: null });
   const { user, checkAuth } = useAuthStore();
   const router = useRouter();
 
@@ -70,6 +71,27 @@ export default function Requests() {
       });
       if (res.ok) {
         setFeedbackData({ rating: 5, comment: '', showFor: null });
+        fetchRequests();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleSchedule = async (id) => {
+    try {
+      // Basic date/time parsing
+      const scheduledDate = new Date(`${scheduleData.date}T${scheduleData.time}`).toISOString();
+      const res = await fetch(`http://localhost:5000/api/swaps/${id}/schedule`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ scheduledDate, duration: scheduleData.duration })
+      });
+      if (res.ok) {
+        setScheduleData({ date: '', time: '', duration: 60, showFor: null });
         fetchRequests();
       }
     } catch (err) {
@@ -176,17 +198,76 @@ export default function Requests() {
                       )}
 
                       {req.status === 'ACCEPTED' && (
-                        <motion.button 
-                          whileHover={{ scale: 1.02 }} 
-                          whileTap={{ scale: 0.98 }}
-                          onClick={() => setFeedbackData({...feedbackData, showFor: req._id})}
-                          className="flex items-center justify-center px-4 py-2.5 bg-primary hover:bg-[#152843] text-white font-bold rounded-xl shadow-md transition-all"
-                        >
-                          <Star className="w-4 h-4 mr-2" /> Complete & Rate
-                        </motion.button>
+                        <>
+                          {!req.scheduledDate && (
+                            <motion.button 
+                              whileHover={{ scale: 1.02 }} 
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => setScheduleData({...scheduleData, showFor: req._id})}
+                              className="flex items-center justify-center px-4 py-2.5 bg-secondary hover:bg-black/80 text-white font-bold rounded-xl shadow-md transition-all mb-2"
+                            >
+                              <Clock className="w-4 h-4 mr-2" /> Schedule Call
+                            </motion.button>
+                          )}
+                          {req.scheduledDate && (
+                            <a href={req.meetingLink} target="_blank" rel="noreferrer" className="flex items-center justify-center px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-md transition-all mb-2">
+                              Join Meeting
+                            </a>
+                          )}
+                          <motion.button 
+                            whileHover={{ scale: 1.02 }} 
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setFeedbackData({...feedbackData, showFor: req._id})}
+                            className="flex items-center justify-center px-4 py-2.5 bg-primary hover:bg-[#152843] text-white font-bold rounded-xl shadow-md transition-all"
+                          >
+                            <Star className="w-4 h-4 mr-2" /> Complete & Rate
+                          </motion.button>
+                        </>
                       )}
                     </div>
                   </div>
+
+                  {/* Scheduled Info Badge */}
+                  {req.scheduledDate && (
+                    <div className="mt-4 bg-blue-50 border border-blue-100 p-4 rounded-xl flex items-center justify-between">
+                      <div className="flex items-center text-blue-800">
+                        <Clock className="w-5 h-5 mr-3 text-blue-600" />
+                        <div>
+                          <strong className="block text-sm font-bold">Scheduled Session</strong>
+                          <span className="text-sm font-medium">{new Date(req.scheduledDate).toLocaleString()} ({req.duration} mins)</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Schedule Form inline */}
+                  {scheduleData.showFor === req._id && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-6 pt-6 border-t border-black/10">
+                      <h4 className="font-bold mb-4 text-primary">Schedule a Session</h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                        <div>
+                          <label className="block text-sm font-bold text-secondary mb-1">Date</label>
+                          <input type="date" value={scheduleData.date} onChange={e => setScheduleData({...scheduleData, date: e.target.value})} className="w-full bg-black/5 border border-black/10 rounded-xl p-3 text-primary font-bold outline-none focus:border-primary" />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-bold text-secondary mb-1">Time</label>
+                          <input type="time" value={scheduleData.time} onChange={e => setScheduleData({...scheduleData, time: e.target.value})} className="w-full bg-black/5 border border-black/10 rounded-xl p-3 text-primary font-bold outline-none focus:border-primary" />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-bold text-secondary mb-1">Duration (mins)</label>
+                          <select value={scheduleData.duration} onChange={e => setScheduleData({...scheduleData, duration: Number(e.target.value)})} className="w-full bg-black/5 border border-black/10 rounded-xl p-3 text-primary font-bold outline-none focus:border-primary">
+                            <option value={30}>30 mins</option>
+                            <option value={60}>60 mins</option>
+                            <option value={90}>90 mins</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="flex justify-end space-x-3">
+                        <button onClick={() => setScheduleData({ date: '', time: '', duration: 60, showFor: null })} className="px-5 py-2.5 font-bold text-secondary hover:text-primary transition-colors">Cancel</button>
+                        <button onClick={() => handleSchedule(req._id)} disabled={!scheduleData.date || !scheduleData.time} className="px-5 py-2.5 bg-primary hover:bg-[#152843] text-white font-bold rounded-xl shadow-md transition-all disabled:opacity-50">Set Schedule</button>
+                      </div>
+                    </motion.div>
+                  )}
 
                   {/* Feedback Form inline */}
                   {feedbackData.showFor === req._id && (
