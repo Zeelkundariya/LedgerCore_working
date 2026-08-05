@@ -106,26 +106,45 @@ export default function ProfileView() {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            <div>
-              <h3 className="text-sm font-bold text-secondary uppercase tracking-widest mb-4">Skills They Offer</h3>
+          {/* Badges Section */}
+          <div className="mt-12 flex flex-wrap gap-3">
+            <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold text-sm rounded-full shadow-sm">
+              <ShieldCheck className="w-4 h-4 mr-2" /> Verified Member
+            </span>
+            <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-sm rounded-full shadow-sm">
+              <Star className="w-4 h-4 mr-2" /> Top Teacher
+            </span>
+            <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-sm rounded-full shadow-sm">
+              <Zap className="w-4 h-4 mr-2" /> Fast Responder
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+            <div className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
+              <h3 className="text-lg font-black text-blue-900 mb-4 flex items-center">
+                <span className="w-8 h-8 bg-blue-200 text-blue-700 rounded-lg flex items-center justify-center mr-3">🎓</span>
+                Can Teach
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {targetUser.skillsOffered.length > 0 ? targetUser.skillsOffered.map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-blue-50 text-blue-700 font-bold text-sm rounded-lg border border-blue-200">
+                  <span key={skill} className="px-4 py-2 bg-white text-blue-700 font-bold text-sm rounded-xl border border-blue-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default">
                     {skill}
                   </span>
-                )) : <span className="text-secondary italic">No skills listed yet.</span>}
+                )) : <span className="text-gray-500 italic">No skills listed yet.</span>}
               </div>
             </div>
             
-            <div>
-              <h3 className="text-sm font-bold text-secondary uppercase tracking-widest mb-4">Skills They Want</h3>
+            <div className="bg-purple-50/50 p-6 rounded-2xl border border-purple-100">
+              <h3 className="text-lg font-black text-purple-900 mb-4 flex items-center">
+                <span className="w-8 h-8 bg-purple-200 text-purple-700 rounded-lg flex items-center justify-center mr-3">🚀</span>
+                Wants to Learn
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {targetUser.skillsWanted.length > 0 ? targetUser.skillsWanted.map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-black/5 text-primary font-bold text-sm rounded-lg border border-black/10">
+                  <span key={skill} className="px-4 py-2 bg-white text-purple-700 font-bold text-sm rounded-xl border border-purple-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default">
                     {skill}
                   </span>
-                )) : <span className="text-secondary italic">No skills listed yet.</span>}
+                )) : <span className="text-gray-500 italic">No skills listed yet.</span>}
               </div>
             </div>
           </div>
