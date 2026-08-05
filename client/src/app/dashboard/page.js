@@ -77,7 +77,7 @@ export default function Dashboard() {
               <Link href="/requests" className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-primary font-medium rounded-xl transition-all">
                 <Calendar className="w-5 h-5 mr-3" /> Requests
               </Link>
-              <Link href={\`/profile/\${user?._id}\`} className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-primary font-medium rounded-xl transition-all">
+              <Link href={`/profile/${user?._id}`} className="flex items-center px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-primary font-medium rounded-xl transition-all">
                 <Settings className="w-5 h-5 mr-3" /> Profile Settings
               </Link>
             </nav>
