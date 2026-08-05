@@ -83,9 +83,46 @@ export default function Dashboard() {
             
             {/* Left Column (Stats & Upcoming) */}
             <div className="xl:col-span-2 space-y-6">
-              {/* Push 2: Stats Component goes here */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-32 flex items-center justify-center text-gray-400 border-dashed border-2">
-                [Stats Component Placeholder]
+              {/* Push 2: Stats Component */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <motion.div whileHover={{ y: -5 }} className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 shadow-md text-white">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <p className="text-blue-100 font-medium">Total Swaps</p>
+                      <h3 className="text-3xl font-bold mt-1">12</h3>
+                    </div>
+                    <div className="bg-white/20 p-2 rounded-xl">
+                      <Activity className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-blue-100">+2 this week</p>
+                </motion.div>
+                
+                <motion.div whileHover={{ y: -5 }} className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 shadow-md text-white">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <p className="text-purple-100 font-medium">Hours Learned</p>
+                      <h3 className="text-3xl font-bold mt-1">45.5</h3>
+                    </div>
+                    <div className="bg-white/20 p-2 rounded-xl">
+                      <Calendar className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-purple-100">+5 hrs this month</p>
+                </motion.div>
+
+                <motion.div whileHover={{ y: -5 }} className="bg-gradient-to-br from-[#dd6b20] to-orange-600 rounded-2xl p-6 shadow-md text-white">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <p className="text-orange-100 font-medium">Profile Rating</p>
+                      <h3 className="text-3xl font-bold mt-1">4.9</h3>
+                    </div>
+                    <div className="bg-white/20 p-2 rounded-xl">
+                      <Users className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+                  <p className="text-sm text-orange-100">Top 5% of users</p>
+                </motion.div>
               </div>
 
               {/* Push 3: Upcoming Meetings goes here */}
