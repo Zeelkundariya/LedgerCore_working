@@ -142,38 +142,61 @@ export default function Dashboard() {
                 </motion.div>
               </div>
 
-              {/* Push 3: Upcoming Meetings */}
+              {/* Push 6: Upcoming Scheduled Swaps */}
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Upcoming Swaps</h2>
-                  <button className="text-sm text-primary font-bold hover:underline">View All</button>
+                  <h2 className="text-xl font-bold text-gray-900">Upcoming Scheduled Swaps</h2>
+                  <Link href="/requests" className="text-sm text-primary font-bold hover:underline">View All</Link>
                 </div>
                 
                 <div className="space-y-4">
-                  {swaps.filter(s => s.status === 'accepted').length === 0 ? (
+                  {swaps.filter(s => s.status === 'ACCEPTED' && s.scheduledDate).length === 0 ? (
                     <div className="text-center py-8">
                       <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                      <h3 className="text-lg font-bold text-gray-900">No upcoming swaps</h3>
-                      <p className="text-gray-500 text-sm mt-1 mb-4">You have no scheduled meetings yet.</p>
-                      <Link href="/matches" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-sm hover:bg-[#152843] transition-colors">
-                        Find Matches
+                      <h3 className="text-lg font-bold text-gray-900">No scheduled swaps</h3>
+                      <p className="text-gray-500 text-sm mt-1 mb-4">You have no upcoming sessions on the calendar.</p>
+                      <Link href="/requests" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-sm hover:bg-[#152843] transition-colors">
+                        Schedule a Session
                       </Link>
                     </div>
                   ) : (
-                    swaps.filter(s => s.status === 'accepted').map((swap) => (
-                      <motion.div key={swap._id} whileHover={{ scale: 1.01 }} className="flex items-center p-4 border border-gray-100 rounded-xl hover:shadow-sm transition-all cursor-pointer group">
-                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary transition-colors">
-                          <Calendar className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
-                        </div>
-                        <div className="flex-grow">
-                          <h4 className="font-bold text-gray-900">{swap.skillWanted} session</h4>
-                          <p className="text-sm text-gray-500">with {swap.sender._id === user._id ? swap.receiver.name : swap.sender.name}</p>
-                        </div>
-                        <div className="text-right">
-                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Confirmed</span>
-                        </div>
-                      </motion.div>
-                    ))
+                    swaps.filter(s => s.status === 'ACCEPTED' && s.scheduledDate)
+                      .sort((a, b) => new Date(a.scheduledDate) - new Date(b.scheduledDate))
+                      .map((swap) => {
+                        const otherUser = swap.senderId._id === user?._id ? swap.receiverId : swap.senderId;
+                        const dateObj = new Date(swap.scheduledDate);
+                        const isToday = dateObj.toDateString() === new Date().toDateString();
+
+                        return (
+                          <motion.div key={swap._id} whileHover={{ scale: 1.01 }} className="flex flex-col sm:flex-row sm:items-center p-4 border border-gray-100 rounded-xl hover:shadow-sm transition-all group gap-4">
+                            <div className={`w-14 h-14 rounded-full flex flex-col items-center justify-center flex-shrink-0 shadow-sm border ${isToday ? 'bg-primary border-primary text-white' : 'bg-primary/5 border-primary/20 text-primary'}`}>
+                              <span className="text-xs font-bold uppercase">{dateObj.toLocaleString('en-US', { month: 'short' })}</span>
+                              <span className="text-lg font-black leading-none">{dateObj.getDate()}</span>
+                            </div>
+                            
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-2">
+                                <h4 className="font-bold text-gray-900 text-lg">{otherUser.name}</h4>
+                                {isToday && <span className="bg-red-50 text-red-600 text-[10px] font-black uppercase px-2 py-0.5 rounded-md border border-red-100">Today</span>}
+                              </div>
+                              <p className="text-sm text-gray-500 font-medium mb-1">
+                                {dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {swap.duration} mins
+                              </p>
+                              <p className="text-xs text-gray-400 truncate max-w-xs md:max-w-md">Focus: {swap.offeredSkills[0]} & {swap.requestedSkills[0]}</p>
+                            </div>
+
+                            <div className="flex-shrink-0">
+                              {swap.meetingLink ? (
+                                <a href={swap.meetingLink} target="_blank" rel="noreferrer" className="inline-block w-full text-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold rounded-lg shadow-sm transition-colors">
+                                  Join Room
+                                </a>
+                              ) : (
+                                <span className="px-3 py-1 bg-gray-100 text-gray-500 text-xs font-bold rounded-md">No Link</span>
+                              )}
+                            </div>
+                          </motion.div>
+                        );
+                      })
                   )}
                 </div>
               </div>
