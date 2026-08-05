@@ -166,7 +166,7 @@ export default function Register() {
                   required
                   autoComplete="email"
                   className="w-full pl-11 pr-4 py-3.5 bg-white border border-black/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-primary transition-all placeholder:text-black/30 font-medium shadow-sm"
-                  placeholder="name@example.com"
+                  placeholder="Enter your email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
