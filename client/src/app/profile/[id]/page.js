@@ -161,6 +161,28 @@ export default function ProfileView() {
             </div>
           </div>
           
+          {/* Portfolio Section */}
+          <div className="mt-16 pt-10 border-t border-gray-100">
+            <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-gray-100 text-gray-700 rounded-lg flex items-center justify-center mr-3">🎨</span>
+              Portfolio Projects
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((item) => (
+                <motion.div key={item} whileHover={{ y: -5 }} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group cursor-pointer">
+                  <div className="h-40 bg-gray-100 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-gray-200 to-gray-50 group-hover:scale-105 transition-transform duration-500"></div>
+                    <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-medium">Project Preview {item}</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="font-bold text-gray-900 mb-1">Awesome Project {item}</h4>
+                    <p className="text-sm text-gray-500 line-clamp-2">A demonstration of skills and practical application in real-world scenarios.</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          
         </div>
       </motion.div>
     </div>
