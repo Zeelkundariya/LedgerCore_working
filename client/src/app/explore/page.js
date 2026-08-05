@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, MapPin, User, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export default function Explore() {
   const [query, setQuery] = useState('');
@@ -13,8 +15,16 @@ export default function Explore() {
   // Popular skills to filter quickly
   const popularSkills = ['React', 'Design', 'Spanish', 'Python', 'Guitar', 'Marketing'];
 
+  const router = useRouter();
+  const { checkAuth, logout } = useAuthStore();
+
   useEffect(() => {
-    searchUsers('');
+    checkAuth();
+    if (!localStorage.getItem('token')) {
+      router.push('/login');
+    } else {
+      searchUsers('');
+    }
   }, []);
 
   const [error, setError] = useState(null);
@@ -34,6 +44,9 @@ export default function Explore() {
       if (res.ok) {
         const data = await res.json();
         setUsers(data);
+      } else if (res.status === 401) {
+        logout();
+        router.push('/login');
       } else {
         setError('Failed to fetch data from the server.');
       }
