@@ -195,24 +195,24 @@ export default function Register() {
               <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-full h-1 bg-gray-200 rounded-full z-0"></div>
               <div 
                 className="absolute left-0 top-1/2 transform -translate-y-1/2 h-1 bg-primary rounded-full z-0 transition-all duration-500 ease-in-out"
-                style={{ width: \`\${((step - 1) / (totalSteps - 1)) * 100}%\` }}
+                style={{ width: `${((step - 1) / (totalSteps - 1)) * 100}%` }}
               ></div>
               
               {[1, 2, 3, 4].map(num => (
                 <div key={num} className="relative z-10 flex flex-col items-center">
-                  <div className={\`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-300 \${
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors duration-300 ${
                     step >= num ? 'bg-primary text-white shadow-md' : 'bg-white border-2 border-gray-200 text-gray-400'
-                  }\`}>
+                  }`}>
                     {step > num ? <Check className="w-4 h-4" /> : num}
                   </div>
                 </div>
               ))}
             </div>
             <div className="flex justify-between mt-2 px-1">
-              <span className={\`text-xs font-semibold \${step >= 1 ? 'text-primary' : 'text-gray-400'}\`}>Account</span>
-              <span className={\`text-xs font-semibold \${step >= 2 ? 'text-primary' : 'text-gray-400'}\`}>Teach</span>
-              <span className={\`text-xs font-semibold \${step >= 3 ? 'text-primary' : 'text-gray-400'}\`}>Learn</span>
-              <span className={\`text-xs font-semibold \${step >= 4 ? 'text-primary' : 'text-gray-400'}\`}>Details</span>
+              <span className={`text-xs font-semibold ${step >= 1 ? 'text-primary' : 'text-gray-400'}`}>Account</span>
+              <span className={`text-xs font-semibold ${step >= 2 ? 'text-primary' : 'text-gray-400'}`}>Teach</span>
+              <span className={`text-xs font-semibold ${step >= 3 ? 'text-primary' : 'text-gray-400'}`}>Learn</span>
+              <span className={`text-xs font-semibold ${step >= 4 ? 'text-primary' : 'text-gray-400'}`}>Details</span>
             </div>
           </div>
 
