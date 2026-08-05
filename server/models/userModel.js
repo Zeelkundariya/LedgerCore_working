@@ -56,6 +56,19 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // Gamification fields
+    xp: {
+      type: Number,
+      default: 0,
+    },
+    level: {
+      type: Number,
+      default: 1,
+    },
+    badges: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,
