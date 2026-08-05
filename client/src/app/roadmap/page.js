@@ -257,6 +257,7 @@ export default function Roadmaps() {
                 animate={{ width: `${progressPercentage}%` }}
                 className="h-full bg-green-500 rounded-full"
               />
+            </div>
             <span className="font-black text-primary min-w-[3rem] text-right">{progressPercentage}%</span>
           </div>
 
