@@ -12,6 +12,14 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  
+  // Multi-step profile data
+  const [step, setStep] = useState(1);
+  const [skillsOffered, setSkillsOffered] = useState([]);
+  const [skillsWanted, setSkillsWanted] = useState([]);
+  const [location, setLocation] = useState('');
+  const [availability, setAvailability] = useState('');
+  
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
