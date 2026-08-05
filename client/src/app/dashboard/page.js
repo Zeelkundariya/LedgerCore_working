@@ -125,9 +125,39 @@ export default function Dashboard() {
                 </motion.div>
               </div>
 
-              {/* Push 3: Upcoming Meetings goes here */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-64 flex items-center justify-center text-gray-400 border-dashed border-2">
-                [Upcoming Meetings Placeholder]
+              {/* Push 3: Upcoming Meetings */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-bold text-gray-900">Upcoming Swaps</h2>
+                  <button className="text-sm text-primary font-bold hover:underline">View All</button>
+                </div>
+                
+                <div className="space-y-4">
+                  {[1, 2].map((item) => (
+                    <motion.div key={item} whileHover={{ scale: 1.01 }} className="flex items-center p-4 border border-gray-100 rounded-xl hover:shadow-sm transition-all cursor-pointer group">
+                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary transition-colors">
+                        <Calendar className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                      </div>
+                      <div className="flex-grow">
+                        <h4 className="font-bold text-gray-900">React for Beginners</h4>
+                        <p className="text-sm text-gray-500">with Alex Johnson • Tomorrow, 2:00 PM</p>
+                      </div>
+                      <div className="text-right">
+                        <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Confirmed</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {/* Empty State */}
+                  {/* <div className="text-center py-8">
+                    <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                    <h3 className="text-lg font-bold text-gray-900">No upcoming swaps</h3>
+                    <p className="text-gray-500 text-sm mt-1 mb-4">You have no scheduled meetings yet.</p>
+                    <Link href="/matches" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-sm hover:bg-[#152843] transition-colors">
+                      Find Matches
+                    </Link>
+                  </div> */}
+                </div>
               </div>
             </div>
 
