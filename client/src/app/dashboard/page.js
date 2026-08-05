@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '@/store/useAuthStore';
-import { LayoutDashboard, Users, Calendar, Activity, Settings, User } from 'lucide-react';
+import { LayoutDashboard, Users, Calendar, Activity, Settings, User, Check, Star } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Dashboard() {
@@ -163,9 +163,34 @@ export default function Dashboard() {
 
             {/* Right Column (Activity Feed) */}
             <div className="space-y-6">
-              {/* Push 4: Activity Feed goes here */}
-              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-96 flex items-center justify-center text-gray-400 border-dashed border-2">
-                [Recent Activity Feed Placeholder]
+              {/* Push 4: Activity Feed */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
+                </div>
+                
+                <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:ml-6 md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
+                  {[
+                    { title: 'New match found!', desc: 'Sarah matches 95% of your skills.', time: '2 hours ago', icon: <Users className="w-4 h-4 text-white" />, color: 'bg-blue-500' },
+                    { title: 'Swap completed', desc: 'You completed a 1hr swap with John.', time: 'Yesterday', icon: <Check className="w-4 h-4 text-white" />, color: 'bg-green-500' },
+                    { title: 'Earned a badge', desc: 'You unlocked the "Top Teacher" badge!', time: '3 days ago', icon: <Star className="w-4 h-4 text-white" />, color: 'bg-orange-500' },
+                    { title: 'Profile updated', desc: 'You added "Python" to your offered skills.', time: '1 week ago', icon: <Settings className="w-4 h-4 text-white" />, color: 'bg-gray-500' }
+                  ].map((act, i) => (
+                    <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                      <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm ${act.color} z-10`}>
+                        {act.icon}
+                      </div>
+                      
+                      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="font-bold text-gray-900 text-sm">{act.title}</h4>
+                          <time className="text-xs text-gray-400 font-medium">{act.time}</time>
+                        </div>
+                        <p className="text-sm text-gray-600">{act.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
