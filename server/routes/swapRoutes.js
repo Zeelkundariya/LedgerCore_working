@@ -6,7 +6,8 @@ const {
   acceptSwapRequest,
   rejectSwapRequest,
   cancelSwapRequest,
-  completeSwapRequest
+  completeSwapRequest,
+  proposeSchedule
 } = require('../controllers/swapController');
 const { protect } = require('../middleware/authMiddleware');
 
@@ -17,5 +18,6 @@ router.route('/:id/accept').put(protect, acceptSwapRequest);
 router.route('/:id/reject').put(protect, rejectSwapRequest);
 router.route('/:id/cancel').delete(protect, cancelSwapRequest);
 router.route('/:id/complete').post(protect, completeSwapRequest);
+router.route('/:id/schedule').put(protect, proposeSchedule);
 
 module.exports = router;
