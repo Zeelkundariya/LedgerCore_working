@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
+const { generateMatch } = require('../services/matchService');
 
 // @desc    Get user profile
 // @route   GET /api/users/me
@@ -121,9 +122,35 @@ const addUserReview = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get AI Matches for current user
+// @route   GET /api/users/matches
+// @access  Private
+const getMatches = asyncHandler(async (req, res) => {
+  const currentUser = await User.findById(req.user._id);
+
+  if (!currentUser) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  // Find all public users except current user
+  const otherUsers = await User.find({ isPublic: true, _id: { $ne: req.user._id } }).select(
+    '-password -email -role'
+  );
+
+  // Generate real matches
+  let matches = otherUsers.map(targetUser => generateMatch(currentUser, targetUser));
+
+  // Sort by highest match score
+  matches.sort((a, b) => b.score - a.score);
+
+  res.json(matches);
+});
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
   searchUsers,
   addUserReview,
+  getMatches,
 };
