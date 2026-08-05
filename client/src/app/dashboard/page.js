@@ -11,15 +11,32 @@ export default function Dashboard() {
   const router = useRouter();
   const { user, checkAuth } = useAuthStore();
   const [loading, setLoading] = useState(true);
+  const [swaps, setSwaps] = useState([]);
 
   useEffect(() => {
     checkAuth();
     if (!localStorage.getItem('token')) {
       router.push('/login');
     } else {
-      setLoading(false);
+      fetchDashboardData();
     }
   }, []);
+
+  const fetchDashboardData = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/swaps/my-requests', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setSwaps(data);
+      }
+    } catch (err) {
+      console.error('Failed to fetch dashboard data', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -89,7 +106,7 @@ export default function Dashboard() {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <p className="text-blue-100 font-medium">Total Swaps</p>
-                      <h3 className="text-3xl font-bold mt-1">12</h3>
+                      <h3 className="text-3xl font-bold mt-1">{swaps.filter(s => s.status === 'completed' || s.status === 'accepted').length}</h3>
                     </div>
                     <div className="bg-white/20 p-2 rounded-xl">
                       <Activity className="w-6 h-6 text-white" />
@@ -133,30 +150,31 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="space-y-4">
-                  {[1, 2].map((item) => (
-                    <motion.div key={item} whileHover={{ scale: 1.01 }} className="flex items-center p-4 border border-gray-100 rounded-xl hover:shadow-sm transition-all cursor-pointer group">
-                      <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary transition-colors">
-                        <Calendar className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
-                      </div>
-                      <div className="flex-grow">
-                        <h4 className="font-bold text-gray-900">React for Beginners</h4>
-                        <p className="text-sm text-gray-500">with Alex Johnson • Tomorrow, 2:00 PM</p>
-                      </div>
-                      <div className="text-right">
-                        <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Confirmed</span>
-                      </div>
-                    </motion.div>
-                  ))}
-                  
-                  {/* Empty State */}
-                  {/* <div className="text-center py-8">
-                    <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                    <h3 className="text-lg font-bold text-gray-900">No upcoming swaps</h3>
-                    <p className="text-gray-500 text-sm mt-1 mb-4">You have no scheduled meetings yet.</p>
-                    <Link href="/matches" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-sm hover:bg-[#152843] transition-colors">
-                      Find Matches
-                    </Link>
-                  </div> */}
+                  {swaps.filter(s => s.status === 'accepted').length === 0 ? (
+                    <div className="text-center py-8">
+                      <Calendar className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                      <h3 className="text-lg font-bold text-gray-900">No upcoming swaps</h3>
+                      <p className="text-gray-500 text-sm mt-1 mb-4">You have no scheduled meetings yet.</p>
+                      <Link href="/matches" className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-sm hover:bg-[#152843] transition-colors">
+                        Find Matches
+                      </Link>
+                    </div>
+                  ) : (
+                    swaps.filter(s => s.status === 'accepted').map((swap) => (
+                      <motion.div key={swap._id} whileHover={{ scale: 1.01 }} className="flex items-center p-4 border border-gray-100 rounded-xl hover:shadow-sm transition-all cursor-pointer group">
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4 group-hover:bg-primary transition-colors">
+                          <Calendar className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                        </div>
+                        <div className="flex-grow">
+                          <h4 className="font-bold text-gray-900">{swap.skillWanted} session</h4>
+                          <p className="text-sm text-gray-500">with {swap.sender._id === user._id ? swap.receiver.name : swap.sender.name}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Confirmed</span>
+                        </div>
+                      </motion.div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
