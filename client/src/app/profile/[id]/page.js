@@ -95,7 +95,8 @@ export default function ProfileView() {
               <h1 className="text-4xl font-black text-gray-900 tracking-tight">{targetUser.name}</h1>
               <div className="flex items-center gap-4 text-gray-500 font-medium mt-3">
                 <span className="flex items-center bg-gray-100 px-3 py-1 rounded-full text-sm"><MapPin className="w-4 h-4 mr-1 text-primary" /> {targetUser.location || 'Remote'}</span>
-                <span className="flex items-center bg-yellow-50 px-3 py-1 rounded-full text-yellow-700 text-sm"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> 5.0 (12 Reviews)</span>
+                <span className="flex items-center bg-yellow-50 px-3 py-1 rounded-full text-yellow-700 text-sm"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> {targetUser.reviews?.length > 0 ? (targetUser.reviews.reduce((a, b) => a + b.rating, 0) / targetUser.reviews.length).toFixed(1) : 'New'} ({targetUser.reviews?.length || 0} Reviews)</span>
+                <span className="flex items-center bg-blue-50 px-3 py-1 rounded-full text-blue-700 text-sm font-bold"><Zap className="w-4 h-4 mr-1 text-blue-500" /> Lvl {targetUser.level || 1} • {targetUser.xp || 0} XP</span>
               </div>
             </div>
             
@@ -107,16 +108,15 @@ export default function ProfileView() {
           </div>
           
           {/* Badges Section */}
-          <div className="mt-12 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold text-sm rounded-full shadow-sm">
               <ShieldCheck className="w-4 h-4 mr-2" /> Verified Member
             </span>
-            <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold text-sm rounded-full shadow-sm">
-              <Star className="w-4 h-4 mr-2" /> Top Teacher
-            </span>
-            <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-sm rounded-full shadow-sm">
-              <Zap className="w-4 h-4 mr-2" /> Fast Responder
-            </span>
+            {targetUser.badges?.map(badge => (
+              <span key={badge} className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-sm rounded-full shadow-sm">
+                <Star className="w-4 h-4 mr-2" /> {badge}
+              </span>
+            ))}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
