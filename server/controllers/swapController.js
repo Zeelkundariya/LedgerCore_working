@@ -135,11 +135,39 @@ const completeSwapRequest = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Propose a schedule for a swap request
+// @route   PUT /api/swaps/:id/schedule
+// @access  Private
+const proposeSchedule = asyncHandler(async (req, res) => {
+  const request = await SwapRequest.findById(req.params.id);
+  const { scheduledDate, duration } = req.body;
+
+  if (request) {
+    if (request.senderId.toString() !== req.user._id.toString() && request.receiverId.toString() !== req.user._id.toString()) {
+      res.status(403);
+      throw new Error('Not authorized to schedule this swap');
+    }
+    
+    request.scheduledDate = scheduledDate;
+    request.duration = duration || 60;
+    
+    // Auto-generate a meeting link when schedule is proposed/agreed upon
+    request.meetingLink = `https://meet.skillsphere.com/${request._id}`;
+
+    await request.save();
+    res.json(request);
+  } else {
+    res.status(404);
+    throw new Error('Request not found');
+  }
+});
+
 module.exports = {
   createSwapRequest,
   getMySwapRequests,
   acceptSwapRequest,
   rejectSwapRequest,
   cancelSwapRequest,
-  completeSwapRequest
+  completeSwapRequest,
+  proposeSchedule
 };
