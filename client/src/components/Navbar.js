@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../store/useAuthStore';
-import { Menu, X, Code2, LogOut, User, Sparkles, Map } from 'lucide-react';
+import { Menu, X, Code2, LogOut, User, Sparkles, Map, Trophy } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -50,6 +50,12 @@ export default function Navbar() {
                 className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/roadmap') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
               >
                 <Map className="w-4 h-4 mr-1.5" /> Roadmap
+              </Link>
+              <Link 
+                href="/reputation" 
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/reputation') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
+              >
+                <Trophy className="w-4 h-4 mr-1.5" /> Reputation
               </Link>
 
               {isAuthenticated ? (
