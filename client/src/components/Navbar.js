@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../store/useAuthStore';
-import { Menu, X, Code2, LogOut, User, Sparkles, Map, Trophy } from 'lucide-react';
+import { Menu, X, Code2, LogOut, User, Sparkles, Map, Trophy, ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -39,30 +39,39 @@ export default function Navbar() {
               >
                 Explore
               </Link>
-              <Link 
-                href="/matches" 
-                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/matches') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
-              >
-                <Sparkles className="w-4 h-4 mr-1.5" /> AI Match
-              </Link>
-              <Link 
-                href="/roadmap" 
-                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/roadmap') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
-              >
-                <Map className="w-4 h-4 mr-1.5" /> Roadmap
-              </Link>
-              <Link 
-                href="/reputation" 
-                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/reputation') ? 'bg-primary text-white shadow-sm' : 'text-secondary hover:text-primary hover:bg-black/5'}`}
-              >
-                <Trophy className="w-4 h-4 mr-1.5" /> Reputation
-              </Link>
-              <Link 
-                href="/leaderboard" 
-                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/leaderboard') ? 'bg-yellow-100 text-yellow-700 shadow-sm border border-yellow-200' : 'text-secondary hover:text-yellow-600 hover:bg-yellow-50'}`}
-              >
-                <Trophy className="w-4 h-4 mr-1.5" /> Leaderboard
-              </Link>
+
+              {/* Features Dropdown */}
+              <div className="relative group">
+                <button className="px-4 py-2 rounded-xl text-sm font-bold transition-all text-secondary hover:text-primary hover:bg-black/5 flex items-center gap-1 cursor-pointer">
+                  Features <ChevronDown className="w-4 h-4" />
+                </button>
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 shadow-xl rounded-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[200] overflow-hidden py-2">
+                  <Link 
+                    href="/matches" 
+                    className={`block px-4 py-2.5 text-sm font-bold transition-all flex items-center ${isActive('/matches') ? 'bg-primary/5 text-primary' : 'text-secondary hover:bg-gray-50 hover:text-primary'}`}
+                  >
+                    <Sparkles className="w-4 h-4 mr-2" /> AI Match
+                  </Link>
+                  <Link 
+                    href="/roadmap" 
+                    className={`block px-4 py-2.5 text-sm font-bold transition-all flex items-center ${isActive('/roadmap') ? 'bg-primary/5 text-primary' : 'text-secondary hover:bg-gray-50 hover:text-primary'}`}
+                  >
+                    <Map className="w-4 h-4 mr-2" /> Roadmap
+                  </Link>
+                  <Link 
+                    href="/reputation" 
+                    className={`block px-4 py-2.5 text-sm font-bold transition-all flex items-center ${isActive('/reputation') ? 'bg-primary/5 text-primary' : 'text-secondary hover:bg-gray-50 hover:text-primary'}`}
+                  >
+                    <Trophy className="w-4 h-4 mr-2" /> Reputation
+                  </Link>
+                  <Link 
+                    href="/leaderboard" 
+                    className={`block px-4 py-2.5 text-sm font-bold transition-all flex items-center ${isActive('/leaderboard') ? 'bg-yellow-50 text-yellow-700' : 'text-secondary hover:bg-yellow-50 hover:text-yellow-600'}`}
+                  >
+                    <Trophy className="w-4 h-4 mr-2" /> Leaderboard
+                  </Link>
+                </div>
+              </div>
 
               {isAuthenticated ? (
               <div className="flex items-center gap-6 ml-4">
@@ -74,6 +83,9 @@ export default function Navbar() {
                 <Link href="/requests" className="text-secondary hover:text-primary font-medium transition-colors relative">
                   Requests
                   <span className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+                </Link>
+                <Link href="/calendar" className="text-secondary hover:text-primary font-medium transition-colors">
+                  Calendar
                 </Link>
                 <Link href="/dashboard">
                   <motion.div whileHover={{ scale: 1.02 }} className="flex items-center gap-1 text-secondary hover:text-primary font-medium transition-colors">
@@ -144,6 +156,9 @@ export default function Navbar() {
                   )}
                   <Link href="/requests" onClick={() => setIsOpen(false)}>
                     <span className="block text-secondary hover:text-primary py-2 font-medium">Requests</span>
+                  </Link>
+                  <Link href="/calendar" onClick={() => setIsOpen(false)}>
+                    <span className="block text-secondary hover:text-primary py-2 font-medium">Calendar</span>
                   </Link>
                   <Link href="/dashboard" onClick={() => setIsOpen(false)}>
                     <span className="block text-secondary hover:text-primary py-2 font-medium">Dashboard</span>
