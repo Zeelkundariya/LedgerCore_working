@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const SwapRequest = require('../models/swapRequestModel');
 const User = require('../models/userModel');
+const { awardXP } = require('../services/xpService');
 
 // @desc    Create new swap request
 // @route   POST /api/swaps/request
@@ -128,7 +129,51 @@ const completeSwapRequest = asyncHandler(async (req, res) => {
 
     request.status = 'COMPLETED';
     await request.save();
-    res.json({ message: 'Swap completed and feedback submitted' });
+
+    // Gamification: Award XP to both users for completing a swap
+    const completedSwapsCountSender = await SwapRequest.countDocuments({ 
+      senderId: request.senderId, 
+      status: 'COMPLETED' 
+    });
+    const completedSwapsCountReceiver = await SwapRequest.countDocuments({ 
+      receiverId: request.receiverId, 
+      status: 'COMPLETED' 
+    });
+
+    const senderGamification = await awardXP(request.senderId, 50, completedSwapsCountSender);
+    const receiverGamification = await awardXP(request.receiverId, 50, completedSwapsCountReceiver);
+
+    res.json({ 
+      message: 'Swap completed and feedback submitted',
+      gamification: req.user._id.toString() === request.senderId.toString() ? senderGamification : receiverGamification
+    });
+  } else {
+    res.status(404);
+    throw new Error('Request not found');
+  }
+});
+
+// @desc    Propose a schedule for a swap request
+// @route   PUT /api/swaps/:id/schedule
+// @access  Private
+const proposeSchedule = asyncHandler(async (req, res) => {
+  const request = await SwapRequest.findById(req.params.id);
+  const { scheduledDate, duration } = req.body;
+
+  if (request) {
+    if (request.senderId.toString() !== req.user._id.toString() && request.receiverId.toString() !== req.user._id.toString()) {
+      res.status(403);
+      throw new Error('Not authorized to schedule this swap');
+    }
+    
+    request.scheduledDate = scheduledDate;
+    request.duration = duration || 60;
+    
+    // Auto-generate a meeting link when schedule is proposed/agreed upon
+    request.meetingLink = `https://meet.skillsphere.com/${request._id}`;
+
+    await request.save();
+    res.json(request);
   } else {
     res.status(404);
     throw new Error('Request not found');
@@ -141,5 +186,6 @@ module.exports = {
   acceptSwapRequest,
   rejectSwapRequest,
   cancelSwapRequest,
-  completeSwapRequest
+  completeSwapRequest,
+  proposeSchedule
 };

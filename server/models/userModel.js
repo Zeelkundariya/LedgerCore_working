@@ -44,9 +44,30 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    reviews: [
+      {
+        reviewerName: { type: String, required: true },
+        rating: { type: Number, required: true },
+        comment: { type: String, required: true },
+        createdAt: { type: Date, default: Date.now },
+      }
+    ],
     isBanned: {
       type: Boolean,
       default: false,
+    },
+    // Gamification fields
+    xp: {
+      type: Number,
+      default: 0,
+    },
+    level: {
+      type: Number,
+      default: 1,
+    },
+    badges: {
+      type: [String],
+      default: [],
     },
   },
   {

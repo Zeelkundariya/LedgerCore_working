@@ -7,7 +7,7 @@ const generateToken = require('../utils/generateToken');
 // @route   POST /api/auth/register
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, skillsOffered, skillsWanted, location, availability } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -23,6 +23,10 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password: hashedPassword,
+    skillsOffered: skillsOffered || [],
+    skillsWanted: skillsWanted || [],
+    location: location || '',
+    availability: availability || '',
   });
 
   if (user) {

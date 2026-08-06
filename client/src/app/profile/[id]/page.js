@@ -74,24 +74,29 @@ export default function ProfileView() {
         className="bg-white rounded-3xl border border-black/10 shadow-lg overflow-hidden"
       >
         {/* Banner */}
-        <div className="h-32 bg-primary/5"></div>
+        <div className="h-48 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 relative">
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
         
         <div className="px-8 pb-10 relative">
           {/* Avatar */}
-          <div className="w-24 h-24 bg-white rounded-full border-4 border-white shadow-md flex items-center justify-center absolute -top-12 overflow-hidden">
+          <div className="w-32 h-32 bg-white rounded-full border-4 border-white shadow-xl flex items-center justify-center absolute -top-16 overflow-hidden z-10">
             {targetUser.profilePicture ? (
               <img src={targetUser.profilePicture} alt={targetUser.name} className="w-full h-full object-cover" />
             ) : (
-              <User className="w-12 h-12 text-primary" />
+              <div className="w-full h-full bg-gradient-to-br from-primary to-blue-800 flex items-center justify-center text-white text-4xl font-bold">
+                {targetUser.name.charAt(0)}
+              </div>
             )}
           </div>
           
-          <div className="mt-16 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
+          <div className="mt-20 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
             <div>
-              <h1 className="text-3xl font-black text-primary">{targetUser.name}</h1>
-              <div className="flex items-center gap-4 text-secondary font-medium mt-2">
-                <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {targetUser.location || 'Remote'}</span>
-                <span className="flex items-center"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> 4.9 Average Rating</span>
+              <h1 className="text-4xl font-black text-gray-900 tracking-tight">{targetUser.name}</h1>
+              <div className="flex items-center gap-4 text-gray-500 font-medium mt-3">
+                <span className="flex items-center bg-gray-100 px-3 py-1 rounded-full text-sm"><MapPin className="w-4 h-4 mr-1 text-primary" /> {targetUser.location || 'Remote'}</span>
+                <span className="flex items-center bg-yellow-50 px-3 py-1 rounded-full text-yellow-700 text-sm"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> {targetUser.reviews?.length > 0 ? (targetUser.reviews.reduce((a, b) => a + b.rating, 0) / targetUser.reviews.length).toFixed(1) : 'New'} ({targetUser.reviews?.length || 0} Reviews)</span>
+                <span className="flex items-center bg-blue-50 px-3 py-1 rounded-full text-blue-700 text-sm font-bold"><Zap className="w-4 h-4 mr-1 text-blue-500" /> Lvl {targetUser.level || 1} • {targetUser.xp || 0} XP</span>
               </div>
             </div>
             
@@ -102,26 +107,44 @@ export default function ProfileView() {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            <div>
-              <h3 className="text-sm font-bold text-secondary uppercase tracking-widest mb-4">Skills They Offer</h3>
+          {/* Badges Section */}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white font-bold text-sm rounded-full shadow-sm">
+              <ShieldCheck className="w-4 h-4 mr-2" /> Verified Member
+            </span>
+            {targetUser.badges?.map(badge => (
+              <span key={badge} className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-sm rounded-full shadow-sm">
+                <Star className="w-4 h-4 mr-2" /> {badge}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+            <div className="bg-blue-50/50 p-6 rounded-2xl border border-blue-100">
+              <h3 className="text-lg font-black text-blue-900 mb-4 flex items-center">
+                <span className="w-8 h-8 bg-blue-200 text-blue-700 rounded-lg flex items-center justify-center mr-3">🎓</span>
+                Can Teach
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {targetUser.skillsOffered.length > 0 ? targetUser.skillsOffered.map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-blue-50 text-blue-700 font-bold text-sm rounded-lg border border-blue-200">
+                  <span key={skill} className="px-4 py-2 bg-white text-blue-700 font-bold text-sm rounded-xl border border-blue-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default">
                     {skill}
                   </span>
-                )) : <span className="text-secondary italic">No skills listed yet.</span>}
+                )) : <span className="text-gray-500 italic">No skills listed yet.</span>}
               </div>
             </div>
             
-            <div>
-              <h3 className="text-sm font-bold text-secondary uppercase tracking-widest mb-4">Skills They Want</h3>
+            <div className="bg-purple-50/50 p-6 rounded-2xl border border-purple-100">
+              <h3 className="text-lg font-black text-purple-900 mb-4 flex items-center">
+                <span className="w-8 h-8 bg-purple-200 text-purple-700 rounded-lg flex items-center justify-center mr-3">🚀</span>
+                Wants to Learn
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {targetUser.skillsWanted.length > 0 ? targetUser.skillsWanted.map(skill => (
-                  <span key={skill} className="px-3 py-1.5 bg-black/5 text-primary font-bold text-sm rounded-lg border border-black/10">
+                  <span key={skill} className="px-4 py-2 bg-white text-purple-700 font-bold text-sm rounded-xl border border-purple-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all cursor-default">
                     {skill}
                   </span>
-                )) : <span className="text-secondary italic">No skills listed yet.</span>}
+                )) : <span className="text-gray-500 italic">No skills listed yet.</span>}
               </div>
             </div>
           </div>
@@ -136,6 +159,61 @@ export default function ProfileView() {
                 <ShieldCheck className="w-4 h-4 mr-1" /> Fast Responder
               </span>
             </div>
+          </div>
+          
+          {/* Portfolio Section */}
+          <div className="mt-16 pt-10 border-t border-gray-100">
+            <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-gray-100 text-gray-700 rounded-lg flex items-center justify-center mr-3">🎨</span>
+              Portfolio Projects
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((item) => (
+                <motion.div key={item} whileHover={{ y: -5 }} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden group cursor-pointer">
+                  <div className="h-40 bg-gray-100 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-gray-200 to-gray-50 group-hover:scale-105 transition-transform duration-500"></div>
+                    <div className="absolute inset-0 flex items-center justify-center text-gray-400 font-medium">Project Preview {item}</div>
+                  </div>
+                  <div className="p-5">
+                    <h4 className="font-bold text-gray-900 mb-1">Awesome Project {item}</h4>
+                    <p className="text-sm text-gray-500 line-clamp-2">A demonstration of skills and practical application in real-world scenarios.</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Reviews Section */}
+          <div className="mt-16 pt-10 border-t border-gray-100">
+            <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-yellow-100 text-yellow-600 rounded-lg flex items-center justify-center mr-3">⭐</span>
+              Reviews & Testimonials
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[1, 2].map((item) => (
+                <div key={item} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm relative">
+                  <div className="flex items-center gap-1 mb-3">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    ))}
+                  </div>
+                  <p className="text-gray-700 italic mb-4">"Absolutely fantastic session! I learned so much about React and the explanation was super clear. Highly recommended!"</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-500">
+                      U{item}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-gray-900">User {item}</h4>
+                      <p className="text-xs text-gray-400">1 week ago</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <button className="mt-6 w-full py-4 border-2 border-dashed border-gray-200 text-gray-500 font-bold rounded-2xl hover:border-primary hover:text-primary transition-colors flex items-center justify-center">
+              Leave a Review
+            </button>
           </div>
           
         </div>

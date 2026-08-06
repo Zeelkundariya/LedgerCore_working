@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const User = require('../models/userModel');
+const { generateMatch } = require('../services/matchService');
 
 // @desc    Get user profile
 // @route   GET /api/users/me
@@ -98,8 +99,91 @@ const searchUsers = asyncHandler(async (req, res) => {
   res.json(users);
 });
 
+// @desc    Add a review to a user profile
+// @route   POST /api/users/:id/reviews
+// @access  Private
+const addUserReview = asyncHandler(async (req, res) => {
+  const { rating, comment } = req.body;
+  const userToReview = await User.findById(req.params.id);
+
+  if (userToReview) {
+    const review = {
+      reviewerName: req.user.name,
+      rating: Number(rating),
+      comment,
+    };
+
+    userToReview.reviews.push(review);
+    await userToReview.save();
+    res.status(201).json({ message: 'Review added' });
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
+// @desc    Get AI Matches for current user
+// @route   GET /api/users/matches
+// @access  Private
+const getMatches = asyncHandler(async (req, res) => {
+  const currentUser = await User.findById(req.user._id);
+
+  if (!currentUser) {
+    res.status(404);
+    throw new Error('User not found');
+  }
+
+  // Find all public users except current user
+  const otherUsers = await User.find({ isPublic: true, _id: { $ne: req.user._id } }).select(
+    '-password -email -role'
+  );
+
+  // Generate real matches
+  let matches = otherUsers.map(targetUser => generateMatch(currentUser, targetUser));
+
+  // Sort by highest match score
+  matches.sort((a, b) => b.score - a.score);
+
+  res.json(matches);
+});
+
+// @desc    Get leaderboard
+// @route   GET /api/users/leaderboard
+// @access  Public
+const getLeaderboard = asyncHandler(async (req, res) => {
+  const topUsers = await User.find({ isPublic: true })
+    .sort({ xp: -1 })
+    .limit(50)
+    .select('name profilePhoto xp level badges location reviews');
+
+  // Compute stats for leaderboard
+  const leaderboard = topUsers.map(user => {
+    const totalReviews = user.reviews.length;
+    const avgRating = totalReviews > 0 
+      ? (user.reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews).toFixed(1) 
+      : 0;
+    
+    return {
+      _id: user._id,
+      name: user.name,
+      profilePhoto: user.profilePhoto,
+      xp: user.xp,
+      level: user.level,
+      badges: user.badges,
+      location: user.location,
+      rating: Number(avgRating),
+      reviewCount: totalReviews
+    };
+  });
+
+  res.json(leaderboard);
+});
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
   searchUsers,
+  addUserReview,
+  getMatches,
+  getLeaderboard,
 };

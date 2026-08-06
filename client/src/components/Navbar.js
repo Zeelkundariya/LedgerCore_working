@@ -57,6 +57,12 @@ export default function Navbar() {
               >
                 <Trophy className="w-4 h-4 mr-1.5" /> Reputation
               </Link>
+              <Link 
+                href="/leaderboard" 
+                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center ${isActive('/leaderboard') ? 'bg-yellow-100 text-yellow-700 shadow-sm border border-yellow-200' : 'text-secondary hover:text-yellow-600 hover:bg-yellow-50'}`}
+              >
+                <Trophy className="w-4 h-4 mr-1.5" /> Leaderboard
+              </Link>
 
               {isAuthenticated ? (
               <div className="flex items-center gap-6 ml-4">
@@ -124,6 +130,9 @@ export default function Navbar() {
             <div className="px-4 pt-4 pb-8 space-y-4">
               <Link href="/explore" onClick={() => setIsOpen(false)}>
                 <span className="block text-secondary hover:text-primary py-2 font-medium">Explore</span>
+              </Link>
+              <Link href="/leaderboard" onClick={() => setIsOpen(false)}>
+                <span className="block text-yellow-600 hover:text-yellow-700 py-2 font-bold flex items-center"><Trophy className="w-4 h-4 mr-2" /> Leaderboard</span>
               </Link>
 
               {isAuthenticated ? (
