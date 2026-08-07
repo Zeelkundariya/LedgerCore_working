@@ -29,13 +29,36 @@ export default function ProfileView() {
 
   const fetchTargetUser = async (userId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/users/search`);
-      const allUsers = await res.json();
-      const found = allUsers.find(u => u._id === userId);
-      if (found) {
-        setTargetUser(found);
+      const token = localStorage.getItem('token');
+      
+      // First check if it's the current user
+      const meRes = await fetch(`http://localhost:5000/api/users/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (meRes.ok) {
+        const me = await meRes.json();
+        if (me._id === userId) {
+          setTargetUser(me);
+          setLoading(false);
+          return;
+        }
+      }
+
+      // If not current user, search other public users
+      const res = await fetch(`http://localhost:5000/api/users/search`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      if (res.ok) {
+        const allUsers = await res.json();
+        const found = allUsers.find(u => u._id === userId);
+        if (found) {
+          setTargetUser(found);
+        } else {
+          setError('User not found.');
+        }
       } else {
-        setError('User not found.');
+        setError('Error fetching user.');
       }
     } catch (err) {
       setError('Error fetching user.');

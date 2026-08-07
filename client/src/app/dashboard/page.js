@@ -210,24 +210,24 @@ export default function Dashboard() {
                   <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
                 </div>
                 
-                <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:ml-6 md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
+                <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
                   {[
                     { title: 'New match found!', desc: 'Sarah matches 95% of your skills.', time: '2 hours ago', icon: <Users className="w-4 h-4 text-white" />, color: 'bg-blue-500' },
                     { title: 'Swap completed', desc: 'You completed a 1hr swap with John.', time: 'Yesterday', icon: <Check className="w-4 h-4 text-white" />, color: 'bg-green-500' },
                     { title: 'Earned a badge', desc: 'You unlocked the "Top Teacher" badge!', time: '3 days ago', icon: <Star className="w-4 h-4 text-white" />, color: 'bg-orange-500' },
                     { title: 'Profile updated', desc: 'You added "Python" to your offered skills.', time: '1 week ago', icon: <Settings className="w-4 h-4 text-white" />, color: 'bg-gray-500' }
                   ].map((act, i) => (
-                    <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                      <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm ${act.color} z-10`}>
+                    <div key={i} className="relative flex items-start gap-4 group">
+                      <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shrink-0 shadow-sm ${act.color} z-10`}>
                         {act.icon}
                       </div>
                       
-                      <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex items-center justify-between mb-1">
+                      <div className="flex-1 p-4 rounded-xl border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                        <div className="flex flex-col xl:flex-row xl:items-center justify-between mb-2 xl:mb-1 gap-1">
                           <h4 className="font-bold text-gray-900 text-sm">{act.title}</h4>
-                          <time className="text-xs text-gray-400 font-medium">{act.time}</time>
+                          <time className="text-xs text-gray-400 font-medium whitespace-nowrap">{act.time}</time>
                         </div>
-                        <p className="text-sm text-gray-600">{act.desc}</p>
+                        <p className="text-sm text-gray-600 leading-relaxed">{act.desc}</p>
                       </div>
                     </div>
                   ))}
