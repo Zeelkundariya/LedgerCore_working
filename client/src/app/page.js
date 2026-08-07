@@ -56,83 +56,267 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-          {/* Hero Right: Node Visualization */}
-          <div className="relative w-full aspect-square lg:aspect-auto lg:h-[600px] hidden md:block">
-            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-              <motion.path 
-                d="M100,100 Q200,300 400,200 T600,400" 
-                fill="transparent" 
-                stroke="rgba(31, 58, 95, 0.1)" 
-                strokeWidth="2"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-              />
-              <motion.path 
-                d="M600,100 Q400,200 300,400 T100,500" 
-                fill="transparent" 
-                stroke="rgba(201, 124, 43, 0.1)" 
-                strokeWidth="2"
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 2.5, ease: "easeInOut" }}
-              />
-            </svg>
+          {/* Hero Right: Live AI Match Demo */}
+          <div className="relative w-full lg:h-[650px] hidden md:flex items-center justify-center">
+            {/* Background glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-accent/10 rounded-full blur-3xl pointer-events-none z-0"></div>
             
-            {/* Nodes */}
-            {[
-              { top: '15%', left: '15%', size: 60, img: '10' },
-              { top: '40%', left: '70%', size: 90, img: '20' },
-              { top: '70%', left: '30%', size: 70, img: '30' },
-              { top: '80%', left: '80%', size: 50, img: '40' },
-              { top: '20%', left: '85%', size: 45, img: '50' }
-            ].map((node, i) => (
-              <motion.div
-                key={i}
-                className="absolute rounded-full border-4 border-white shadow-xl overflow-hidden cursor-pointer"
-                style={{ top: node.top, left: node.left, width: node.size, height: node.size }}
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: i * 0.2, type: 'spring', stiffness: 100 }}
-                whileHover={{ scale: 1.1, zIndex: 10 }}
-              >
-                <img src={`https://i.pravatar.cc/200?img=${node.img}`} alt="Node" className="w-full h-full object-cover" />
-              </motion.div>
-            ))}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+              className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] p-8 border border-white shadow-[0_30px_60px_rgba(31,58,95,0.15)] flex flex-col relative z-10 w-full max-w-md mx-auto"
+            >
+              <div className="flex justify-between items-center mb-8 border-b border-black/5 pb-4">
+                <h3 className="text-lg font-black text-primary uppercase tracking-widest flex items-center">
+                  <Star className="w-4 h-4 mr-2 text-accent" /> AI Engine
+                </h3>
+                <span className="flex h-3 w-3 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
+                </span>
+              </div>
+
+              <div className="space-y-5 flex-1">
+                {/* Rani Box */}
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1 }}
+                  className="bg-white p-5 rounded-2xl shadow-sm border border-black/5 flex items-center gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xl">R</div>
+                  <div>
+                    <h4 className="font-bold text-primary text-base">Rani</h4>
+                    <p className="text-sm text-secondary font-medium">Wants to learn <span className="text-accent font-bold">UI Design</span></p>
+                  </div>
+                </motion.div>
+
+                {/* Searching Pulse */}
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: [0, 1, 1, 0], height: ['0px', '40px', '40px', '0px'] }}
+                  transition={{ delay: 2, duration: 3, times: [0, 0.1, 0.9, 1] }}
+                  className="flex justify-center overflow-hidden"
+                >
+                  <div className="bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full flex items-center shadow-md animate-pulse">
+                    <Star className="w-3 h-3 mr-2" /> Searching Global Mentors...
+                  </div>
+                </motion.div>
+
+                {/* Sarah Box */}
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 4.5 }}
+                  className="bg-white p-5 rounded-2xl shadow-md border-l-4 border-l-green-500 flex items-center gap-4 relative"
+                >
+                  <div className="absolute -top-3 -right-3 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase shadow-sm">Match Found</div>
+                  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xl">S</div>
+                  <div>
+                    <h4 className="font-bold text-primary text-base">Sarah</h4>
+                    <p className="text-sm text-secondary font-medium">Teaches UI Design • Wants React</p>
+                  </div>
+                </motion.div>
+
+                {/* Result Block */}
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 5.5, type: "spring" }}
+                  className="text-center pt-4"
+                >
+                  <div className="inline-block bg-green-50 text-green-700 font-black text-2xl px-6 py-3 rounded-2xl border border-green-200 shadow-sm">
+                    95% Compatible
+                  </div>
+                  <div className="text-sm font-bold text-primary uppercase tracking-widest mt-4 flex items-center justify-center bg-black/5 py-2 rounded-xl">
+                    <CheckCircle2 className="w-5 h-5 mr-2 text-green-500" /> Swap Created Automatically
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* --- HOW IT WORKS (Timeline) --- */}
-      <section className="py-32 bg-white border-y border-black/5">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
-          <div className="mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4 tracking-tight">The Exchange Process</h2>
-            <p className="text-xl text-secondary font-light max-w-2xl">A seamless framework designed to connect you with the perfect learning partner.</p>
+      {/* --- LIVE COMMUNITY TICKER --- */}
+      <div className="w-full bg-primary text-white py-3 overflow-hidden flex whitespace-nowrap border-y border-white/10 relative z-20 shadow-lg">
+        <motion.div 
+          className="flex gap-8 items-center font-medium text-sm"
+          animate={{ x: [0, -1000] }}
+          transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
+        >
+          {[...Array(2)].map((_, idx) => (
+            <div key={idx} className="flex gap-12 items-center px-4">
+              <span className="flex items-center"><Star className="w-4 h-4 text-accent mr-2 fill-accent" /> Sarah completed a React Swap</span>
+              <span className="flex items-center text-white/50">•</span>
+              <span className="flex items-center"><Star className="w-4 h-4 text-accent mr-2" /> Alex became a Top Mentor</span>
+              <span className="flex items-center text-white/50">•</span>
+              <span className="flex items-center"><Star className="w-4 h-4 text-accent mr-2 fill-accent" /> James earned Expert Badge</span>
+              <span className="flex items-center text-white/50">•</span>
+              <span className="flex items-center"><Star className="w-4 h-4 text-accent mr-2" /> Maria joined today</span>
+              <span className="flex items-center text-white/50">•</span>
+              <span className="flex items-center"><Star className="w-4 h-4 text-accent mr-2 fill-accent" /> 2,450 active sessions right now</span>
+              <span className="flex items-center text-white/50">•</span>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* --- HOW IT WORKS (AI Demo) --- */}
+      <section className="py-32 bg-white border-y border-black/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+          <div className="mb-20 text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center px-4 py-2 bg-accent/10 text-accent font-bold rounded-full text-sm uppercase tracking-widest mb-6">
+              <Star className="w-4 h-4 mr-2" /> The Engine
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-6 tracking-tight">How our AI connects you.</h2>
+            <p className="text-xl text-secondary font-light">From search to successful swap in milliseconds. Our neural engine handles the heavy lifting so you can focus on learning.</p>
           </div>
 
-          <div className="flex flex-col lg:flex-row justify-between items-stretch gap-6 relative">
-            <div className="absolute top-1/2 left-0 w-full h-[1px] bg-black/10 hidden lg:block -z-10"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            {[
-              { step: '01', title: 'Create Profile', desc: 'List your skills and what you want to learn.' },
-              { step: '02', title: 'Smart Match', desc: 'Our algorithm finds your perfect knowledge partner.' },
-              { step: '03', title: 'Live Session', desc: 'Connect via integrated high-quality video call.' },
-              { step: '04', title: 'Grow', desc: 'Exchange ratings to build your reputation.' }
-            ].map((item, index) => (
-              <motion.div 
-                key={item.step}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: index * 0.2, duration: 0.6 }}
-                className="bg-white p-6 md:p-8 flex-1 border border-black/5 rounded-2xl shadow-sm hover:shadow-xl transition-shadow"
-              >
-                <span className="text-accent font-bold text-lg mb-4 block">{item.step}</span>
-                <h3 className="text-xl font-bold text-primary mb-3">{item.title}</h3>
-                <p className="text-secondary text-sm leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
+            {/* Phase 1: The Result / Dashboard (Moved from col 3) */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-[#F8F9FA] rounded-[2rem] p-8 border border-black/5 flex flex-col relative overflow-hidden"
+            >
+              <div className="mb-8">
+                <span className="text-accent font-black text-4xl opacity-20 absolute top-6 right-8">01</span>
+                <h3 className="text-xl font-bold text-primary mb-2">Actionable Dashboards</h3>
+                <p className="text-secondary text-sm">Everything you need to execute on your goals immediately.</p>
+              </div>
+
+              <div className="space-y-3 flex-1 flex flex-col">
+                <div className="bg-white p-4 rounded-xl shadow-sm border border-black/5">
+                  <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-1">Today's Goal</span>
+                  <div className="font-bold text-primary text-sm flex items-center">
+                    <Target className="w-4 h-4 mr-2 text-accent" /> Complete your React lesson
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-white p-4 rounded-xl shadow-sm border border-black/5 text-center">
+                    <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-1">Pending Swap</span>
+                    <div className="font-black text-primary text-2xl">2</div>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl shadow-sm border border-black/5 text-center">
+                    <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-1">Streak</span>
+                    <div className="font-black text-accent text-2xl">12 <span className="text-sm">Days</span></div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl shadow-sm border border-black/5 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-1">Upcoming Session</span>
+                    <div className="font-bold text-primary text-sm flex items-center">
+                      <Video className="w-4 h-4 mr-2 text-blue-500" /> Today 6 PM
+                    </div>
+                  </div>
+                  <button className="bg-black/5 hover:bg-black/10 transition-colors p-2 rounded-lg text-primary">
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Phase 2: AI Analysis */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-primary rounded-[2rem] p-8 border border-primary-light flex flex-col relative overflow-hidden text-white"
+            >
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+              <div className="mb-8 relative z-10">
+                <span className="text-white/20 font-black text-4xl absolute -top-2 right-0">02</span>
+                <h3 className="text-xl font-bold text-white mb-2">Deep Analysis</h3>
+                <p className="text-white/70 text-sm">6-dimensional compatibility scoring.</p>
+              </div>
+
+              <div className="space-y-4 relative z-10 flex-1">
+                {[
+                  { label: 'Skills Match', val: 95 },
+                  { label: 'Availability', val: 88 },
+                  { label: 'Experience', val: 90 },
+                  { label: 'Trust Score', val: 96 },
+                  { label: 'Learning Goals', val: 92 },
+                  { label: 'Communication Style', val: 80 }
+                ].map((stat, i) => (
+                  <div key={i} className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-white/80">{stat.label}</span>
+                    <div className="flex items-center gap-3 w-1/2">
+                      <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${stat.val}%` }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.5 + (i * 0.1), duration: 1 }}
+                          className="h-full bg-accent rounded-full"
+                        ></motion.div>
+                      </div>
+                      <span className="text-sm font-bold text-white min-w-[3ch]">{stat.val}%</span>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="mt-6 pt-4 border-t border-white/10">
+                  <div className="flex items-center text-xs font-bold text-accent uppercase tracking-widest mb-2">
+                    <Sparkles className="w-3 h-3 mr-1" /> AI Recommendation
+                  </div>
+                  <p className="text-sm text-white/80 font-medium italic leading-relaxed">
+                    "This mentor is perfect because your complementary skill gaps and scheduling patterns align perfectly for a rapid 4-week exchange."
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Phase 3: Reputation & Growth */}
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="bg-[#F8F9FA] rounded-[2rem] p-8 border border-black/5 flex flex-col relative overflow-hidden"
+            >
+              <div className="mb-8">
+                <span className="text-accent font-black text-4xl opacity-20 absolute top-6 right-8">03</span>
+                <h3 className="text-xl font-bold text-primary mb-2">Build Reputation</h3>
+                <p className="text-secondary text-sm">Level up your profile through active knowledge exchange.</p>
+              </div>
+
+              <div className="space-y-4 flex-1 flex flex-col">
+                <div className="bg-white p-5 rounded-xl shadow-sm border border-black/5 text-center">
+                  <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block mb-2">Current XP</span>
+                  <div className="font-black text-primary text-4xl mb-1">4,250</div>
+                  <div className="text-xs font-bold text-accent uppercase tracking-widest">Level 12 Scholar</div>
+                </div>
+
+                <div className="bg-white p-4 rounded-xl shadow-sm border border-black/5">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-[10px] font-bold text-secondary uppercase tracking-widest">Trust Score</span>
+                    <span className="text-xs font-bold text-primary">98/100</span>
+                  </div>
+                  <div className="w-full h-1.5 bg-black/5 rounded-full overflow-hidden mb-1">
+                    <div className="w-[98%] h-full bg-blue-500 rounded-full"></div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-4 rounded-xl shadow-sm border border-black/5 mt-auto">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-secondary uppercase tracking-widest block">Latest Achievement</span>
+                    <span className="text-xs font-bold text-primary bg-yellow-100 px-3 py-1.5 rounded-lg flex items-center shadow-sm border border-yellow-200">
+                      🏆 Top Mentor
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>

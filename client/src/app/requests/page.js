@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useAuthStore } from '@/store/useAuthStore';
 import { CheckCircle2, XCircle, Clock, Send, Inbox, Star } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Check } from 'lucide-react';
 
 export default function Requests() {
   const [requests, setRequests] = useState([]);
@@ -173,7 +174,7 @@ export default function Requests() {
                         "{req.message || 'No message provided'}"
                       </p>
 
-                      <div className="flex flex-wrap gap-x-8 gap-y-4 text-sm">
+                      <div className="flex flex-wrap gap-x-8 gap-y-4 text-sm mt-4">
                         <div>
                           <strong className="text-primary block mb-2 font-bold">They Offer:</strong>
                           <div className="flex gap-2">{req.offeredSkills.map(s => <span key={s} className="bg-primary/5 border border-primary/10 px-3 py-1.5 rounded-lg text-primary font-bold shadow-sm">{s}</span>)}</div>
@@ -183,6 +184,43 @@ export default function Requests() {
                           <div className="flex gap-2">{req.requestedSkills.map(s => <span key={s} className="bg-black/5 border border-black/10 px-3 py-1.5 rounded-lg text-black/70 font-bold shadow-sm">{s}</span>)}</div>
                         </div>
                       </div>
+
+                      {/* Timeline Progress */}
+                      {req.status !== 'REJECTED' && req.status !== 'CANCELLED' && (
+                        <div className="mt-8 pt-6 border-t border-black/5 relative z-0 w-full max-w-3xl">
+                          <div className="flex justify-between items-center relative">
+                            {/* Connecting Line */}
+                            <div className="absolute top-1/2 left-0 w-full h-1 bg-black/5 -translate-y-1/2 -z-10 rounded-full"></div>
+                            
+                            {/* Dynamic Filled Line */}
+                            <div 
+                              className="absolute top-1/2 left-0 h-1 bg-accent -translate-y-1/2 -z-10 rounded-full transition-all duration-1000"
+                              style={{ 
+                                width: req.status === 'PENDING' ? '0%' : 
+                                       req.status === 'ACCEPTED' && !req.scheduledDate ? '33%' : 
+                                       req.status === 'ACCEPTED' && req.scheduledDate ? '66%' : 
+                                       req.status === 'COMPLETED' ? '100%' : '0%' 
+                              }}
+                            ></div>
+
+                            {[
+                              { label: 'Requested', active: true },
+                              { label: 'Accepted', active: req.status === 'ACCEPTED' || req.status === 'COMPLETED' },
+                              { label: 'Scheduled', active: (req.status === 'ACCEPTED' && req.scheduledDate) || req.status === 'COMPLETED' },
+                              { label: 'Completed', active: req.status === 'COMPLETED' }
+                            ].map((step, stepIdx) => (
+                              <div key={stepIdx} className="flex flex-col items-center">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center border-4 transition-colors ${step.active ? 'bg-accent border-accent-light text-white shadow-md' : 'bg-white border-black/10 text-black/20'}`}>
+                                  {step.active ? <Check className="w-4 h-4" /> : <div className="w-2 h-2 rounded-full bg-black/10"></div>}
+                                </div>
+                                <span className={`text-[10px] font-bold uppercase tracking-widest mt-2 ${step.active ? 'text-primary' : 'text-secondary'}`}>
+                                  {step.label}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Actions */}
