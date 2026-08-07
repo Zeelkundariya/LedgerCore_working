@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '@/store/useAuthStore';
-import { User, MapPin, ArrowLeft, Star, ShieldCheck, Zap } from 'lucide-react';
+import { User, MapPin, ArrowLeft, Star, ShieldCheck, Zap, Settings } from 'lucide-react';
 import Link from 'next/link';
+import ProfileEditModal from '@/components/profile/ProfileEditModal';
 
 export default function ProfileView() {
   const params = useParams();
@@ -17,6 +18,7 @@ export default function ProfileView() {
   const [targetUser, setTargetUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   useEffect(() => {
     checkAuth();
@@ -102,32 +104,42 @@ export default function ProfileView() {
         </div>
         
         <div className="px-8 pb-10 relative">
-          {/* Avatar */}
-          <div className="w-32 h-32 bg-white rounded-full border-4 border-white shadow-xl flex items-center justify-center absolute -top-16 overflow-hidden z-10">
-            {targetUser.profilePicture ? (
-              <img src={targetUser.profilePicture} alt={targetUser.name} className="w-full h-full object-cover" />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-primary to-blue-800 flex items-center justify-center text-white text-4xl font-bold">
-                {targetUser.name.charAt(0)}
-              </div>
-            )}
-          </div>
-          
-          <div className="mt-20 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
-            <div>
-              <h1 className="text-4xl font-black text-gray-900 tracking-tight">{targetUser.name}</h1>
-              <div className="flex items-center gap-4 text-gray-500 font-medium mt-3">
-                <span className="flex items-center bg-gray-100 px-3 py-1 rounded-full text-sm"><MapPin className="w-4 h-4 mr-1 text-primary" /> {targetUser.location || 'Remote'}</span>
-                <span className="flex items-center bg-yellow-50 px-3 py-1 rounded-full text-yellow-700 text-sm"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> {targetUser.reviews?.length > 0 ? (targetUser.reviews.reduce((a, b) => a + b.rating, 0) / targetUser.reviews.length).toFixed(1) : 'New'} ({targetUser.reviews?.length || 0} Reviews)</span>
-                <span className="flex items-center bg-blue-50 px-3 py-1 rounded-full text-blue-700 text-sm font-bold"><Zap className="w-4 h-4 mr-1 text-blue-500" /> Lvl {targetUser.level || 1} • {targetUser.xp || 0} XP</span>
-              </div>
+          <div className="flex flex-col sm:flex-row gap-6 sm:items-end relative -mt-16 z-10 mb-8">
+            {/* Avatar */}
+            <div className="w-32 h-32 bg-white rounded-full border-4 border-white shadow-xl shrink-0 flex items-center justify-center overflow-hidden">
+              {targetUser.profilePicture ? (
+                <img src={targetUser.profilePicture} alt={targetUser.name} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-primary to-blue-800 flex items-center justify-center text-white text-4xl font-bold">
+                  {targetUser.name.charAt(0)}
+                </div>
+              )}
             </div>
             
-            <Link href={`/swap/${targetUser._id}`}>
-              <button className="px-8 py-3 bg-primary text-white font-black rounded-xl hover:bg-[#152843] transition-colors shadow-md flex items-center group">
-                <Zap className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" /> Request Swap
-              </button>
-            </Link>
+            <div className="flex-grow flex flex-col md:flex-row md:justify-between md:items-end gap-6 mb-2">
+              <div>
+                <h1 className="text-4xl font-black text-gray-900 tracking-tight">{targetUser.name}</h1>
+                <div className="flex flex-wrap items-center gap-4 text-gray-500 font-medium mt-3">
+                  <span className="flex items-center bg-gray-100 px-3 py-1 rounded-full text-sm"><MapPin className="w-4 h-4 mr-1 text-primary" /> {targetUser.location || 'Remote'}</span>
+                  <span className="flex items-center bg-yellow-50 px-3 py-1 rounded-full text-yellow-700 text-sm"><Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" /> {targetUser.reviews?.length > 0 ? (targetUser.reviews.reduce((a, b) => a + b.rating, 0) / targetUser.reviews.length).toFixed(1) : 'New'} ({targetUser.reviews?.length || 0} Reviews)</span>
+                  <span className="flex items-center bg-blue-50 px-3 py-1 rounded-full text-blue-700 text-sm font-bold"><Zap className="w-4 h-4 mr-1 text-blue-500" /> Lvl {targetUser.level || 1} • {targetUser.xp || 0} XP</span>
+                </div>
+              </div>
+              
+              <div className="flex shrink-0">
+                {currentUser && currentUser._id === targetUser._id ? (
+                  <button onClick={() => setIsEditModalOpen(true)} className="px-8 py-3 bg-gray-100 text-gray-900 hover:bg-gray-200 font-black rounded-xl transition-colors shadow-sm flex items-center group">
+                    <Settings className="w-4 h-4 mr-2 group-hover:rotate-90 transition-transform" /> Edit Profile
+                  </button>
+                ) : (
+                  <Link href={`/swap/${targetUser._id}`}>
+                    <button className="px-8 py-3 bg-primary text-white font-black rounded-xl hover:bg-[#152843] transition-colors shadow-md flex items-center group">
+                      <Zap className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" /> Request Swap
+                    </button>
+                  </Link>
+                )}
+              </div>
+            </div>
           </div>
           
           {/* Badges Section */}
@@ -241,6 +253,13 @@ export default function ProfileView() {
           
         </div>
       </motion.div>
+
+      <ProfileEditModal 
+        isOpen={isEditModalOpen} 
+        onClose={() => setIsEditModalOpen(false)} 
+        user={targetUser} 
+        onSave={(updated) => setTargetUser(updated)} 
+      />
     </div>
   );
 }
