@@ -216,37 +216,37 @@ function PremiumMatchCard({ user, onCompare }) {
       <div className="p-8 md:p-12 relative z-10">
         
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b border-black/5 pb-10">
+        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8 md:gap-6 mb-12 border-b border-black/5 pb-10">
           
-          <div className="flex items-center gap-6">
-            <div className="relative">
-              <div className="w-28 h-28 bg-white rounded-full flex items-center justify-center border-4 border-primary shadow-lg overflow-hidden z-10 relative">
+          <div className="flex flex-col md:flex-row items-center gap-6">
+            <div className="relative shrink-0">
+              <div className="w-32 h-32 md:w-28 md:h-28 bg-white rounded-full flex items-center justify-center border-4 border-primary shadow-lg overflow-hidden z-10 relative">
                 {user.profilePicture ? (
                   <img src={user.profilePicture} alt={user.name} className="w-full h-full object-cover" />
                 ) : (
                   <User className="w-12 h-12 text-primary" />
                 )}
               </div>
-              <div className="absolute -bottom-3 -right-3 bg-white px-3 py-1 rounded-full border border-black/10 shadow-sm flex items-center gap-1">
+              <div className="absolute -bottom-3 right-1/2 translate-x-1/2 md:translate-x-0 md:-right-3 bg-white px-3 py-1 rounded-full border border-black/10 shadow-sm flex items-center gap-1">
                 <Star className="w-3 h-3 fill-yellow-500 text-yellow-500" />
                 <span className="text-xs font-bold text-primary">{stats.rating}</span>
               </div>
             </div>
             
-            <div>
-              <div className="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-black uppercase tracking-wider mb-2">
+            <div className="flex flex-col items-center md:items-start">
+              <div className="inline-flex items-center px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-black uppercase tracking-wider mb-3 md:mb-2">
                 Best Match
               </div>
-              <h2 className="text-3xl font-black text-primary mb-1">{user.name}</h2>
-              <div className="flex items-center gap-4 text-secondary font-medium">
+              <h2 className="text-3xl font-black text-primary mb-2 md:mb-1">{user.name}</h2>
+              <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 md:gap-4 text-secondary font-medium">
                 <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {user.location || 'Remote'}</span>
                 <span className="flex items-center"><CheckCircle2 className="w-4 h-4 mr-1" /> {stats.swaps} Swaps</span>
               </div>
               
               {/* Trust Badges */}
-              <div className="flex flex-wrap gap-2 mt-4">
+              <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-4">
                 {extStats.badges.map(badge => (
-                  <span key={badge} className="inline-flex items-center px-2.5 py-1 bg-black/5 text-primary text-xs font-bold rounded-md hover:bg-primary hover:text-white transition-colors cursor-default">
+                  <span key={badge} className="inline-flex items-center px-3 py-1 bg-black/5 text-primary text-xs font-bold rounded-md hover:bg-primary hover:text-white transition-colors cursor-default">
                     <ShieldCheck className="w-3 h-3 mr-1" /> {badge}
                   </span>
                 ))}
@@ -255,21 +255,21 @@ function PremiumMatchCard({ user, onCompare }) {
           </div>
 
           <div className="flex flex-col items-center">
-            <div className="relative w-36 h-36 flex items-center justify-center">
-              <svg className="w-full h-full transform -rotate-90 absolute top-0 left-0">
-                <circle cx="72" cy="72" r="60" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-black/5" />
+            <div className="relative w-32 h-32 flex items-center justify-center">
+              <svg viewBox="0 0 128 128" className="w-full h-full transform -rotate-90 absolute top-0 left-0">
+                <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-black/5" />
                 <motion.circle 
-                  cx="72" cy="72" r="60" stroke="currentColor" strokeWidth="8" fill="transparent" 
-                  strokeDasharray={377} 
-                  initial={{ strokeDashoffset: 377 }}
-                  animate={{ strokeDashoffset: 377 - (377 * user.score) / 100 }}
+                  cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="8" fill="transparent" 
+                  strokeDasharray={352} 
+                  initial={{ strokeDashoffset: 352 }}
+                  animate={{ strokeDashoffset: 352 - (352 * user.score) / 100 }}
                   transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
                   className="text-primary drop-shadow-[0_0_10px_rgba(30,58,138,0.3)]" 
                   strokeLinecap="round"
                 />
               </svg>
-              <div className="text-center">
-                <span className="text-4xl font-black text-primary block leading-none">
+              <div className="text-center relative z-10">
+                <span className="text-3xl font-black text-primary block leading-none">
                   <AnimatedCounter value={user.score} />%
                 </span>
               </div>
