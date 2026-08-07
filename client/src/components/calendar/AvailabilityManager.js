@@ -107,13 +107,13 @@ export default function AvailabilityManager() {
         </motion.button>
       </div>
 
-      <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
+      <div className="space-y-3">
         {DAYS_OF_WEEK.map((day) => {
           const isActive = !!availability[day];
           
           return (
-            <div key={day} className={`border rounded-xl p-4 transition-colors ${isActive ? 'border-primary/20 bg-primary/5' : 'border-gray-100 bg-gray-50/50 hover:bg-gray-50'}`}>
-              <div className="flex items-center justify-between mb-2">
+            <div key={day} className={`border rounded-xl p-3 transition-colors ${isActive ? 'border-primary/20 bg-primary/5' : 'border-gray-100 bg-gray-50/50 hover:bg-gray-50'}`}>
+              <div className="flex items-center justify-between">
                 <label className="flex items-center cursor-pointer select-none">
                   <div className="relative">
                     <input
@@ -125,7 +125,7 @@ export default function AvailabilityManager() {
                     <div className={`block w-10 h-6 rounded-full transition-colors ${isActive ? 'bg-primary' : 'bg-gray-200'}`}></div>
                     <div className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${isActive ? 'transform translate-x-4' : ''}`}></div>
                   </div>
-                  <span className={`ml-3 font-semibold ${isActive ? 'text-primary' : 'text-gray-500'}`}>{day}</span>
+                  <span className={`ml-3 font-semibold text-sm ${isActive ? 'text-primary' : 'text-gray-500'}`}>{day}</span>
                 </label>
                 
                 {isActive && (
@@ -146,25 +146,25 @@ export default function AvailabilityManager() {
                     exit={{ opacity: 0, height: 0 }}
                     className="overflow-hidden"
                   >
-                    <div className="pt-2 space-y-2">
+                    <div className="pt-3 space-y-2">
                       {availability[day].map((slot, index) => (
                         <div key={index} className="flex items-center gap-2">
                           <input
                             type="time"
                             value={slot.start}
                             onChange={(e) => handleTimeChange(day, index, 'start', e.target.value)}
-                            className="text-sm bg-white border border-gray-200 rounded-lg px-2 py-1 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                            className="text-sm bg-white border border-gray-200 rounded-lg px-2 py-1 focus:ring-2 focus:ring-primary focus:border-transparent outline-none flex-1"
                           />
                           <span className="text-gray-400 font-medium">-</span>
                           <input
                             type="time"
                             value={slot.end}
                             onChange={(e) => handleTimeChange(day, index, 'end', e.target.value)}
-                            className="text-sm bg-white border border-gray-200 rounded-lg px-2 py-1 focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                            className="text-sm bg-white border border-gray-200 rounded-lg px-2 py-1 focus:ring-2 focus:ring-primary focus:border-transparent outline-none flex-1"
                           />
                           <button 
                             onClick={() => handleRemoveTimeSlot(day, index)}
-                            className="text-red-400 hover:text-red-500 p-1 hover:bg-red-50 rounded-md transition-colors"
+                            className="text-red-400 hover:text-red-500 p-1.5 hover:bg-red-50 rounded-md transition-colors shrink-0"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
